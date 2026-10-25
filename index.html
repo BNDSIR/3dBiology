@@ -3,45 +3,34 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>MBBS 3D Interactive Anatomy Hub & Dissector</title>
+  <title>MBBS 3D Interactive Anatomy Hub (English & বাংলা)</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     :root {
-      --bg-gradient: radial-gradient(circle at center, #f8fafc 0%, #cbd5e1 100%);
+      --bg-gradient: radial-gradient(circle at center, #134e4a 0%, #042f2e 100%);
     }
     body {
       margin: 0;
       overflow: hidden;
       background: var(--bg-gradient);
       color: #f8fafc;
-      font-family: system-ui, -apple-system, sans-serif;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans Bengali', sans-serif;
       touch-action: none;
       user-select: none;
       transition: background 0.35s ease;
     }
 
-    /* 4 Instant Background Themes */
-    body.theme-light {
-      --bg-gradient: radial-gradient(circle at center, #ffffff 0%, #cbd5e1 100%);
-    }
-    body.theme-teal {
-      --bg-gradient: radial-gradient(circle at center, #134e4a 0%, #042f2e 100%);
-    }
-    body.theme-slate {
-      --bg-gradient: radial-gradient(circle at center, #334155 0%, #0f172a 100%);
-    }
-    body.theme-dark {
-      --bg-gradient: radial-gradient(circle at center, #1e293b 0%, #090d16 100%);
-    }
+    body.theme-light { --bg-gradient: radial-gradient(circle at center, #ffffff 0%, #cbd5e1 100%); }
+    body.theme-teal  { --bg-gradient: radial-gradient(circle at center, #134e4a 0%, #042f2e 100%); }
+    body.theme-slate { --bg-gradient: radial-gradient(circle at center, #334155 0%, #0f172a 100%); }
+    body.theme-dark  { --bg-gradient: radial-gradient(circle at center, #1e293b 0%, #090d16 100%); }
 
     #canvas-container { width: 100vw; height: 100vh; position: relative; }
 
-    /* Custom Scrollbar */
     ::-webkit-scrollbar { width: 5px; height: 5px; }
     ::-webkit-scrollbar-track { background: #0f172a; }
     ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
 
-    /* Single Clean Floating Tag for Selected Structure */
     #activeBoneTag {
       position: absolute;
       transform: translate(-50%, -140%);
@@ -79,14 +68,13 @@
 <body class="theme-teal">
 
   <!-- ========================================================================== -->
-  <!-- 1. TOP MASTER NAVIGATION BAR (HOME + SYSTEM TABS + THEME + DEVELOPER)     -->
+  <!-- 1. TOP MASTER NAVIGATION BAR (WITH ENGLISH ⇄ বাংলা LANGUAGE SWITCHER)      -->
   <!-- ========================================================================== -->
   <header class="fixed top-0 left-0 right-0 z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 px-3 py-2 flex flex-wrap items-center justify-between gap-2 shadow-xl">
     
-    <!-- Left: Home Portal Button & Tool Toggle -->
     <div class="flex items-center gap-2">
       <button id="btnOpenHome" class="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs flex items-center gap-1.5 shadow transition">
-        <span>🏠</span> <span>Home Portal</span>
+        <span>🏠</span> <span id="uiHomeBtn">Home</span>
       </button>
 
       <button id="btnToggleLeft" class="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-semibold text-amber-400 flex items-center gap-1 transition">
@@ -94,80 +82,84 @@
       </button>
     </div>
 
-    <!-- Center: Interactive Anatomy System Tabs -->
+    <!-- Center: System Tabs -->
     <nav class="flex items-center gap-1.5 overflow-x-auto py-0.5 max-w-full">
       <button data-sys="skeletal" class="sys-tab active px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 whitespace-nowrap transition">
-        🦴 Skeletal
-      </button>
-      <button data-sys="cardio" class="sys-tab px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 whitespace-nowrap transition">
-        🫀 Cardiovascular
+        🦴 <span class="tab-lbl" data-en="Skeletal" data-bn="কঙ্কালতন্ত্র">Skeletal</span>
       </button>
       <button data-sys="nervous" class="sys-tab px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 whitespace-nowrap transition">
-        🧠 Nervous
+        🧠 <span class="tab-lbl" data-en="Nervous" data-bn="স্নায়ুতন্ত্র">Nervous</span>
+      </button>
+      <button data-sys="cardio" class="sys-tab px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 whitespace-nowrap transition">
+        🫀 <span class="tab-lbl" data-en="Cardiovascular" data-bn="হৃৎ-সংবহনতন্ত্র">Cardiovascular</span>
       </button>
       <button data-sys="muscular" class="sys-tab px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 whitespace-nowrap transition">
-        💪 Muscular
+        💪 <span class="tab-lbl" data-en="Muscular" data-bn="পেশীতন্ত্র">Muscular</span>
       </button>
       <button data-sys="visceral" class="sys-tab px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 whitespace-nowrap transition">
-        🫁 Visceral Organs
+        🫁 <span class="tab-lbl" data-en="Viscera" data-bn="অভ্যন্তরীণ অঙ্গ">Viscera</span>
       </button>
     </nav>
 
-    <!-- Right: Background Theme Switcher, Details & Developer Avatar -->
-    <div class="flex items-center gap-2">
-      <!-- Background Color Switcher -->
-      <select id="bgThemeSelector" title="Change 3D Background" class="bg-slate-800 text-xs text-cyan-300 border border-slate-700 rounded-xl px-2.5 py-1.5 focus:outline-none focus:border-cyan-400 cursor-pointer">
-        <option value="theme-teal">🎨 Surgical Teal</option>
-        <option value="theme-light">☀️ Clinical White</option>
-        <option value="theme-slate">🌤️ Soft Slate</option>
-        <option value="theme-dark">🌙 Dark Studio</option>
+    <!-- Right: Language Switcher (EN ⇄ বাংলা), Theme, Details & Developer -->
+    <div class="flex items-center gap-1.5">
+      <!-- BILINGUAL TOGGLE BUTTON -->
+      <button id="btnLangToggle" class="px-3 py-1.5 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-400/60 text-emerald-300 font-bold text-xs flex items-center gap-1.5 shadow transition">
+        <span>🌐</span> <span id="langLabel">EN | বাংলা</span>
+      </button>
+
+      <select id="bgThemeSelector" title="Change Background" class="bg-slate-800 text-xs text-cyan-300 border border-slate-700 rounded-xl px-2 py-1.5 focus:outline-none cursor-pointer">
+        <option value="theme-teal">🎨 Teal</option>
+        <option value="theme-light">☀️ White</option>
+        <option value="theme-slate">🌤️ Slate</option>
+        <option value="theme-dark">🌙 Dark</option>
       </select>
 
       <button id="btnToggleRight" class="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-xs font-semibold text-cyan-400 transition">
-        📖 Notes
+        📖 <span id="uiNotesBtn">Notes</span>
       </button>
 
-      <!-- Developer Mini Badge in Header -->
-      <button id="btnDevProfile" title="About Developer" class="flex items-center gap-2 bg-slate-800/90 hover:bg-slate-700 border border-amber-500/40 rounded-full pl-1 pr-2.5 py-0.5 transition">
+      <button id="btnDevProfile" title="Developer Profile" class="flex items-center gap-1.5 bg-slate-800/90 hover:bg-slate-700 border border-amber-500/40 rounded-full pl-1 pr-2.5 py-0.5 transition">
         <img src="https://github.com/mrinmoyedebnath-sys/mylogo/blob/main/1764070018636-removebg-preview.png?raw=true" 
-             alt="Developer" class="w-7 h-11 rounded-full object-cover bg-slate-700 border border-amber-400" />
-        <span class="text-[11px] font-semibold text-amber-300 hidden lg:inline">Developer</span>
+             alt="Developer" class="w-7 h-7 rounded-full object-cover bg-slate-700 border border-amber-400" />
+        <span class="text-[11px] font-semibold text-amber-300 hidden xl:inline">Developer</span>
       </button>
     </div>
   </header>
 
   <!-- ========================================================================== -->
-  <!-- 2. HOME PORTAL OVERLAY (LAUNCHPAD FOR ALL ANATOMY SYSTEMS + DEV CARD)      -->
+  <!-- 2. HOME PORTAL OVERLAY                                                     -->
   <!-- ========================================================================== -->
   <div id="homeOverlay" class="fixed inset-0 z-50 bg-slate-950/95 backdrop-blur-xl overflow-y-auto pt-16 pb-12 px-4 transition-opacity duration-300">
     <div class="max-w-6xl mx-auto">
       
-      <!-- Top Hero Banner + Developer Profile Card -->
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center bg-gradient-to-br from-slate-900 via-slate-900 to-teal-950/60 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl mb-8">
-        
         <div class="lg:col-span-2 space-y-3">
-          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs font-semibold">
-            <span>🩺 Interactive 3D Medical Education Platform</span>
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-semibold">
+            <span>🩺 Bilingual MBBS 3D Education Platform (English & বাংলা)</span>
           </div>
-          <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
-            MBBS 3D Virtual Dissector & <span class="text-amber-400">Viva Explorer</span>
+          <h1 id="heroTitle" class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
+            MBBS 3D Virtual Dissector & <span class="text-amber-400">Viva Hub</span>
           </h1>
-          <p class="text-sm sm:text-base text-slate-300 leading-relaxed">
-            Select an anatomical system below to launch the interactive 3D WebGL model. Tap any structure to study high-yield <strong>Anatomical Relations, Side Determination, Attachments, Embryology, and Clinical Correlations</strong>, or double-tap to isolate & rotate a single bone 360°.
+          <p id="heroDesc" class="text-sm sm:text-base text-slate-300 leading-relaxed">
+            Explore interactive 3D human anatomy with complete clinical & viva notes available in both <strong>English and Bengali (বাংলা)</strong>. Tap any nerve, brain structure, or bone to inspect its origin, course, branches, and clinical lesions, or double-tap to isolate & zoom 360°.
           </p>
           <div class="pt-2 flex flex-wrap gap-3">
-            <button onclick="window.launchSystem('skeletal')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-5 py-2.5 rounded-xl text-sm shadow-lg shadow-amber-500/20 transition">
-              🦴 Launch Skeletal System ➔
+            <button onclick="window.launchSystem('nervous')" class="bg-yellow-500 hover:bg-yellow-400 text-slate-950 font-bold px-5 py-2.5 rounded-xl text-sm shadow-lg shadow-yellow-500/20 transition">
+              🧠 Launch Nervous System (স্নায়ুতন্ত্র) ➔
             </button>
-            <button id="btnCloseHome" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold px-5 py-2.5 rounded-xl text-sm transition">
-              Resume Active 3D View
+            <button onclick="window.launchSystem('skeletal')" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-5 py-2.5 rounded-xl text-sm shadow-lg shadow-amber-500/20 transition">
+              🦴 Launch Skeletal System (কঙ্কালতন্ত্র) ➔
+            </button>
+            <button id="btnCloseHome" class="bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 font-semibold px-4 py-2.5 rounded-xl text-sm transition">
+              Resume 3D View
             </button>
           </div>
         </div>
 
-        <!-- Developer Profile Showcase Card -->
-        <div class="bg-slate-950/80 border border-amber-500/40 rounded-2xl p-5 flex flex-col items-center text-center shadow-xl relative overflow-hidden">
-          <div class="w-28 h-38 rounded-full p-1 bg-gradient-to-tr from-amber-500 to-cyan-400 shadow-lg mb-3">
+        <!-- Developer Profile Card -->
+        <div class="bg-slate-950/80 border border-amber-500/40 rounded-2xl p-5 flex flex-col items-center text-center shadow-xl">
+          <div class="w-28 h-28 rounded-full p-1 bg-gradient-to-tr from-amber-500 to-cyan-400 shadow-lg mb-3">
             <img src="https://github.com/mrinmoyedebnath-sys/mylogo/blob/main/1764070018636-removebg-preview.png?raw=true" 
                  alt="Platform Developer" 
                  class="w-full h-full object-cover rounded-full bg-slate-900" />
@@ -175,32 +167,44 @@
           <span class="text-[10px] uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-bold mb-1">
             Creator & Lead Developer
           </span>
-          <h3 class="text-base font-bold text-white">3D Anatomy Architecture</h3>
+          <h3 class="text-base font-bold text-white">3D Medical Education Suite</h3>
           <p class="text-xs text-slate-400 mt-1 leading-relaxed">
-          Bholanath Debnath / Assistant Teacher
+            Interactive WebGL Dissector powered by Blender, Z-Anatomy & Three.js with bilingual English–বাংলা clinical narration.
           </p>
         </div>
-
       </div>
 
-      <!-- System Modules Grid (Click Any Card to Load That 3D Model) -->
-      <div class="flex items-center justify-between mb-4">
-        <h2 class="text-lg font-bold text-white">Select an Anatomical System Module</h2>
-        <span class="text-xs text-slate-400">Auto-loads <code class="text-amber-300">.glb</code> from repository</span>
-      </div>
-
+      <!-- System Modules Grid -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         
-        <!-- 1. Skeletal System Card -->
-        <div onclick="window.launchSystem('skeletal')" class="group cursor-pointer bg-slate-900/90 hover:bg-slate-800/90 border border-slate-800 hover:border-amber-500/60 rounded-2xl p-5 transition-all shadow-lg hover:shadow-amber-500/10 flex flex-col justify-between">
+        <!-- Nervous System Card (Highlighted) -->
+        <div onclick="window.launchSystem('nervous')" class="group cursor-pointer bg-slate-900/90 hover:bg-slate-800/90 border-2 border-yellow-500/50 hover:border-yellow-400 rounded-2xl p-5 transition-all shadow-lg flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-start mb-3">
+              <span class="text-3xl bg-yellow-500/10 border border-yellow-500/30 p-2.5 rounded-2xl">🧠</span>
+              <span class="text-[11px] font-mono bg-yellow-950 text-yellow-300 border border-yellow-700/50 px-2.5 py-0.5 rounded-full">nervous.glb</span>
+            </div>
+            <h3 class="text-base font-bold text-white group-hover:text-yellow-400 transition">Nervous System (স্নায়ুতন্ত্র)</h3>
+            <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
+              Brain, brainstem, cranial nerves (CN I–XII), spinal cord, brachial & lumbosacral plexuses with English & বাংলা clinical lesions.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-slate-800/80 flex justify-between items-center text-xs font-semibold text-yellow-400">
+            <span>Open 3D Neuroanatomy Lab</span>
+            <span class="group-hover:translate-x-1 transition">➔</span>
+          </div>
+        </div>
+
+        <!-- Skeletal System Card -->
+        <div onclick="window.launchSystem('skeletal')" class="group cursor-pointer bg-slate-900/90 hover:bg-slate-800/90 border border-slate-800 hover:border-amber-500/60 rounded-2xl p-5 transition-all shadow-lg flex flex-col justify-between">
           <div>
             <div class="flex justify-between items-start mb-3">
               <span class="text-3xl bg-amber-500/10 border border-amber-500/30 p-2.5 rounded-2xl">🦴</span>
               <span class="text-[11px] font-mono bg-emerald-950 text-emerald-300 border border-emerald-700/50 px-2.5 py-0.5 rounded-full">skeleton.glb</span>
             </div>
-            <h3 class="text-base font-bold text-white group-hover:text-amber-400 transition">1. Skeletal System (Osteology)</h3>
+            <h3 class="text-base font-bold text-white group-hover:text-amber-400 transition">Skeletal System (কঙ্কালতন্ত্র)</h3>
             <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
-              Axial & Appendicular skeleton, side determination, bony landmarks, muscle attachments, ossification centers & clinical fractures.
+              206 bones, axial & appendicular filters, side determination, muscle attachments, ossification & fracture correlations.
             </p>
           </div>
           <div class="mt-4 pt-3 border-t border-slate-800/80 flex justify-between items-center text-xs font-semibold text-amber-400">
@@ -209,16 +213,16 @@
           </div>
         </div>
 
-        <!-- 2. Cardiovascular System Card -->
-        <div onclick="window.launchSystem('cardio')" class="group cursor-pointer bg-slate-900/90 hover:bg-slate-800/90 border border-slate-800 hover:border-rose-500/60 rounded-2xl p-5 transition-all shadow-lg hover:shadow-rose-500/10 flex flex-col justify-between">
+        <!-- Cardiovascular System Card -->
+        <div onclick="window.launchSystem('cardio')" class="group cursor-pointer bg-slate-900/90 hover:bg-slate-800/90 border border-slate-800 hover:border-rose-500/60 rounded-2xl p-5 transition-all shadow-lg flex flex-col justify-between">
           <div>
             <div class="flex justify-between items-start mb-3">
               <span class="text-3xl bg-rose-500/10 border border-rose-500/30 p-2.5 rounded-2xl">🫀</span>
               <span class="text-[11px] font-mono bg-slate-800 text-rose-300 border border-rose-700/40 px-2.5 py-0.5 rounded-full">cardiovascular.glb</span>
             </div>
-            <h3 class="text-base font-bold text-white group-hover:text-rose-400 transition">2. Cardiovascular System</h3>
+            <h3 class="text-base font-bold text-white group-hover:text-rose-400 transition">Cardiovascular (হৃৎ-সংবহনতন্ত্র)</h3>
             <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
-              Heart chambers, coronary circulation, arch of aorta, great vessels, pericardial sinuses & developmental embryology.
+              Heart chambers, valves, coronary arteries, arch of aorta, venae cavae & congenital heart anomalies.
             </p>
           </div>
           <div class="mt-4 pt-3 border-t border-slate-800/80 flex justify-between items-center text-xs font-semibold text-rose-400">
@@ -227,34 +231,16 @@
           </div>
         </div>
 
-        <!-- 3. Nervous System Card -->
-        <div onclick="window.launchSystem('nervous')" class="group cursor-pointer bg-slate-900/90 hover:bg-slate-800/90 border border-slate-800 hover:border-yellow-500/60 rounded-2xl p-5 transition-all shadow-lg hover:shadow-yellow-500/10 flex flex-col justify-between">
-          <div>
-            <div class="flex justify-between items-start mb-3">
-              <span class="text-3xl bg-yellow-500/10 border border-yellow-500/30 p-2.5 rounded-2xl">🧠</span>
-              <span class="text-[11px] font-mono bg-slate-800 text-yellow-300 border border-yellow-700/40 px-2.5 py-0.5 rounded-full">nervous.glb</span>
-            </div>
-            <h3 class="text-base font-bold text-white group-hover:text-yellow-400 transition">3. Nervous System (Neuroanatomy)</h3>
-            <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
-              Cerebral hemispheres, brainstem, cranial nerves, brachial & lumbosacral plexuses, tracts & clinical lesions.
-            </p>
-          </div>
-          <div class="mt-4 pt-3 border-t border-slate-800/80 flex justify-between items-center text-xs font-semibold text-yellow-400">
-            <span>Open 3D Neuroanatomy</span>
-            <span class="group-hover:translate-x-1 transition">➔</span>
-          </div>
-        </div>
-
-        <!-- 4. Muscular System Card -->
-        <div onclick="window.launchSystem('muscular')" class="group cursor-pointer bg-slate-900/90 hover:bg-slate-800/90 border border-slate-800 hover:border-red-500/60 rounded-2xl p-5 transition-all shadow-lg hover:shadow-red-500/10 flex flex-col justify-between">
+        <!-- Muscular System Card -->
+        <div onclick="window.launchSystem('muscular')" class="group cursor-pointer bg-slate-900/90 hover:bg-slate-800/90 border border-slate-800 hover:border-red-500/60 rounded-2xl p-5 transition-all shadow-lg flex flex-col justify-between">
           <div>
             <div class="flex justify-between items-start mb-3">
               <span class="text-3xl bg-red-500/10 border border-red-500/30 p-2.5 rounded-2xl">💪</span>
               <span class="text-[11px] font-mono bg-slate-800 text-red-300 border border-red-700/40 px-2.5 py-0.5 rounded-full">muscular.glb</span>
             </div>
-            <h3 class="text-base font-bold text-white group-hover:text-red-400 transition">4. Muscular System (Myology)</h3>
+            <h3 class="text-base font-bold text-white group-hover:text-red-400 transition">Muscular System (পেশীতন্ত্র)</h3>
             <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
-              Superficial & deep muscle layers, origin, insertion, nerve supply, myotomes & clinical testing of muscles.
+              Origin, insertion, nerve supply, actions & myotome testing of upper limb, lower limb, and trunk muscles.
             </p>
           </div>
           <div class="mt-4 pt-3 border-t border-slate-800/80 flex justify-between items-center text-xs font-semibold text-red-400">
@@ -263,16 +249,16 @@
           </div>
         </div>
 
-        <!-- 5. Visceral / Splanchnology Card -->
-        <div onclick="window.launchSystem('visceral')" class="group cursor-pointer bg-slate-900/90 hover:bg-slate-800/90 border border-slate-800 hover:border-cyan-500/60 rounded-2xl p-5 transition-all shadow-lg hover:shadow-cyan-500/10 flex flex-col justify-between">
+        <!-- Visceral Organs Card -->
+        <div onclick="window.launchSystem('visceral')" class="group cursor-pointer bg-slate-900/90 hover:bg-slate-800/90 border border-slate-800 hover:border-cyan-500/60 rounded-2xl p-5 transition-all shadow-lg flex flex-col justify-between">
           <div>
             <div class="flex justify-between items-start mb-3">
               <span class="text-3xl bg-cyan-500/10 border border-cyan-500/30 p-2.5 rounded-2xl">🫁</span>
               <span class="text-[11px] font-mono bg-slate-800 text-cyan-300 border border-cyan-700/40 px-2.5 py-0.5 rounded-full">visceral.glb</span>
             </div>
-            <h3 class="text-base font-bold text-white group-hover:text-cyan-400 transition">5. Visceral Organs (Splanchnology)</h3>
+            <h3 class="text-base font-bold text-white group-hover:text-cyan-400 transition">Visceral Organs (অভ্যন্তরীণ অঙ্গ)</h3>
             <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
-              Lungs & bronchopulmonary segments, liver, GI tract, kidneys, peritoneal reflections & histological correlations.
+              Lungs, bronchopulmonary segments, liver, stomach, kidneys & peritoneal relations in English & বাংলা.
             </p>
           </div>
           <div class="mt-4 pt-3 border-t border-slate-800/80 flex justify-between items-center text-xs font-semibold text-cyan-400">
@@ -281,20 +267,20 @@
           </div>
         </div>
 
-        <!-- 6. Custom Local GLB Tester Card -->
+        <!-- Local File Uploader Card -->
         <label class="group cursor-pointer bg-slate-900/60 hover:bg-slate-800/90 border-2 border-dashed border-slate-700 hover:border-emerald-400 rounded-2xl p-5 transition-all flex flex-col justify-between">
           <div>
             <div class="flex justify-between items-start mb-3">
               <span class="text-3xl bg-emerald-500/10 border border-emerald-500/30 p-2.5 rounded-2xl">📂</span>
-              <span class="text-[11px] font-mono bg-emerald-950 text-emerald-300 px-2.5 py-0.5 rounded-full">Instant Test</span>
+              <span class="text-[11px] font-mono bg-emerald-950 text-emerald-300 px-2.5 py-0.5 rounded-full">Local Test</span>
             </div>
-            <h3 class="text-base font-bold text-white group-hover:text-emerald-400 transition">Load Any Custom .GLB File</h3>
+            <h3 class="text-base font-bold text-white group-hover:text-emerald-400 transition">Test Any Local .GLB File</h3>
             <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
-              Exported a new Z-Anatomy region from Blender? Click here to load it directly from your computer or phone.
+              Just exported <code class="text-emerald-300">nervous.glb</code> or <code class="text-emerald-300">skeleton.glb</code>? Click here to preview it immediately with bilingual notes!
             </p>
           </div>
           <div class="mt-4 pt-3 border-t border-slate-800/80 flex justify-between items-center text-xs font-semibold text-emerald-400">
-            <span>Browse Local .GLB File</span>
+            <span>Select .GLB from Device</span>
             <span>➔</span>
           </div>
           <input id="homeFileInput" type="file" accept=".glb,.gltf" class="hidden" />
@@ -305,13 +291,12 @@
   </div>
 
   <!-- ========================================================================== -->
-  <!-- 3. 3D VIEWPORT & FLOATING ACTION PILLS                                     -->
+  <!-- 3. 3D VIEWPORT & FLOATING CONTROLS                                         -->
   <!-- ========================================================================== -->
   <div id="canvas-container">
-    <div id="activeBoneTag" class="hidden">📍 Selected Structure</div>
+    <div id="activeBoneTag" class="hidden">📍 Selected</div>
   </div>
 
-  <!-- Floating Bottom-Center Isolate / Return Bar -->
   <div class="fixed bottom-4 left-1/2 -translate-x-1/2 z-20 flex items-center gap-2 bg-slate-900/90 backdrop-blur border border-slate-700 px-3 py-1.5 rounded-full shadow-2xl">
     <span id="activeSystemIndicator" class="text-xs font-bold text-amber-400 px-2">🦴 Skeletal System</span>
     <button id="btnExamineBone" class="hidden bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-3.5 py-1 rounded-full text-xs transition">
@@ -326,22 +311,20 @@
   </div>
 
   <!-- ========================================================================== -->
-  <!-- 4. COLLAPSIBLE LEFT PANEL: TOOLS, CLUTTER CLEANER & REGIONAL FILTERS       -->
+  <!-- 4. COLLAPSIBLE LEFT PANEL                                                  -->
   <!-- ========================================================================== -->
   <aside id="leftPanel" class="fixed top-14 left-3 z-20 w-72 max-h-[calc(100vh-5rem)] overflow-y-auto bg-slate-900/95 backdrop-blur-md border border-slate-800 rounded-2xl p-3.5 shadow-2xl transition-transform duration-300 ease-in-out">
     <div class="flex justify-between items-center mb-2.5 border-b border-slate-800 pb-2">
-      <span class="text-xs font-bold uppercase tracking-wider text-amber-400">🛠️ Dissector Controls</span>
+      <span id="uiToolsHeader" class="text-xs font-bold uppercase tracking-wider text-amber-400">🛠️ Dissector Controls</span>
       <button id="btnCloseLeft" class="text-slate-400 hover:text-white text-xs px-2 py-0.5 rounded bg-slate-800">✕ Hide</button>
     </div>
 
-    <!-- Search Structure -->
     <div class="mb-3 relative">
-      <input id="searchBone" type="text" placeholder="🔍 Search structure (e.g. Femur, Aorta)..." 
+      <input id="searchBone" type="text" placeholder="🔍 Search (e.g. Vagus, Sciatic, Cerebrum)..." 
         class="w-full px-3 py-1.5 text-xs bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:border-amber-400 text-white" />
       <div id="searchDropdown" class="mt-1 max-h-36 overflow-y-auto bg-slate-800 border border-slate-700 rounded-lg hidden divide-y divide-slate-700 text-xs"></div>
     </div>
 
-    <!-- Z-Anatomy Clutter Filter -->
     <div class="mb-3 bg-slate-800/70 border border-slate-700/80 rounded-xl p-2.5">
       <div class="flex justify-between items-center mb-1.5">
         <span class="text-[11px] font-semibold text-emerald-400">🧹 Z-Anatomy Label Filter</span>
@@ -357,44 +340,42 @@
       </div>
     </div>
 
-    <!-- Division Filter -->
-    <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Division Filter</p>
+    <!-- Division Filter (Works for both CNS/PNS and Axial/Appendicular) -->
+    <p id="uiDivHeader" class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">System Division Filter</p>
     <div class="grid grid-cols-3 gap-1.5 text-xs mb-3">
-      <button id="btnShowAllBones" class="bg-slate-700 hover:bg-slate-600 py-1.5 rounded-lg font-semibold text-white">All</button>
-      <button id="btnAxialOnly" class="bg-amber-500/20 border border-amber-500/40 text-amber-300 hover:bg-amber-500/30 py-1.5 rounded-lg font-semibold">Axial</button>
-      <button id="btnAppendicularOnly" class="bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 hover:bg-cyan-500/30 py-1.5 rounded-lg font-semibold">Appendicular</button>
+      <button id="btnShowAllBones" class="bg-slate-700 hover:bg-slate-600 py-1.5 rounded-lg font-semibold text-white">All / সব</button>
+      <button id="btnAxialOnly" class="bg-amber-500/20 border border-amber-500/40 text-amber-300 hover:bg-amber-500/30 py-1.5 rounded-lg font-semibold">CNS / Axial</button>
+      <button id="btnAppendicularOnly" class="bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 hover:bg-cyan-500/30 py-1.5 rounded-lg font-semibold">PNS / Limb</button>
     </div>
 
     <!-- Regional Trays -->
-    <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Regional Trays</p>
+    <p id="uiRegHeader" class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Regional Trays (অঞ্চলসমূহ)</p>
     <div class="space-y-1 text-xs mb-3">
       <button data-reg="Skull" class="tray-btn w-full text-left px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 flex justify-between">
-        <span>💀 Head, Skull & Brain</span> <span class="text-slate-500">➔</span>
+        <span>🧠 Brain, Cranial Nerves & Skull</span> <span class="text-slate-500">➔</span>
       </button>
       <button data-reg="Vertebra" class="tray-btn w-full text-left px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 flex justify-between">
-        <span>🦴 Spine &Vertebral Column</span> <span class="text-slate-500">➔</span>
+        <span>🦴 Spinal Cord & Vertebral Column</span> <span class="text-slate-500">➔</span>
       </button>
       <button data-reg="Thorax" class="tray-btn w-full text-left px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 flex justify-between">
-        <span>🫁 Thorax, Heart & Organs</span> <span class="text-slate-500">➔</span>
+        <span>🫁 Thorax, Vagus & Autonomics</span> <span class="text-slate-500">➔</span>
       </button>
       <button data-reg="Upper" class="tray-btn w-full text-left px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 flex justify-between">
-        <span>💪 Upper Limb Region</span> <span class="text-slate-500">➔</span>
+        <span>💪 Brachial Plexus & Upper Limb</span> <span class="text-slate-500">➔</span>
       </button>
       <button data-reg="Lower" class="tray-btn w-full text-left px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 flex justify-between">
-        <span>🦵 Lower Limb & Pelvis</span> <span class="text-slate-500">➔</span>
+        <span>🦵 Lumbosacral, Sciatic & Lower Limb</span> <span class="text-slate-500">➔</span>
       </button>
     </div>
 
-    <!-- Disarticulate / Explode Slider -->
     <div class="mb-3 border-t border-slate-800 pt-2.5">
       <label class="text-xs text-slate-300 flex justify-between">
-        <span>💥 Explode / Disarticulate</span>
+        <span id="uiExplodeLbl">💥 Explode / Separate Layers</span>
         <span id="explodeVal" class="text-amber-400 font-mono">0%</span>
       </label>
       <input id="explodeSlider" type="range" min="0" max="1" step="0.01" value="0" class="w-full accent-amber-400 mt-1" />
     </div>
 
-    <!-- Custom Local File Upload -->
     <div class="border-t border-slate-800 pt-2.5">
       <label class="block w-full text-center cursor-pointer bg-emerald-600/20 border border-emerald-500/40 hover:bg-emerald-600/30 text-emerald-300 py-1.5 rounded-lg text-xs font-semibold transition">
         📂 Open Local .GLB File
@@ -404,24 +385,31 @@
   </aside>
 
   <!-- ========================================================================== -->
-  <!-- 5. COLLAPSIBLE RIGHT PANEL: COMPLETE MBBS VIVA & CLINICAL DETAILS          -->
+  <!-- 5. COLLAPSIBLE RIGHT PANEL: BILINGUAL (ENGLISH & বাংলা) MBBS VIVA DETAILS  -->
   <!-- ========================================================================== -->
-  <section id="rightPanel" class="fixed bottom-0 right-0 sm:top-14 sm:bottom-auto sm:right-3 z-20 w-full sm:w-96 max-h-[62vh] sm:max-h-[calc(100vh-5rem)] overflow-y-auto bg-slate-900/95 backdrop-blur-md border-t sm:border border-slate-700 rounded-t-2xl sm:rounded-2xl p-4 shadow-2xl transition-transform duration-300 ease-in-out translate-y-full sm:translate-y-0 sm:translate-x-[110%]">
+  <section id="rightPanel" class="fixed bottom-0 right-0 sm:top-14 sm:bottom-auto sm:right-3 z-20 w-full sm:w-96 max-h-[65vh] sm:max-h-[calc(100vh-5rem)] overflow-y-auto bg-slate-900/95 backdrop-blur-md border-t sm:border border-slate-700 rounded-t-2xl sm:rounded-2xl p-4 shadow-2xl transition-transform duration-300 ease-in-out translate-y-full sm:translate-y-0 sm:translate-x-[110%]">
+    
+    <!-- Top Title + Quick Language Switcher inside Drawer + Voice -->
     <div class="flex justify-between items-start border-b border-slate-800 pb-2.5 mb-3">
       <div>
-        <div class="flex items-center gap-2">
-          <h2 id="detailTitle" class="text-base sm:text-lg font-bold text-amber-400">Select Any Structure</h2>
-          <button id="btnSpeak" title="Listen to Viva Summary" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-xs text-cyan-300 border border-slate-700">🔊 Audio</button>
-        </div>
-        <p id="detailLatin" class="text-xs italic text-slate-400">Terminologia Anatomica</p>
+        <h2 id="detailTitle" class="text-base sm:text-lg font-bold text-amber-400 leading-snug">Select Structure</h2>
+        <p id="detailLatin" class="text-xs italic text-slate-400 mt-0.5">Terminologia Anatomica</p>
       </div>
-      <button id="btnCloseRight" class="text-slate-400 hover:text-white px-2 py-0.5 rounded bg-slate-800 text-xs">✕</button>
+      <div class="flex items-center gap-1">
+        <button id="btnDrawerLang" class="px-2 py-1 rounded bg-emerald-500/20 border border-emerald-500/50 text-[11px] font-bold text-emerald-300">
+          বাংলা / EN
+        </button>
+        <button id="btnSpeak" title="Read Aloud" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-xs text-cyan-300 border border-slate-700">
+          🔊
+        </button>
+        <button id="btnCloseRight" class="text-slate-400 hover:text-white px-2 py-1 rounded bg-slate-800 text-xs">✕</button>
+      </div>
     </div>
 
-    <!-- Quick Examination Actions -->
+    <!-- Isolate / Hide Buttons -->
     <div class="grid grid-cols-2 gap-2 mb-3 text-xs font-semibold">
       <button id="btnPanelIsolate" class="bg-amber-500 hover:bg-amber-400 text-slate-950 py-2 rounded-lg transition shadow">
-        🔍 Examine Alone (Zoom)
+        🔍 Examine Alone
       </button>
       <button id="btnPanelHideBone" class="bg-rose-600/80 hover:bg-rose-500 text-white py-2 rounded-lg transition">
         👁️ Peel / Hide Part
@@ -435,30 +423,30 @@
       <span id="badgeType" class="bg-slate-800 border border-slate-700 text-slate-300 px-2 py-0.5 rounded-full">Classification</span>
     </div>
 
-    <!-- Detailed MBBS Viva Cards -->
+    <!-- 5 Detailed MBBS Viva Sections (Dynamically Updated in English or Bengali) -->
     <div class="space-y-2.5 text-xs leading-relaxed">
       <div class="bg-amber-950/30 border border-amber-700/50 p-2.5 rounded-xl">
-        <strong class="text-amber-400 block uppercase text-[10px] tracking-wider">🧭 1. Anatomical Position, Relations & Side</strong>
-        <p id="detailSide" class="text-slate-200 mt-1">Tap any 3D structure to view its anatomical position and relations.</p>
+        <strong id="hdrSide" class="text-amber-400 block uppercase text-[10px] tracking-wider">🧭 1. Origin, Course, Relations & Position</strong>
+        <p id="detailSide" class="text-slate-100 mt-1">-</p>
       </div>
 
       <div class="bg-slate-800/70 border border-slate-700/60 p-2.5 rounded-xl">
-        <strong class="text-cyan-400 block uppercase text-[10px] tracking-wider">📌 2. Key Landmarks, Parts & Surfaces</strong>
+        <strong id="hdrFeatures" class="text-cyan-400 block uppercase text-[10px] tracking-wider">📌 2. Functional Components, Nuclei & Parts</strong>
         <p id="detailFeatures" class="text-slate-200 mt-1">-</p>
       </div>
 
       <div class="bg-slate-800/70 border border-slate-700/60 p-2.5 rounded-xl">
-        <strong class="text-emerald-400 block uppercase text-[10px] tracking-wider">💪 3. Attachments / Branches / Neurovascular Supply</strong>
+        <strong id="hdrAttachments" class="text-emerald-400 block uppercase text-[10px] tracking-wider">⚡ 3. Branches, Distribution & Supply</strong>
         <p id="detailAttachments" class="text-slate-200 mt-1">-</p>
       </div>
 
       <div class="bg-slate-800/70 border border-slate-700/60 p-2.5 rounded-xl">
-        <strong class="text-purple-400 block uppercase text-[10px] tracking-wider">🌱 4. Embryology & Ossification</strong>
+        <strong id="hdrOssification" class="text-purple-400 block uppercase text-[10px] tracking-wider">🌱 4. Embryology & Development</strong>
         <p id="detailOssification" class="text-slate-200 mt-1">-</p>
       </div>
 
       <div class="bg-rose-950/50 border border-rose-700/60 p-2.5 rounded-xl">
-        <strong class="text-rose-400 block uppercase text-[10px] tracking-wider">🏥 5. High-Yield MBBS Clinical Correlation</strong>
+        <strong id="hdrClinical" class="text-rose-400 block uppercase text-[10px] tracking-wider">🏥 5. Clinical Lesions & Applied Viva</strong>
         <p id="detailClinical" class="text-slate-100 mt-1">-</p>
       </div>
     </div>
@@ -468,7 +456,7 @@
   <div id="loadingScreen" class="fixed inset-0 z-40 bg-slate-950/85 backdrop-blur-md flex flex-col items-center justify-center hidden">
     <div class="w-12 h-12 border-4 border-amber-400 border-t-transparent rounded-full animate-spin mb-3"></div>
     <p id="loadingMsg" class="text-sm font-bold text-amber-300">Loading 3D Anatomy Module...</p>
-    <p class="text-xs text-slate-400 mt-1">Auto-filtering 3D text clutter & preparing interactive meshes</p>
+    <p class="text-xs text-slate-400 mt-1">Preparing bilingual English & বাংলা clinical database</p>
   </div>
 
   <script type="module">
@@ -478,33 +466,454 @@
     import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 
     // ============================================================================
-    // 1. SYSTEM REGISTRY (MAP TABS TO YOUR GITHUB .GLB FILES)
+    // 1. LANGUAGE STATE & UI DICTIONARY (ENGLISH ⇄ বাংলা)
+    // ============================================================================
+    let currentLang = 'en'; // 'en' or 'bn'
+
+    const UI_TEXT = {
+      en: {
+        home: "Home",
+        hideTools: "Hide Tools",
+        showTools: "Show Tools",
+        notes: "Notes",
+        langBadge: "🌐 EN | বাংলা",
+        toolsHdr: "🛠️ Dissector Controls",
+        divHdr: "System Division Filter",
+        regHdr: "Regional Trays",
+        explodeLbl: "💥 Explode / Separate Layers",
+        examineBtn: "🔍 Examine Alone (Zoom)",
+        returnBtn: "🔙 Return to Full System",
+        hidePartBtn: "👁️ Peel / Hide Part",
+        hdr1: "🧭 1. Origin, Course, Relations & Position",
+        hdr2: "📌 2. Functional Components, Nuclei & Landmarks",
+        hdr3: "⚡ 3. Branches, Distribution & Attachments",
+        hdr4: "🌱 4. Embryology & Ossification",
+        hdr5: "🏥 5. High-Yield Clinical Lesions & Viva"
+      },
+      bn: {
+        home: "হোম পোর্টাল",
+        hideTools: "টুলস লুকান",
+        showTools: "টুলস দেখুন",
+        notes: "তথ্য ও নোট",
+        langBadge: "🌐 বাংলা | EN",
+        toolsHdr: "🛠️ ডিসেক্টর কন্ট্রোল",
+        divHdr: "বিভাগ ফিল্টার (CNS / PNS)",
+        regHdr: "শারীরস্থানিক অঞ্চল (Regions)",
+        explodeLbl: "💥 স্তর পৃথকীকরণ (Explode)",
+        examineBtn: "🔍 এককভাবে জুম করে দেখুন",
+        returnBtn: "🔙 সম্পূর্ণ মডেলে ফিরে যান",
+        hidePartBtn: "👁️ এই অংশটি লুকান",
+        hdr1: "🧭 ১. উৎপত্তি, গতিপথ, অবস্থান ও সম্পর্ক (Relations)",
+        hdr2: "📌 ২. কার্যকরী অংশ, নিউক্লিয়াস ও গঠনগত বৈশিষ্ট্য",
+        hdr3: "⚡ ৩. শাখা-প্রশাখা, বিস্তার ও সংযুক্তি (Supply & Branches)",
+        hdr4: "🌱 ৪. ভ্রূণতত্ত্ব ও বিকাশ (Embryology & Ossification)",
+        hdr5: "🏥 ৫. ক্লিনিক্যাল গুরুত্ব ও পক্ষাঘাত (Clinical Correlation)"
+      }
+    };
+
+    // Word-level dictionary for auto-translating any Z-Anatomy mesh name into Bengali
+    const BN_TERM_MAP = {
+      "left": "বাম (Left)", "right": "ডান (Right)", "nerve": "স্নায়ু", "plexus": "প্লেক্সাস (স্নায়ুজালক)",
+      "ganglion": "গ্যাংলিয়ন", "tract": "ট্র্যাক্ট", "nucleus": "নিউক্লিয়াস", "cortex": "কর্টেক্স",
+      "lobe": "লোব (খণ্ড)", "gyrus": "গাইরাস", "sulcus": "সালকাস", "ventricle": "ভেন্ট্রিকল (প্রকোষ্ঠ)",
+      "artery": "ধমনী", "vein": "শিরা", "bone": "অস্থি", "muscle": "পেশী",
+      "anterior": "অগ্র", "posterior": "পশ্চাৎ", "superior": "ঊর্ধ্ব", "inferior": "নিম্ন",
+      "medial": "মধ্য", "lateral": "পার্শ্বীয়", "superficial": "উপরিষ্ঠ", "deep": "গভীর",
+      "internal": "অভ্যন্তরীণ", "external": "বাহ্যিক", "branch": "শাখা", "cord": "রজ্জু",
+      "root": "মূল", "trunk": "ট্রাঙ্ক", "cutaneous": "ত্বকীয়"
+    };
+
+    function autoTranslateTitleToBn(engTitle) {
+      let words = engTitle.split(/\s+/);
+      let bnWords = words.map(w => {
+        const clean = w.toLowerCase().replace(/[^a-z]/g, '');
+        return BN_TERM_MAP[clean] ? BN_TERM_MAP[clean] : w;
+      });
+      return `${engTitle} (${bnWords.join(' ')})`;
+    }
+
+    // ============================================================================
+    // 2. BILINGUAL MBBS NEUROANATOMY & OSTEOLOGY DATABASE (ENGLISH + বাংলা)
+    // ============================================================================
+    const BILINGUAL_MBBS_DB = {
+      // ---------------- NERVOUS SYSTEM (NEUROANATOMY) ----------------
+      "cerebrum": {
+        en: {
+          title: "Cerebrum (Cerebral Hemisphere)",
+          type: "Telencephalon • Central Nervous System (CNS)",
+          side: "Occupies anterior & middle cranial fossae and supratentorial compartment; divided by longitudinal fissure containing Falx Cerebri.",
+          features: "4 Lobes (Frontal, Parietal, Temporal, Occipital); Motor strip (Precentral gyrus - Area 4); Broca's area (44, 45); Sensory strip (Postcentral gyrus - Areas 3, 1, 2); Wernicke's area (22).",
+          attachments: "Blood Supply: Anterior Cerebral Artery (medial surface/leg area), Middle Cerebral Artery (lateral surface/face, arm & speech areas), Posterior Cerebral Artery (visual cortex - Area 17).",
+          ossification: "Embryology: Develops from Telencephalic vesicles of Prosencephalon (Forebrain) neural tube.",
+          clinical: "MCA Infarction (Stroke): Contralateral hemiplegia affecting face & upper limb more than lower limb, plus Broca's/Wernicke's aphasia if dominant (left) hemisphere is lesioned."
+        },
+        bn: {
+          title: "গুরুমস্তিষ্ক / সেরিব্রাম (Cerebrum)",
+          type: "টেলেনসেফালন • কেন্দ্রীয় স্নায়ুতন্ত্র (CNS)",
+          side: "করোটির অগ্র ও মধ্য ক্র্যানিয়াল ফোসা এবং সুপ্রাটেন্টোরিয়াল অংশে অবস্থিত; মাঝখানের লংগিটিউডিনাল ফিসার ও ফ্যালক্স সেরিব্রাই দ্বারা ডান ও বাম গোলার্ধে বিভক্ত।",
+          features: "৪টি প্রধান লোব (ফ্রন্টাল, প্যারাইটাল, টেম্পোরাল ও অক্সিপিটাল); প্রি-সেন্ট্রাল গাইরাস (মোটর এরিয়া ৪), ব্রোকার বাক্-কেন্দ্র (এরিয়া ৪৪, ৪৫), পোস্ট-সেন্ট্রাল গাইরাস (সেন্সরি এরিয়া ৩,১,২) এবং ভার্নিকের এরিয়া (২২)।",
+          attachments: "রক্ত সরবরাহ: অ্যান্টেরিয়র সেরিব্রাল ধমনী (পায়ের অংশ), মিডল সেরিব্রাল ধমনী (মুখমণ্ডল, হাত ও বাক্-কেন্দ্র), এবং পোস্টেরিয়র সেরিব্রাল ধমনী (দৃষ্টি কেন্দ্র - এরিয়া ১৭)।",
+          ossification: "ভ্রূণতত্ত্ব: অগ্রমস্তিষ্কের (Prosencephalon) টেলেনসেফালিক ভেসিকল থেকে উৎপন্ন হয়।",
+          clinical: "মিডল সেরিব্রাল ধমনী স্ট্রোক (MCA Stroke): দেহের বিপরীত পাশে মুখমণ্ডল ও হাতের পক্ষাঘাত (Hemiplegia) এবং বাম গোলার্ধ ক্ষতিগ্রস্ত হলে কথা বলার অক্ষমতা (Aphasia) দেখা দেয়।"
+        }
+      },
+      "cerebellum": {
+        en: {
+          title: "Cerebellum (Little Brain)",
+          type: "Metencephalon • Hindbrain (CNS)",
+          side: "Located in the Posterior Cranial Fossa underneath the Tentorium Cerebelli, posterior to the Pons and Medulla separated by the 4th Ventricle.",
+          features: "Midline Vermis & 2 Lateral Hemispheres; 3 Lobes (Anterior, Posterior, Flocculonodular); 4 Deep Nuclei: Dentate, Emboliform, Globose, Fastigial ('Don't Eat Greasy Food').Connected by Superior, Middle & Inferior Cerebellar Peduncles.",
+          attachments: "Arterial Supply: Superior Cerebellar Artery (SCA), Anterior Inferior Cerebellar Artery (AICA), Posterior Inferior Cerebellar Artery (PICA).",
+          ossification: "Embryology: Develops from Rhombic lips of Alar plate of Metencephalon.",
+          clinical: "Cerebellar Lesion (Ipsilateral signs — DANISH): Dysdiadochokinesia, Ataxia (broad-based drunken gait), Nystagmus, Intention tremor, Slurred staccato speech, Hypotonia."
+        },
+        bn: {
+          title: "লঘুমস্তিষ্ক / সেরিবেলাম (Cerebellum)",
+          type: "মেটেনসেফালন • পশ্চাৎ মস্তিষ্ক (CNS)",
+          side: "পশ্চাৎ ক্র্যানিয়াল ফোসায় টেন্টোরিয়াম সেরিবেলাই-এর নিচে এবং পনস ও মেডুলা অবলংগাটার পিছনে (চতুর্থ ভেন্ট্রিকলের পশ্চাতে) অবস্থিত।",
+          features: "মাঝখানে ভার্মিস ও দুটি পার্শ্বীয় গোলার্ধ; ৩টি লোব (অগ্র, পশ্চাৎ ও ফ্লকুলোনোডিউলার); ৪টি গভীর নিউক্লিয়াস: ডেন্টেট, এমবলিফর্ম, গ্লোবোস ও ফ্যাস্টিজিয়াল। ৩ জোড়া পেডাঙ্কল দ্বারা ব্রেনস্টেমের সাথে যুক্ত।",
+          attachments: "রক্ত সরবরাহ: সুপিরিয়র সেরিবেলার ধমনী (SCA), অ্যান্টেরিয়র ইনফিরিয়র সেরিবেলার ধমনী (AICA) এবং পোস্টেরিয়র ইনফিরিয়র সেরিবেলার ধমনী (PICA)।",
+          ossification: "ভ্রূণতত্ত্ব: মেটেনসেফালনের অ্যালার প্লেটের রম্বিক লিপ (Rhombic lips) থেকে বিকশিত হয়।",
+          clinical: "সেরিবেলার ক্ষত (একই পাশের লক্ষণ - DANISH): দেহের ভারসাম্যহীনতা (Ataxia), ডিসডায়াডোকোকাইনেসিয়া, ইনটেনশন ট্রেমর (লক্ষ্যবস্তু ধরতে গেলে হাত কাঁপা), নিস্ট্যাগযাস ও অস্পষ্ট কথা।"
+        }
+      },
+      "brainstem": {
+        en: {
+          title: "Brainstem (Midbrain, Pons & Medulla)",
+          type: "Central Stalk of Brain • CNS",
+          side: "Rests on the Clivus of the occipital/sphenoid bone in the posterior cranial fossa; continuous inferiorly with the Spinal Cord at the Foramen Magnum.",
+          features: "Midbrain (Cerebral peduncles, Corpora quadrigemina, CN III & IV); Pons (Basilar groove, Middle cerebellar peduncle, CN V, VI, VII, VIII); Medulla Oblongata (Pyramids, Olives, CN IX, X, XI, XII).",
+          attachments: "Supplied by Vertebro-Basilar arterial system (Vertebral, Basilar, PICA, AICA, Superior Cerebellar & Posterior Cerebral arteries).",
+          ossification: "Embryology: Mesencephalon (Midbrain), Metencephalon (Pons), and Myelencephalon (Medulla).",
+          clinical: "Lateral Medullary Syndrome (Wallenberg Syndrome - PICA occlusion): Dysphagia, hoarseness (Nucleus ambiguus), ipsilateral Horner's syndrome, vertigo & contralateral pain/temp loss. Weber's Syndrome (Midbrain): CN III palsy + contralateral hemiplegia."
+        },
+        bn: {
+          title: "ব্রেনস্টেম — মিডব্রেন, পনস ও মেডুলা (Brainstem)",
+          type: "মস্তিষ্কের কেন্দ্রীয় কাণ্ড • CNS",
+          side: "পশ্চাৎ ক্র্যানিয়াল ফোসায় ক্লিভাসের (Clivus) ওপর অবস্থান করে এবং ফোরামেন ম্যাগনামের মাধ্যমে নিচে সুষুম্নাকাণ্ডের (Spinal Cord) সাথে যুক্ত হয়।",
+          features: "মিডব্রেন (CN III, IV), পনস (CN V, VI, VII, VIII) এবং মেডুলা অবলংগাটা (পিরামিড, অলিভ এবং CN IX, X, XI, XII এর নিউক্লিয়াস এবং শ্বাস-প্রশ্বাস ও হৃদস্পন্দন নিয়ন্ত্রণ কেন্দ্র)।",
+          attachments: "রক্ত সরবরাহ: ভার্টিব্রো-ব্যাসিলার ধমনী তন্ত্র (Vertebral ও Basilar artery এবং এর শাখাসমূহ)।",
+          ossification: "ভ্রূণতত্ত্ব: মেসেনসেফালন (মিডব্রেন), মেটেনসেফালন (পনস) ও মায়েলেনসেফালন (মেডুলা) থেকে উৎপন্ন।",
+          clinical: "ল্যাটারাল মেডুলারি সিনড্রোম (Wallenberg Syndrome - PICA অবরুদ্ধ হলে): গিলতে অসুবিধা (Dysphagia), স্বরভঙ্গ, হর্নার সিনড্রোম এবং বিপরীত পাশে ব্যথা ও তাপমাত্রার অনুভূতি লোপ।"
+        }
+      },
+      "thalamus": {
+        en: {
+          title: "Thalamus & Diencephalon",
+          type: "Great Sensory Relay Station • CNS",
+          side: "Paired egg-shaped nuclear mass forming the lateral wall of the 3rd Ventricle; bounded laterally by the Posterior Limb of Internal Capsule.",
+          features: "VPL Nucleus (relays spinothalamic & medial lemniscus from body), VPM Nucleus (trigeminal & taste pathways from face), LGN (Visual relay), MGN (Auditory relay).",
+          attachments: "Supplied predominantly by Thalamogeniculate & Thalamoperforating branches of Posterior Cerebral Artery (PCA).",
+          ossification: "Embryology: Develops from Alar plate of Prosencephalon (Diencephalon).",
+          clinical: "Thalamic Pain Syndrome (Dejerine-Roussy syndrome): PCA thrombosis causes contralateral hemianesthesia followed by severe, burning agonizing pain to slightest touch."
+        },
+        bn: {
+          title: "থ্যালামাস ও ডায়েনসেফালন (Thalamus)",
+          type: "প্রধান সংজ্ঞাবহ রিলে কেন্দ্র • CNS",
+          side: "তৃতীয় ভেন্ট্রিকলের (3rd Ventricle) দুই পাশে অবস্থিত ডিম্বাকৃতি ধূসর বস্তুর পিণ্ড; এর বাইরের দিকে ইন্টারনাল ক্যাপসুলের পশ্চাৎ বাহু অবস্থিত।",
+          features: "VPL নিউক্লিয়াস (দেহের স্পর্শ ও ব্যথার অনুভূতি), VPM নিউক্লিয়াস (মুখমণ্ডল ও স্বাদের অনুভূতি), LGN (দৃষ্টিশক্তি রিলে কেন্দ্র), এবং MGN (শ্রবণশক্তি রিলে কেন্দ্র)।",
+          attachments: "রক্ত সরবরাহ: পোস্টেরিয়র সেরিব্রাল ধমনীর (PCA) থ্যালামোজেনিকুলেট ও থ্যালামোপারফোরেটিং শাখা।",
+          ossification: "ভ্রূণতত্ত্ব: ডায়েনসেফালনের অ্যালার প্লেট থেকে বিকশিত হয়।",
+          clinical: "থ্যালামিক পেইন সিনড্রোম (Dejerine-Roussy Syndrome): থ্যালামাসের রক্তক্ষরণ বা স্ট্রোকে দেহের বিপরীত পাশে অনুভূতি লোপ পায় এবং পরবর্তীতে সামান্য স্পর্শেই তীব্র জ্বালাপোড়া ব্যথা অনুভূত হয়।"
+        }
+      },
+      "spinal": {
+        en: {
+          title: "Spinal Cord (Medulla Spinalis)",
+          type: "Central Nervous System • 31 Segments",
+          side: "Begins at Foramen Magnum as continuation of Medulla; terminates at lower border of L1 vertebra in adults (L3 in newborns) as Conus Medullaris.",
+          features: "45 cm long; Cervical enlargement (C5–T1 for Brachial plexus) & Lumbosacral enlargement (L1–S3); H-shaped central Gray Matter (Anterior motor horn, Posterior sensory horn, Lateral autonomic horn T1–L2); Filum terminale & Cauda equina.",
+          attachments: "1 Anterior Spinal Artery & 2 Posterior Spinal Arteries reinforced by Great Radicular Artery of Adamkiewicz.",
+          ossification: "Embryology: Develops from caudal neural tube (Basal plate = Motor anterior horn; Alar plate = Sensory posterior horn).",
+          clinical: "Lumbar Puncture is safely performed at L3–L4 or L4–L5 interspace to avoid injuring the cord. Brown-Séquard Syndrome (Hemisection): Ipsilateral UMN paralysis & proprioception loss + Contralateral pain/temperature loss."
+        },
+        bn: {
+          title: "সুষুম্নাকাণ্ড / স্পাইনাল কর্ড (Spinal Cord)",
+          type: "কেন্দ্রীয় স্নায়ুতন্ত্র • ৩১ জোড়া খণ্ডাংশ",
+          side: "ফোরামেন ম্যাগনামে মেডুলা অবলংগাটার নিচ থেকে শুরু হয়ে প্রাপ্তবয়স্কদের ক্ষেত্রে ১ম লাম্বার কশেরুকার (L1) নিচের প্রান্তে (নবজাতকদের L3 স্তরে) কোনাস মেডুলারিস হিসেবে শেষ হয়।",
+          features: "দৈর্ঘ্য প্রায় ৪৫ সেমি; সার্ভাইকাল স্ফীতি (C5–T1) ও লাম্বোস্যাক্রাল স্ফীতি (L1–S3); ভিতরে H-আকৃতির ধূসর বস্তু (Gray matter) ও বাইরে শ্বেত বস্তু; নিচে কডা ইকুইনা (Cauda equina) ও ফাইলাম টার্মিনালি।",
+          attachments: "রক্ত সরবরাহ: ১টি অ্যান্টেরিয়র স্পাইনাল ধমনী, ২টি পোস্টেরিয়র স্পাইনাল ধমনী এবং অ্যাডামকিউইচ-এর র‍্যাডিকুলার ধমনী।",
+          ossification: "ভ্রূণতত্ত্ব: নিউরাল টিউবের পশ্চাৎ অংশ থেকে উৎপন্ন (ব্যাসাল প্লেট থেকে মোটর হর্ন ও অ্যালার প্লেট থেকে সেন্সরি হর্ন)।",
+          clinical: "সুষুম্নাকাণ্ড L1-এ শেষ হওয়ার কারণে নিরাপদে L3–L4 বা L4–L5 কশেরুকার মধ্যবর্তী স্থানে লাম্বার পাংচার (Lumbar Puncture) করা হয়। ব্রাউন-সেকার্ড সিনড্রোমে একই পাশে পক্ষাঘাত ও বিপরীত পাশে ব্যথা-তাপ অনুভূতি লোপ পায়।"
+        }
+      },
+      "optic": {
+        en: {
+          title: "Optic Nerve (Cranial Nerve II) & Chiasma",
+          type: "Special Sensory Nerve of Vision (CNS Tract)",
+          side: "Leaves orbital cavity via Optic Canal with Ophthalmic Artery; unites at Optic Chiasma above pituitary gland (sella turcica).",
+          features: "Axons of Retinal Ganglion Cells; myelinated by Oligodendrocytes (not Schwann cells) and surrounded by cranial meninges & CSF subarachnoid space.",
+          attachments: "Nasal retinal fibers decussate at Optic Chiasma; Temporal fibers stay ipsilateral to form Optic Tract -> Lateral Geniculate Body -> Visual Cortex.",
+          ossification: "Embryology: Develops from Optic Stalk of Diencephalon (Forebrain).",
+          clinical: "Optic Nerve lesion = Ipsilateral monocular blindness; Optic Chiasma compression (Pituitary tumor) = Bitemporal Hemianopia; Optic Tract lesion = Contralateral Homonymous Hemianopia. Raised ICP causes Papilledema."
+        },
+        bn: {
+          title: "অপটিক স্নায়ু — ২য় করোটিক স্নায়ু (Optic Nerve - CN II)",
+          type: "বিশেষ সংজ্ঞাবহ স্নায়ু (দৃষ্টিশক্তি)",
+          side: "রেটিনা থেকে উৎপন্ন হয়ে অপথ্যালমিক ধমনীর সাথে অপটিক ক্যানাল দিয়ে করোটিক গহ্বরে প্রবেশ করে এবং পিটুইটারি গ্রন্থির উপরে অপটিক কায়াজমা (Optic Chiasma) গঠন করে।",
+          features: "রেটিনার গ্যাংলিয়ন কোষের অ্যাক্সন দ্বারা গঠিত; এটি প্রকৃতপক্ষে মস্তিষ্কের একটি ট্র্যাক্ট যা অলিগোডেনড্রোসাইট ও মেনিনজেস আবরণী দ্বারা আবৃত থাকে।",
+          attachments: "রেটিনার নাসিকা-প্রান্তের তন্তুগুলো অপটিক কায়াজমায় ক্রস করে -> অপটিক ট্র্যাক্ট -> ল্যাটারাল জেনিকুলেট বডি (LGB) -> অক্সিপিটাল ভিজ্যুয়াল কর্টেক্স।",
+          ossification: "ভ্রূণতত্ত্ব: ডায়েনসেফালনের অপটিক বৃন্ত (Optic stalk) থেকে উৎপন্ন।",
+          clinical: "অপটিক স্নায়ু কাটলে সেই চোখে সম্পূর্ণ অন্ধত্ব; পিটুইটারি টিউমারে অপটিক কায়াজমা চাপে পড়লে বাইটেম্পোরাল হেমিয়ানোপিয়া (দুই পাশের পার্শ্বীয় দৃষ্টি লোপ) এবং মস্তিষ্কের চাপ বাড়লে প্যাপিলিডিমা (Papilledema) হয়।"
+        }
+      },
+      "trigeminal": {
+        en: {
+          title: "Trigeminal Nerve (Cranial Nerve V)",
+          type: "Largest Cranial Nerve • Mixed (1st Pharyngeal Arch)",
+          side: "Emerges from anterolateral surface of Pons by a large sensory root & small motor root; Trigeminal (Gasserian) ganglion rests in Meckel's cave at apex of petrous temporal bone.",
+          features: "3 Divisions: V1 Ophthalmic (exits via Superior Orbital Fissure - purely sensory), V2 Maxillary (exits via Foramen Rotundum - purely sensory), V3 Mandibular (exits via Foramen Ovale - mixed sensory & motor).",
+          attachments: "Motor supply to 4 Muscles of Mastication (Masseter, Temporalis, Medial & Lateral Pterygoids) + Mylohyoid, Anterior belly of digastric, Tensor tympani, Tensor veli palatini.",
+          ossification: "Embryology: Nerve of the 1st Pharyngeal (Mandibular) Arch.",
+          clinical: "Trigeminal Neuralgia (Tic Douloureux): Excruciating lancinating pain along V2/V3 distribution. Lesion of V3 causes jaw deviation to the paralyzed side on opening the mouth (unopposed contralateral Lateral Pterygoid)."
+        },
+        bn: {
+          title: "ট্রাইজেমিনাল স্নায়ু — ৫ম করোটিক স্নায়ু (Trigeminal Nerve - CN V)",
+          type: "বৃহত্তম করোটিক স্নায়ু • মিশ্র স্নায়ু (১ম ফ্যারিনজিয়াল আর্চ)",
+          side: "পনসের অগ্র-পার্শ্বীয় তল থেকে উৎপন্ন হয়ে পেট্রাস টেম্পোরাল অস্থির মেক্কেলস গুহায় ট্রাইজেমিনাল (গ্যাসেরিয়ান) গ্যাংলিয়ন গঠন করে।",
+          features: "৩টি প্রধান শাখা: ১. অপথ্যালমিক (V1 - সুপিরিয়র অরবিটাল ফিসার দিয়ে যায়), ২. ম্যাক্সিলারি (V2 - ফোরামেন রোটান্ডাম দিয়ে যায়), ৩. ম্যান্ডিবুলার (V3 - ফোরামেন ওভালি দিয়ে যায়, মিশ্র শাখা)।",
+          attachments: "মুখমণ্ডলের অনুভূতি বহন করে এবং চর্বণ পেশীসমূহকে (Masseter, Temporalis, Medial ও Lateral Pterygoid) মোটর স্নায়ু সরবরাহ করে।",
+          ossification: "ভ্রূণতত্ত্ব: ১ম ফ্যারিনজিয়াল আর্চের (ম্যান্ডিবুলার আর্চ) প্রধান স্নায়ু।",
+          clinical: "ট্রাইজেমিনাল নিউরালজিয়া (Tic Douloureux): মুখমণ্ডলে V2 ও V3 শাখায় তীব্র বৈদ্যুতিক শকের মতো ব্যথা। একপাশের স্নায়ু ক্ষতিগ্রস্ত হলে হাঁ করার সময় চোয়াল ক্ষতিগ্রস্ত পাশেই বেঁকে যায়।"
+        }
+      },
+      "facial": {
+        en: {
+          title: "Facial Nerve (Cranial Nerve VII)",
+          type: "Mixed Cranial Nerve • 2nd Pharyngeal (Hyoid) Arch",
+          side: "Emerges at Pontomedullary junction, enters Internal Acoustic Meatus, traverses Facial Canal (forming Geniculate ganglion), and exits skull via Stylomastoid Foramen.",
+          features: "Intratemporal branches: Greater Petrosal Nerve (lacrimation), Nerve to Stapedius, Chorda Tympani (taste from anterior 2/3 of tongue + submandibular/sublingual secretomotor). Terminal parotid branches ('To Zanzibar By Motor Car'): Temporal, Zygomatic, Buccal, Marginal mandibular, Cervical.",
+          attachments: "Supplies all Muscles of Facial Expression, Stapedius, Stylohyoid, Posterior belly of digastric & Platysma.",
+          ossification: "Embryology: Nerve of the 2nd Pharyngeal Arch.",
+          clinical: "Bell's Palsy (LMN Facial Palsy at Stylomastoid foramen): Complete ipsilateral facial paralysis (loss of forehead wrinkles, inability to close eye / Bell's phenomenon, drooping of angle of mouth). In UMN lesion, upper face (forehead) is spared due to bilateral corticonuclear innervation!"
+        },
+        bn: {
+          title: "ফেসিয়াল স্নায়ু — ৭ম করোটিক স্নায়ু (Facial Nerve - CN VII)",
+          type: "মিশ্র করোটিক স্নায়ু • ২য় ফ্যারিনজিয়াল আর্চের স্নায়ু",
+          side: "পনটো-মেডুলারি সংযোগস্থল থেকে উৎপন্ন হয়ে ইন্টারনাল অ্যাকোস্টিক মিয়াটাস ও ফেসিয়াল ক্যানাল অতিক্রম করে স্টাইলোমাস্টয়েড ফোরামেন দিয়ে করোটির বাইরে আসে।",
+          features: "অভ্যন্তরীণ শাখা: গ্রেটার পেট্রোসাল স্নায়ু (অশ্রু নিঃসরণ), নার্ভ টু স্টেপিডিয়াস, এবং কর্ডা টিমপ্যানাই (জিহ্বার অগ্র ২/৩ অংশের স্বাদ ও লালা নিঃসরণ)। প্যারোটিড গ্রন্থির ভিতরে ৫টি প্রান্তীয় শাখা: টেম্পোরাল, জাইগোম্যাটিক, বাক্কাল, মার্জিনাল ম্যান্ডিবুলার ও সার্ভাইকাল।",
+          attachments: "মুখমণ্ডলের সকল অভিব্যক্তি প্রকাশক পেশী (Muscles of facial expression), স্টেপিডিয়াস ও প্লাটিসমা পেশীকে স্নায়ু সরবরাহ করে।",
+          ossification: "ভ্রূণতত্ত্ব: ২য় ফ্যারিনজিয়াল আর্চ (হায়য়েড আর্চ) থেকে উৎপন্ন।",
+          clinical: "বেলস পালসি (Bell's Palsy - LMN পক্ষাঘাত): মুখের একপাশের সম্পূর্ণ পক্ষাঘাত (কপালের ভাঁজ মিলিয়ে যাওয়া, চোখ বন্ধ করতে না পারা এবং মুখ সুস্থ পাশের দিকে বেঁকে যাওয়া)। UMN ক্ষতে কপালের পেশী অক্ষত থাকে।"
+        }
+      },
+      "vagus": {
+        en: {
+          title: "Vagus Nerve (Cranial Nerve X)",
+          type: "Longest Parasympathetic & Mixed Cranial Nerve",
+          side: "Arises from post-olivary sulcus of Medulla, exits skull via Jugular Foramen with CN IX & XI, descends vertically within the Carotid Sheath between Internal Jugular Vein and Carotid Artery, passes through Thorax, and enters Abdomen via Esophageal hiatus (T10).",
+          features: "Nuclei in Medulla: Dorsal Nucleus of Vagus (parasympathetic), Nucleus Ambiguus (motor to pharynx/larynx), Nucleus of Solitary Tract (visceral sensory/taste), Spinal Trigeminal Nucleus.",
+          attachments: "Branches: Pharyngeal branch, Superior Laryngeal Nerve (External -> Cricothyroid; Internal -> sensory above vocal cords), Recurrent Laryngeal Nerve (all intrinsic laryngeal muscles except cricothyroid), Cardiac, Pulmonary & Celiac branches (up to right 2/3 of transverse colon).",
+          ossification: "Embryology: Nerve of the 4th (Superior laryngeal) and 6th (Recurrent laryngeal) Pharyngeal Arches.",
+          clinical: "Uvula deviates AWAY from the side of lesion (towards normal side). Left Recurrent Laryngeal Nerve hooks under Arch of Aorta (compressed in aortic aneurysm/mediastinal tumors causing hoarseness); Right RLN hooks under Right Subclavian Artery."
+        },
+        bn: {
+          title: "ভেগাস স্নায়ু — ১০ম করোটিক স্নায়ু (Vagus Nerve - CN X)",
+          type: "দীর্ঘতম প্যারাসিমপ্যাথেটিক ও মিশ্র করোটিক স্নায়ু",
+          side: "মেডুলা অবলংগাটা থেকে উৎপন্ন হয়ে জুগুলার ফোরামেন দিয়ে করোটি ত্যাগ করে, গ্রীবা অঞ্চলে ক্যারোটিড শীথের (Carotid sheath) মধ্য দিয়ে বক্ষগহ্বরে নামে এবং T10 স্তরে ইসোফেজিয়াল ছিদ্র দিয়ে উদরগহ্বরে প্রবেশ করে।",
+          features: "মেডুলার নিউক্লিয়াসসমূহ: ডর্সাল নিউক্লিয়াস অব ভেগাস, নিউক্লিয়াস অ্যাম্বিগুয়াস (গলবিল ও স্বরযন্ত্রের পেশী) এবং নিউক্লিয়াস অব সলিটারি ট্র্যাক্ট।",
+          attachments: "প্রধান শাখা: ফ্যারিনজিয়াল শাখা, সুপিরিয়র ল্যারিনজিয়াল স্নায়ু (ক্রিকোথাইরয়েড পেশী), রিকারেন্ট ল্যারিনজিয়াল স্নায়ু (স্বরযন্ত্রের অন্যান্য পেশী), এবং হৃৎপিণ্ড, ফুসফুস ও পরিপাকতন্ত্রের প্যারাসিমপ্যাথেটিক শাখা।",
+          ossification: "ভ্রূণতত্ত্ব: ৪র্থ ফ্যারিনজিয়াল আর্চ (সুপিরিয়র ল্যারিনজিয়াল) এবং ৬ষ্ঠ আর্চ (রিকারেন্ট ল্যারিনজিয়াল) থেকে উৎপন্ন।",
+          clinical: "ভেগাস স্নায়ু ক্ষতিগ্রস্ত হলে আলজিহ্বা (Uvula) সুস্থ পাশের দিকে বেঁকে যায়। বাম রিকারেন্ট ল্যারিনজিয়াল স্নায়ু অ্যাওর্টিক আর্চের নিচ দিয়ে ঘুরে আসে, ফলে অ্যাওর্টিক অ্যানিউরিজমে এটি চাপে পড়ে স্বরভঙ্গ (Hoarseness) ঘটায়।"
+        }
+      },
+      "brachial": {
+        en: {
+          title: "Brachial Plexus (C5, C6, C7, C8, T1)",
+          type: "Somatic Nerve Plexus of Upper Limb",
+          side: "Roots & Trunks lie in Posterior Triangle of Neck between Scalenus Anterior & Scalenus Medius; Divisions lie behind Clavicle; Cords & Branches surround Axillary Artery in the Axilla.",
+          features: "5 Stages ('Read That Cadaver Book Carefully'): Roots (C5–T1) -> Trunks (Upper C5-6, Middle C7, Lower C8-T1) -> Divisions (Anterior & Posterior) -> Cords (Lateral, Medial, Posterior) -> Terminal Branches.",
+          attachments: "Major Branches: Musculocutaneous (C5–C7), Axillary (C5–C6), Radial (C5–T1), Median (C5–T1), Ulnar (C8–T1), Long Thoracic Nerve (C5–C7).",
+          ossification: "Embryology: Ventral primary rami of lower four cervical and first thoracic spinal nerves.",
+          clinical: "1. Erb's Palsy (Upper Trunk C5–C6 injury at Erb's point): 'Policeman's / Waiter's Tip Hand' (arm adducted, internally rotated, forearm pronated). 2. Klumpke's Palsy (Lower Trunk C8–T1 injury): Complete Claw Hand + ipsilateral Horner's Syndrome."
+        },
+        bn: {
+          title: "ব্রাকিয়াল প্লেক্সাস — ঊর্ধ্বাঙ্গের স্নায়ুজালক (Brachial Plexus: C5–T1)",
+          type: "ঊর্ধ্বাঙ্গের প্রধান স্নায়ুজালক (PNS)",
+          side: "সুষুম্নাকাণ্ডের C5, C6, C7, C8 ও T1 মূল থেকে উৎপন্ন হয়ে গ্রীবার স্কেলেনাস পেশীদ্বয়ের মধ্য দিয়ে ক্ল্যাভিকলের নিচ হয়ে বগলে (Axilla) অ্যাক্সিলারি ধমনীর চারপাশে অবস্থান করে।",
+          features: "৫টি ধাপ: রুট (Roots) -> ট্রাঙ্ক (Upper, Middle, Lower) -> ডিভিশন (Anterior ও Posterior) -> কর্ড (Lateral, Medial, Posterior) -> প্রান্তীয় শাখাসমূহ।",
+          attachments: "প্রধান শাখাসমূহ: মাসকুলোকিউটেনিয়াস, অ্যাক্সিলারি, রেডিয়াল (Radial), মিডিয়ান (Median), আলনার (Ulnar) এবং লং থোরাসিক স্নায়ু।",
+          ossification: "ভ্রূণতত্ত্ব: C5 থেকে T1 স্পাইনাল স্নায়ুর ভেন্ট্রাল র‍্যামাই (Ventral rami) থেকে গঠিত।",
+          clinical: "১. আর্বস পালসি (Erb's Palsy - C5, C6 আঘাত): হাত ঝুলে পড়ে 'ওয়েটার্স টিপ হ্যান্ড' (Policeman's tip posture) তৈরি হয়। ২. ক্লাম্পকিস পালসি (Klumpke's Palsy - C8, T1 আঘাত): হাতের আঙুলগুলো বাঁকা হয়ে 'ক্ল হ্যান্ড' (Claw hand) ও হর্নার সিনড্রোম দেখা দেয়।"
+        }
+      },
+      "median": {
+        en: {
+          title: "Median Nerve (C5, C6, C7, C8, T1) — 'Laborer's Nerve'",
+          type: "Terminal Branch of Lateral & Medial Cords (Brachial Plexus)",
+          side: "Formed anterior to 3rd part of Axillary artery; crosses Brachial artery from lateral to medial in mid-arm; enters forearm between 2 heads of Pronator Teres; passes deep to Flexor Retinaculum through the Carpal Tunnel.",
+          features: "Has NO branches in the arm! In forearm gives Anterior Interosseous Nerve & Palmar Cutaneous branch (passes superficial to flexor retinaculum). In hand supplies LOAF muscles (Lateral 2 Lumbricals, Opponens pollicis, Abductor pollicis brevis, Flexor pollicis brevis).",
+          attachments: "Supplies all anterior forearm flexors (except Flexor Carpi Ulnaris & medial half of Flexor Digitorum Profundus) + Thenar muscles & cutaneous sensation to lateral 3½ digits.",
+          ossification: "Embryology: Lateral root (C5–C7) & Medial root (C8–T1) of Brachial Plexus.",
+          clinical: "1. Carpal Tunnel Syndrome: Compression under flexor retinaculum causes tingling in lateral 3½ fingers, Ape Thumb deformity (thenar wasting), but palmar sensation is SPARED (Palmar cutaneous branch travels outside tunnel!). 2. High lesion at elbow causes 'Hand of Benediction' when trying to make a fist."
+        },
+        bn: {
+          title: "মিডিয়ান স্নায়ু — 'শ্রমিকের স্নায়ু' (Median Nerve: C5–T1)",
+          type: "ব্রাকিয়াল প্লেক্সাসের ল্যাটারাল ও মিডিয়াল কর্ডের শাখা",
+          side: "অ্যাক্সিলারি ধমনীর সামনে উৎপন্ন হয়ে বাহুতে ব্রাকিয়াল ধমনীকে অতিক্রম করে, প্রোনেটর টেরেস পেশীর দুই মাথার মাঝ দিয়ে পুরোবাহুতে নামে এবং কার্পাল টানেলের (Carpal Tunnel) মধ্য দিয়ে হাতের তালুতে প্রবেশ করে।",
+          features: "বাহুতে (Arm) এর কোনো শাখা নেই! পুরোবাহুতে অ্যান্টেরিয়র ইন্টারওসিয়াস শাখা এবং হাতের তালুতে LOAF পেশীসমূহকে (ল্যাটারাল ২ লুম্ব্রিকাল ও থেনার পেশী) সরবরাহ করে।",
+          attachments: "পুরোবাহুর প্রায় সকল ফ্লেক্সর পেশী (FCU ও অর্ধেক FDP ব্যতীত), বৃদ্ধাঙ্গুলির থেনার পেশী এবং বাইরের ৩.৫টি আঙুলের ত্বকের অনুভূতি জোগায়।",
+          ossification: "ভ্রূণতত্ত্ব: ব্রাকিয়াল প্লেক্সাসের ল্যাটারাল (C5–C7) ও মিডিয়াল কর্ড (C8–T1) থেকে গঠিত।",
+          clinical: "১. কার্পাল টানেল সিনড্রোম (Carpal Tunnel Syndrome): কব্জিতে ফ্লেক্সর রেটিনাকুলামের নিচে চাপে পড়লে বৃদ্ধাঙ্গুলির পেশী শুকিয়ে 'এইপ থাম্ব ডিফরমিটি' (Ape thumb deformity) এবং ৩.৫ আঙুলে ঝিনঝিন অনুভূতি হয়। ২. কনুইতে আঘাত পেলে মুষ্টিবদ্ধ করতে গেলে 'হ্যান্ড অব বেনেডিকশন' দেখা যায়।"
+        }
+      },
+      "radial": {
+        en: {
+          title: "Radial Nerve (C5, C6, C7, C8, T1)",
+          type: "Largest Branch of Brachial Plexus (Posterior Cord)",
+          side: "Descends behind 3rd part of Axillary artery, runs in the Radial (Spiral) Groove on posterior humerus with Profunda Brachii artery, pierces lateral intermuscular septum, and divides in front of lateral epicondyle into Superficial Radial & Deep (Posterior Interosseous) nerves.",
+          features: "Supplies all Extensor muscles of the Posterior Compartment of Arm & Forearm ('BEST': Brachioradialis, Extensors, Supinator, Triceps) and skin over posterior arm, forearm & anatomical snuffbox.",
+          attachments: "Triceps brachii (long & medial heads arise above spiral groove!), Anconeus, Brachioradialis, Extensor carpi radialis longus/brevis, Supinator, Abductor pollicis longus.",
+          ossification: "Embryology: Continuation of Posterior Cord of Brachial Plexus.",
+          clinical: "1. Mid-shaft Humerus Fracture (Spiral Groove injury): Causes 'Wrist Drop' (loss of wrist & finger extension), sensory loss in first dorsal web space, but Elbow Extension is SPARED because branches to long & medial heads of Triceps arise above the groove! 2. Crutch Palsy (Axilla): Loss of elbow extension + Wrist Drop."
+        },
+        bn: {
+          title: "রেডিয়াল স্নায়ু (Radial Nerve: C5–T1)",
+          type: "ব্রাকিয়াল প্লেক্সাসের বৃহত্তম শাখা (পোস্টেরিয়র কর্ড)",
+          side: "পোস্টেরিয়র কর্ড থেকে উৎপন্ন হয়ে হিউমেরাসের পিছনের স্পাইরাল গ্রুভ (Spiral groove) দিয়ে প্রোফান্ডা ব্রাকাই ধমনীর সাথে নিচে নামে এবং ল্যাটারাল এপিকন্ডাইলের সামনে সুপারফিসিয়াল ও ডিপ শাখায় বিভক্ত হয়।",
+          features: "বাহু ও পুরোবাহুর পশ্চাৎ প্রকোষ্ঠের সকল এক্সটেনসর পেশী (Triceps, Brachioradialis, Supinator ও সকল Extensor পেশী) নিয়ন্ত্রণ করে।",
+          attachments: "ট্রাইসেপস ব্রাকাই, ব্রাকিওরেডিয়ালিস, সুপিনেটর এবং কব্জি ও আঙুল সোজা করার (Extensor) পেশীসমূহ ও হাতের পিছনের ত্বকে সরবরাহ করে।",
+          ossification: "ভ্রূণতত্ত্ব: ব্রাকিয়াল প্লেক্সাসের পোস্টেরিয়র কর্ডের সরাসরি বর্ধিত অংশ।",
+          clinical: "হিউমেরাসের শ্যাফট ভাঙলে স্পাইরাল গ্রুভে রেডিয়াল স্নায়ু ক্ষতিগ্রস্ত হয়ে 'রিস্ট ড্রপ' (Wrist Drop - কব্জি উঁচু করতে না পারা) দেখা দেয়; তবে ট্রাইসেপসের প্রধান শাখা গ্রুভের উপরেই বের হয়ে যাওয়ায় কনুই সোজা করার ক্ষমতা অক্ষত থাকে।"
+        }
+      },
+      "ulnar": {
+        en: {
+          title: "Ulnar Nerve (C7, C8, T1) — 'Musician's Nerve'",
+          type: "Terminal Branch of Medial Cord (Brachial Plexus)",
+          side: "Descends medially in arm, passes behind Medial Epicondyle of Humerus ('Funny Bone' / Cubital tunnel), enters forearm between two heads of Flexor Carpi Ulnaris, and enters palm superficial to flexor retinaculum via Guyon's Canal.",
+          features: "Controls fine intricate finger movements ('Musician's Nerve'): All Hypothenar muscles, all Palmar & Dorsal Interossei (PAD & DAB), Medial 2 Lumbricals, and Adductor Pollicis.",
+          attachments: "In forearm: Flexor Carpi Ulnaris (FCU) & medial half of Flexor Digitorum Profundus (FDP). Cutaneous sensation to medial 1½ fingers (little finger & medial half of ring finger).",
+          ossification: "Embryology: Medial Cord of Brachial Plexus (C8, T1 with C7 fibers).",
+          clinical: "1. Ulnar Claw Hand (Hyperextension at MCP & flexion at IP joints of 4th & 5th digits) + Positive Froment's Sign (thumb IP flexion via FPL when pinching paper due to Adductor Pollicis paralysis). 2. 'Ulnar Paradox': Lesion at wrist produces MORE severe clawing than lesion at elbow because FDP is spared at the wrist!"
+        },
+        bn: {
+          title: "আলনার স্নায়ু — 'সঙ্গীতজ্ঞের স্নায়ু' (Ulnar Nerve: C7, C8, T1)",
+          type: "ব্রাকিয়াল প্লেক্সাসের মিডিয়াল কর্ডের প্রধান শাখা",
+          side: "বাহুর ভেতরের পাশ দিয়ে নেমে হিউমেরাসের মিডিয়াল এপিকন্ডাইলের ঠিক পিছন দিয়ে (Cubital tunnel) পুরোবাহুতে প্রবেশ করে এবং কব্জিতে গাইয়নস ক্যানাল (Guyon's canal) দিয়ে হাতের তালুতে যায়।",
+          features: "আঙুলের সূক্ষ্ম নড়াচড়া নিয়ন্ত্রণ করে: হাইপোথেনার পেশী, সকল পামার ও ডর্সাল ইন্টারওসিয়াই (PAD ও DAB), মিডিয়াল ২ লুম্ব্রিকাল এবং অ্যাডাক্টর পলিসিস পেশী।",
+          attachments: "পুরোবাহুতে ফ্লেক্সর কার্পি আলনারিস (FCU) ও অর্ধেক FDP পেশী এবং কনিষ্ঠা ও অনামিকার অর্ধাংশের (১.৫ আঙুল) অনুভূতি জোগায়।",
+          ossification: "ভ্রূণতত্ত্ব: ব্রাকিয়াল প্লেক্সাসের মিডিয়াল কর্ড (C8, T1 ও C7) থেকে উৎপন্ন।",
+          clinical: "১. আলনার ক্ল হ্যান্ড (Ulnar Claw Hand - ৪র্থ ও ৫ম আঙুল বাঁকা হয়ে যাওয়া) এবং পজিটিভ ফ্রোমেন্টস সাইন (Froment's sign)। ২. 'আলনার প্যারাডক্স': কনুইয়ের চেয়ে কব্জিতে আঘাত পেলে আঙুল বেশি বাঁকা দেখায় কারণ তখন FDP পেশী অক্ষত থেকে আঙুলকে আরও বেশি টেনে রাখে।"
+        }
+      },
+      "sciatic": {
+        en: {
+          title: "Sciatic Nerve (L4, L5, S1, S2, S3)",
+          type: "Thickest & Longest Nerve in the Human Body",
+          side: "Arises from Sacral Plexus, exits pelvis through Greater Sciatic Foramen BELOW Piriformis muscle, descends in gluteal region over gemelli, obturator internus & quadratus femoris, and divides at apex of Popliteal Fossa into Tibial & Common Peroneal nerves.",
+          features: "2 cm wide at origin; composed of two distinct components bound in a common sheath: Tibial component (ventral divisions of L4–S3) & Common Peroneal component (dorsal divisions of L4–S2).",
+          attachments: "Supplies all Hamstring muscles in posterior thigh (Semitendinosus, Semimembranosus, Long head of Biceps femoris & Ischial part of Adductor magnus via Tibial part; Short head of Biceps femoris via Common Peroneal part) and indirectly all muscles of leg and foot.",
+          ossification: "Embryology: Lumbosacral trunk (L4, L5) and ventral rami of S1, S2, S3.",
+          clinical: "1. Safe Intramuscular Gluteal Injection is given in the Upper Outer Quadrant to avoid injuring the Sciatic Nerve. 2. Sciatica (L4/L5 or L5/S1 IV disc prolapse): Shooting pain radiating down posterior thigh & leg (positive Straight Leg Raising / Lasègue's test). 3. Complete injury causes flail foot & loss of knee flexion."
+        },
+        bn: {
+          title: "সায়াটিক স্নায়ু — মানবদেহের বৃহত্তম স্নায়ু (Sciatic Nerve: L4–S3)",
+          type: "দেহের সবচেয়ে মোটা ও দীর্ঘতম প্রান্তীয় স্নায়ু",
+          side: "স্যাক্রাল প্লেক্সাস থেকে উৎপন্ন হয়ে গ্রেটার সায়াটিক ফোরামেন দিয়ে পিরিফর্মিস (Piriformis) পেশীর নিচ দিয়ে নিতম্ব অঞ্চলে প্রবেশ করে এবং উরুর পিছন দিয়ে নেমে পপলিটিয়াল ফোসার শীর্ষে টিবিয়াল ও কমন পেরোনিয়াল স্নায়ুতে বিভক্ত হয়।",
+          features: "উৎপত্তিস্থলে এটি প্রায় ২ সেমি চওড়া; একই আবরণীর ভিতরে দুটি অংশ থাকে: টিবিয়াল অংশ (L4–S3 ভেন্ট্রাল বিভাগ) এবং কমন পেরোনিয়াল অংশ (L4–S2 ডর্সাল বিভাগ)।",
+          attachments: "উরুর পিছনের হ্যামস্ট্রিং পেশীসমূহ (Semitendinosus, Semimembranosus, Biceps femoris ও Adductor magnus) এবং হাঁটুর নিচে পা ও পায়ের পাতার সকল পেশী নিয়ন্ত্রণ করে।",
+          ossification: "ভ্রূণতত্ত্ব: লাম্বোস্যাক্রাল ট্রাঙ্ক (L4, L5) এবং S1–S3 স্পাইনাল স্নায়ু থেকে গঠিত।",
+          clinical: "১. সায়াটিক স্নায়ুর আঘাত এড়াতে নিতম্বের উপরের বাইরের চতুর্থাংশে (Upper outer quadrant) ইনজেকশন দেওয়া হয়। ২. সায়াটিকা (Sciatica - ডিস্ক প্রলাপ্স): কোমর থেকে উরুর পিছন দিয়ে পা পর্যন্ত তীব্র ব্যথা ছড়িয়ে পড়ে। ৩. সম্পূর্ণ কাটলে 'ফুট ড্রপ' ও হাঁটু ভাঁজ করার ক্ষমতা নষ্ট হয়।"
+        }
+      },
+
+      // ---------------- SKELETAL SYSTEM (OSTEOLOGY) ----------------
+      "clavicle": {
+        en: {
+          title: "Clavicle (Collar Bone)",
+          type: "Modified Long Bone (Membranous Ossification)",
+          side: "1. Flat acromial end laterally; large quadrilateral sternal end medially. 2. Medial 2/3 of shaft is convex anteriorly. 3. Subclavian groove lies on the inferior surface.",
+          features: "Sternal end, Acromial end, Conoid tubercle, Trapezoid ridge, Subclavian groove; has NO medullary cavity.",
+          attachments: "Origins: Pectoralis major (anterior medial 2/3), Deltoid (lateral 1/3), SCM. Insertions: Trapezius, Subclavius, Coracoclavicular ligament.",
+          ossification: "First bone in the body to start ossifying (5th–6th week IU) and last to fuse (21–25 yrs). Only long bone with TWO primary centers.",
+          clinical: "Commonly fractured at junction of medial 2/3 and lateral 1/3 by fall on outstretched hand."
+        },
+        bn: {
+          title: "ক্ল্যাভিকল বা কণ্ঠাস্থি (Clavicle)",
+          type: "রূপান্তরিত দীর্ঘ অস্থি (Modified Long Bone)",
+          side: "১. চ্যাপ্টা অ্যাক্রোমিয়াল প্রান্ত বাইরের দিকে এবং বড় স্টার্নাল প্রান্ত ভেতরের দিকে থাকে। ২. শ্যাফটের ভেতরের ২/৩ অংশ সামনের দিকে উত্তল। ৩. সাবক্ল্যাভিয়ান খাঁজ নিচের তলে থাকে।",
+          features: "স্টার্নাল প্রান্ত, অ্যাক্রোমিয়াল প্রান্ত, কনয়েড টিউবারকল ও ট্রাপিজয়েড রিজ; এই অস্থিতে কোনো মজ্জা গহ্বর (Medullary cavity) নেই।",
+          attachments: "উৎপত্তি: পেক্টোরালিস মেজর, ডেল্টয়েড ও স্টার্নোক্লিডোমাস্টয়েড পেশী। সংযুক্তি: ট্রাপিজিয়াস, সাবক্ল্যাভিয়াস পেশী ও কোরাকোক্ল্যাভিকুলার লিগামেন্ট।",
+          ossification: "মানবদেহের প্রথম অস্থি যা ভ্রূণাবস্থায় (৫ম-৬ষ্ঠ সপ্তাহে) ঝিল্লি থেকে অস্থিভবন শুরু করে এবং দুটি প্রাথমিক কেন্দ্র (2 Primary centers) থাকে।",
+          clinical: "হাতের ওপর ভর দিয়ে পড়ে গেলে ভেতরের ২/৩ এবং বাইরের ১/৩ অংশের সংযোগস্থলে সবচেয়ে বেশি ভেঙে যায়।"
+        }
+      },
+      "humerus": {
+        en: {
+          title: "Humerus (Bone of Arm)",
+          type: "Typical Long Bone • Upper Limb",
+          side: "1. Rounded head faces medially, upward & backward. 2. Lesser tubercle & bicipital groove face anteriorly. 3. Deep olecranon fossa lies posteriorly at lower end.",
+          features: "Head, Anatomical & Surgical necks, Greater & Lesser tubercles, Spiral (radial) groove, Deltoid tuberosity, Capitulum, Trochlea, Medial & Lateral epicondyles.",
+          attachments: "Rotator cuff muscles on tubercles; Pectoralis major, Latissimus dorsi & Teres major on bicipital groove; Deltoid on deltoid tuberosity.",
+          ossification: "1 Primary shaft center (8th wk IU); Upper end fuses at 20 yrs (Growing End).",
+          clinical: "3 Major Nerves directly related: 1. Axillary nerve (Surgical neck), 2. Radial nerve (Spiral groove — Wrist drop), 3. Ulnar nerve (Behind medial epicondyle)."
+        },
+        bn: {
+          title: "হিউমেরাস — বাহুর অস্থি (Humerus)",
+          type: "আদর্শ দীর্ঘ অস্থি • ঊর্ধ্বাঙ্গ",
+          side: "১. গোলাকার মস্তক (Head) উপরে ও ভেতরের দিকে মুখ করে থাকে। ২. লেসার টিউবারকল ও বাইসিপিটাল গ্রুভ সামনে থাকে। ৩. গভীর ওলেক্র্যানন ফোসা নিচের প্রান্তের পিছনে থাকে।",
+          features: "মস্তক, অ্যানাটমিক্যাল ও সার্জিক্যাল গ্রীবা (Neck), গ্রেটার ও লেসার টিউবারকল, ডেল্টয়েড টিউবারোসিটি, স্পাইরাল গ্রুভ, ক্যাপিচুলাম ও ট্রকলিয়া।",
+          attachments: "রোটেটর কাফ পেশীসমূহ, পেক্টোরালিস মেজর, ল্যাটিসিমাস ডর্সাই, টেরেস মেজর ও ডেল্টয়েড পেশী সংযুক্ত থাকে।",
+          ossification: "৮ম সপ্তাহে প্রাথমিক কেন্দ্র; উপরের প্রান্তটি বর্ধনশীল প্রান্ত (Growing end) যা ২০ বছর বয়সে যুক্ত হয়।",
+          clinical: "৩টি প্রধান স্নায়ু সরাসরি অস্থির সংস্পর্শে থাকে: ১. অ্যাক্সিলারি স্নায়ু (সার্জিক্যাল গ্রীবা), ২. রেডিয়াল স্নায়ু (স্পাইরাল গ্রুভ - ভাঙলে রিস্ট ড্রপ হয়), ৩. আলনার স্নায়ু (মিডিয়াল এপিকন্ডাইলের পিছনে)।"
+        }
+      },
+      "femur": {
+        en: {
+          title: "Femur (Thigh Bone)",
+          type: "Longest & Strongest Bone of Body",
+          side: "1. Spherical head faces superiorly & medially. 2. Cylindrical shaft is convex anteriorly. 3. Prominent Linea Aspera ridge lies on the posterior border.",
+          features: "Head with fovea, Neck (125° angle), Greater & Lesser trochanters, Linea aspera, Medial & Lateral condyles, Adductor tubercle.",
+          attachments: "Gluteus medius & minimus (Greater trochanter), Iliopsoas (Lesser trochanter), Gluteus maximus, Quadriceps femoris, Adductor magnus.",
+          ossification: "Lower end secondary center appears at 9th month of intrauterine life (Medicolegal proof of fetal viability!) and is the Growing End.",
+          clinical: "Intracapsular fracture of Neck of Femur tears retinacular branches of Medial Circumflex Femoral Artery, causing Avascular Necrosis (AVN) of femoral head."
+        },
+        bn: {
+          title: "ফিমার — উরুর অস্থি (Femur)",
+          type: "মানবদেহের দীর্ঘতম ও সবচেয়ে শক্তিশালী অস্থি",
+          side: "১. গোলাকার মস্তক উপরে ও ভেতরের দিকে থাকে। ২. শ্যাফট সামনের দিকে উত্তল। ৩. পিছনের প্রান্তে স্পষ্ট লিনিয়া অ্যাসপেরা (Linea aspera) রিজ থাকে।",
+          features: "মস্তক (ফোভিয়া সহ), গ্রীবা (১২৫° কোণ), গ্রেটার ও লেসার ট্রোক্যান্টার, লিনিয়া অ্যাসপেরা, মিডিয়াল ও ল্যাটারাল কন্ডাইল।",
+          attachments: "গ্লুটিয়াস মিডিয়াস ও মিনিমাস, ইলিওসোয়াস, গ্লুটিয়াস ম্যাক্সিমাস, কোয়াড্রিসেপস ফিমোরিস ও অ্যাডাক্টর ম্যাগনাস পেশী।",
+          ossification: "নিচের প্রান্তের অস্থিভবন কেন্দ্র জন্মের ঠিক আগে (৯ম মাসে) আবির্ভূত হয় (যা ফরেনসিক মেডিসিনে পূর্ণাঙ্গ নবজাতকের প্রমাণ হিসেবে ব্যবহৃত হয়)।",
+          clinical: "ফিমারের গ্রীবা (Neck of femur) ভাঙলে মিডিয়াল সার্কামফ্লেক্স ফিমোরাল ধমনীর রক্ত সরবরাহ বন্ধ হয়ে ফিমারের মস্তকে অ্যাভাসকুলার নেক্রোসিস (AVN) ঘটে।"
+        }
+      }
+    };
+
+    // ============================================================================
+    // 3. SYSTEM MODULES REGISTRY
     // ============================================================================
     const SYSTEM_MODULES = {
       skeletal: {
-        title: "🦴 Skeletal System",
+        titleEn: "🦴 Skeletal System",
+        titleBn: "🦴 কঙ্কালতন্ত্র (Skeletal System)",
         urls: ['./skeleton.glb', './models/skeleton.glb', './model.glb']
       },
-      cardio: {
-        title: "🫀 Cardiovascular System",
-        urls: ['./cardiovascular.glb', './heart.glb', './models/cardiovascular.glb']
-      },
       nervous: {
-        title: "🧠 Nervous System",
+        titleEn: "🧠 Nervous System",
+        titleBn: "🧠 স্নায়ুতন্ত্র (Nervous System)",
         urls: ['./nervous.glb', './brain.glb', './models/nervous.glb']
       },
+      cardio: {
+        titleEn: "🫀 Cardiovascular System",
+        titleBn: "🫀 হৃৎ-সংবহনতন্ত্র (Cardiovascular)",
+        urls: ['./cardiovascular.glb', './heart.glb', './models/cardiovascular.glb']
+      },
       muscular: {
-        title: "💪 Muscular System",
+        titleEn: "💪 Muscular System",
+        titleBn: "💪 পেশীতন্ত্র (Muscular System)",
         urls: ['./muscular.glb', './muscles.glb', './models/muscular.glb']
       },
       visceral: {
-        title: "🫁 Visceral Organs",
+        titleEn: "🫁 Visceral Organs",
+        titleBn: "🫁 অভ্যন্তরীণ অঙ্গ (Viscera)",
         urls: ['./visceral.glb', './organs.glb', './models/visceral.glb']
       }
     };
 
     // ============================================================================
-    // 2. THREE.JS SCENE, CAMERA & LIGHTING
+    // 4. THREE.JS SCENE SETUP
     // ============================================================================
     const container = document.getElementById('canvas-container');
     const activeBoneTag = document.getElementById('activeBoneTag');
@@ -530,9 +939,7 @@
     dirLight2.position.set(-6, -4, -6);
     scene.add(dirLight2);
 
-    // ============================================================================
-    // 3. STATE & HIGH-YIELD MBBS KNOWLEDGE BASE (OSTEOLOGY + OTHER SYSTEMS)
-    // ============================================================================
+    let activeSysKey = 'nervous';
     let rootModel = null;
     let boneMeshes = [];
     let labelMeshes = [];
@@ -540,6 +947,8 @@
     let isIsolatedMode = false;
     let show3DTextMeshes = false;
     let isGhostMode = false;
+    let isLeftOpen = true;
+    let isRightOpen = false;
 
     let defaultCamPos = new THREE.Vector3(0, 1, 3);
     let defaultTarget = new THREE.Vector3(0, 0, 0);
@@ -547,129 +956,99 @@
     let targetCamPos = new THREE.Vector3();
     let targetLookAt = new THREE.Vector3();
 
-    const MBBS_DB = {
-      "clavicle": {
-        type: "Modified Long Bone (Membranous)",
-        side: "1. Flat acromial end laterally; large sternal end medially. 2. Medial 2/3 convex anteriorly. 3. Subclavian groove inferiorly.",
-        features: "Sternal end, Acromial end, Conoid tubercle, Trapezoid ridge, Subclavian groove.",
-        attachments: "Origins: Pectoralis major, Deltoid, SCM. Insertions: Trapezius, Subclavius, Coracoclavicular ligament.",
-        ossification: "First bone to ossify (5th–6th wk IU) in membrane with TWO primary centers. Growing end = Sternal end.",
-        clinical: "Commonly fractured at junction of medial 2/3 & lateral 1/3; has NO medullary cavity."
-      },
-      "scapula": {
-        type: "Flat Triangular Bone",
-        side: "1. Glenoid cavity faces laterally. 2. Coracoid process projects anteriorly. 3. Spine divides dorsal surface.",
-        features: "Subscapular, Supraspinous & Infraspinous fossae, Spine, Acromion, Coracoid process, Suprascapular notch.",
-        attachments: "Rotator cuff muscles (Subscapularis, Supraspinatus, Infraspinatus, Teres minor), Biceps, Triceps, Serratus anterior.",
-        ossification: "1 Primary center (8th wk IU) & 7 Secondary centers.",
-        clinical: "Paralysis of Serratus Anterior (Long Thoracic Nerve C5–C7 injury) causes Winging of Scapula."
-      },
-      "humerus": {
-        type: "Typical Long Bone",
-        side: "1. Rounded head faces medially & upward. 2. Lesser tubercle & bicipital groove anteriorly. 3. Deep olecranon fossa posteriorly.",
-        features: "Head, Anatomical & Surgical necks, Greater & Lesser tubercles, Spiral groove, Capitulum, Trochlea.",
-        attachments: "Rotator cuff on tubercles; Pectoralis major, Latissimus dorsi, Teres major on bicipital groove; Deltoid on deltoid tuberosity.",
-        ossification: "Upper end fuses at 20 yrs (Growing End); Lower end fuses at 16–18 yrs.",
-        clinical: "3 Nerves directly on bone: Axillary (Surgical neck), Radial (Spiral groove — Wrist drop), Ulnar (Medial epicondyle)."
-      },
-      "femur": {
-        type: "Longest & Strongest Long Bone",
-        side: "1. Spherical head superiorly & medially. 2. Shaft convex anteriorly. 3. Prominent Linea Aspera posteriorly.",
-        features: "Head with fovea, Neck, Greater & Lesser trochanters, Linea aspera, Medial & Lateral condyles, Adductor tubercle.",
-        attachments: "Gluteus medius & minimus (greater trochanter), Iliopsoas (lesser trochanter), Gluteus maximus, Quadriceps, Adductor magnus.",
-        ossification: "Lower end secondary center appears at 9th month IU (Medicolegal viability at birth!) and is the Growing End.",
-        clinical: "Intracapsular fracture of Neck of Femur disrupts Medial Circumflex Femoral Artery -> Avascular Necrosis (AVN) of head."
-      },
-      "arch of aorta": {
-        type: "Great Arterial Trunk (Superior Mediastinum)",
-        side: "Begins behind right 2nd sternocostal joint, arches backward & to the left over left main bronchus, ends at lower border of T4.",
-        features: "3 Supra-aortic branches: Brachiocephalic trunk, Left Common Carotid artery, Left Subclavian artery.",
-        attachments: "Ligamentum arteriosum connects lower concave surface to left pulmonary artery.",
-        ossification: "Embryology: Aortic sac, Left 4th pharyngeal arch artery, and left dorsal aorta.",
-        clinical: "Aortic knuckle on PA Chest X-ray; Aortic aneurysm compresses left recurrent laryngeal nerve causing hoarseness (Ortner's syndrome)."
-      },
-      "left ventricle": {
-        type: "Thick-Walled Systemic Cardiac Chamber",
-        side: "Forms the Apex of the Heart (left 5th intercostal space, 9 cm from midline) and left border.",
-        features: "Mitral inflow orifice, Aortic vestibule outflow, Anterior & Posterior papillary muscles, Trabeculae carneae.",
-        attachments: "Chordae tendineae attach papillary muscles to cusps of Mitral (Bicuspid) valve.",
-        ossification: "Embryology: Primitive ventricle (rough part) & Bulbus cordis (smooth aortic vestibule).",
-        clinical: "Wall is 3x thicker than Right Ventricle; hypertrophies in systemic hypertension & aortic stenosis."
-      },
-      "cerebrum": {
-        type: "Telencephalon / Cerebral Cortex",
-        side: "Divided by longitudinal fissure into Right & Left hemispheres connected by Corpus Callosum.",
-        features: "Frontal, Parietal, Temporal & Occipital lobes; Central sulcus of Rolando; Lateral sulcus of Sylvius.",
-        attachments: "Supplied by Anterior, Middle & Posterior Cerebral Arteries (Circle of Willis).",
-        ossification: "Embryology: Develops from Prosencephalon -> Telencephalic vesicles.",
-        clinical: "Middle Cerebral Artery (MCA) stroke causes contralateral hemiparesis & sensory loss (face & upper limb > lower limb) + aphasia."
-      }
-    };
-
-    // ============================================================================
-    // 4. MULTI-SYSTEM LOADER (TRIES GITHUB GLB -> FALLBACK BUILT-IN 3D MODEL)
-    // ============================================================================
     const draco = new DRACOLoader();
     draco.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.6/');
     const loader = new GLTFLoader();
     loader.setDRACOLoader(draco);
 
+    // ============================================================================
+    // 5. LANGUAGE SWITCHING ENGINE (UPDATES UI & ACTIVE STRUCTURE DETAILS)
+    // ============================================================================
+    function toggleLanguage() {
+      currentLang = (currentLang === 'en') ? 'bn' : 'en';
+      applyLanguageUI();
+      if (selectedBone) renderBoneDetails(selectedBone);
+    }
+
+    function applyLanguageUI() {
+      const t = UI_TEXT[currentLang];
+      document.getElementById('uiHomeBtn').textContent = t.home;
+      document.getElementById('leftBtnText').textContent = isLeftOpen ? t.hideTools : t.showTools;
+      document.getElementById('uiNotesBtn').textContent = t.notes;
+      document.getElementById('langLabel').textContent = (currentLang === 'bn') ? "বাংলা (সক্রিয়) | EN" : "EN (Active) | বাংলা";
+
+      document.getElementById('uiToolsHeader').textContent = t.toolsHdr;
+      document.getElementById('uiDivHeader').textContent = t.divHdr;
+      document.getElementById('uiRegHeader').textContent = t.regHdr;
+      document.getElementById('uiExplodeLbl').textContent = t.explodeLbl;
+
+      document.getElementById('btnPanelIsolate').textContent = isIsolatedMode ? t.returnBtn : t.examineBtn;
+      document.getElementById('btnPanelHideBone').textContent = t.hidePartBtn;
+
+      document.getElementById('hdrSide').textContent = t.hdr1;
+      document.getElementById('hdrFeatures').textContent = t.hdr2;
+      document.getElementById('hdrAttachments').textContent = t.hdr3;
+      document.getElementById('hdrOssification').textContent = t.hdr4;
+      document.getElementById('hdrClinical').textContent = t.hdr5;
+
+      // Update Top System Tab Labels
+      document.querySelectorAll('.tab-lbl').forEach(el => {
+        el.textContent = el.getAttribute(`data-${currentLang}`);
+      });
+
+      const mod = SYSTEM_MODULES[activeSysKey] || SYSTEM_MODULES.nervous;
+      document.getElementById('activeSystemIndicator').textContent = (currentLang === 'bn') ? mod.titleBn : mod.titleEn;
+    }
+
+    document.getElementById('btnLangToggle').onclick = toggleLanguage;
+    document.getElementById('btnDrawerLang').onclick = toggleLanguage;
+
+    // ============================================================================
+    // 6. MULTI-SYSTEM LOADER & PROCEDURAL NEUROANATOMY MODEL
+    // ============================================================================
     window.launchSystem = function(sysKey) {
-      // Close Home Portal
+      activeSysKey = sysKey;
       document.getElementById('homeOverlay').classList.add('hidden');
 
-      // Highlight Active Top Tab
       document.querySelectorAll('.sys-tab').forEach(btn => {
         btn.classList.toggle('active', btn.getAttribute('data-sys') === sysKey);
       });
 
-      const mod = SYSTEM_MODULES[sysKey] || SYSTEM_MODULES.skeletal;
-      document.getElementById('activeSystemIndicator').textContent = mod.title;
+      const mod = SYSTEM_MODULES[sysKey] || SYSTEM_MODULES.nervous;
+      document.getElementById('activeSystemIndicator').textContent = (currentLang === 'bn') ? mod.titleBn : mod.titleEn;
 
-      // Show Loading Spinner
       const loadingScreen = document.getElementById('loadingScreen');
-      document.getElementById('loadingMsg').textContent = `Loading ${mod.title}...`;
+      document.getElementById('loadingMsg').textContent = `Loading ${(currentLang === 'bn') ? mod.titleBn : mod.titleEn}...`;
       loadingScreen.classList.remove('hidden');
 
       tryLoadUrlsSequentially(mod.urls, 0, sysKey);
     };
 
-    function tryLoadUrlsSequentially(urlList, index, sysKey) {
-      if (index >= urlList.length) {
-        console.log(`No external .glb found for ${sysKey} — building interactive 3D module.`);
+    function tryLoadUrlsSequentially(urlList, idx, sysKey) {
+      if (idx >= urlList.length) {
         buildProceduralSystem(sysKey);
         return;
       }
       loader.load(
-        urlList[index],
+        urlList[idx],
         (gltf) => processLoadedGLTF(gltf.scene),
         undefined,
-        () => tryLoadUrlsSequentially(urlList, index + 1, sysKey)
+        () => tryLoadUrlsSequentially(urlList, idx + 1, sysKey)
       );
     }
 
-    // Bind Top System Tabs
     document.querySelectorAll('.sys-tab').forEach(btn => {
       btn.onclick = () => window.launchSystem(btn.getAttribute('data-sys'));
     });
 
-    // Home Overlay Buttons
-    document.getElementById('btnOpenHome').onclick = () => {
-      document.getElementById('homeOverlay').classList.remove('hidden');
-    };
-    document.getElementById('btnDevProfile').onclick = () => {
-      document.getElementById('homeOverlay').classList.remove('hidden');
-    };
-    document.getElementById('btnCloseHome').onclick = () => {
-      document.getElementById('homeOverlay').classList.add('hidden');
-    };
+    document.getElementById('btnOpenHome').onclick = () => document.getElementById('homeOverlay').classList.remove('hidden');
+    document.getElementById('btnDevProfile').onclick = () => document.getElementById('homeOverlay').classList.remove('hidden');
+    document.getElementById('btnCloseHome').onclick = () => document.getElementById('homeOverlay').classList.add('hidden');
 
-    // Background Theme Switcher
     document.getElementById('bgThemeSelector').onchange = (e) => {
       document.body.className = e.target.value;
     };
 
-    // Local File Uploaders (Both on Home Portal & Left Toolbar)
     function handleLocalGLB(e) {
       const file = e.target.files[0];
       if (!file) return;
@@ -681,11 +1060,11 @@
     document.getElementById('fileInput').addEventListener('change', handleLocalGLB);
     document.getElementById('homeFileInput').addEventListener('change', handleLocalGLB);
 
-    // Pre-load Skeletal System in background on startup
-    tryLoadUrlsSequentially(SYSTEM_MODULES.skeletal.urls, 0, 'skeletal');
+    // Load Nervous System in background by default
+    tryLoadUrlsSequentially(SYSTEM_MODULES.nervous.urls, 0, 'nervous');
 
     // ============================================================================
-    // 5. Z-ANATOMY CLUTTER FILTER & GLB PROCESSOR
+    // 7. Z-ANATOMY CLUTTER FILTER & BILINGUAL METADATA ENRICHMENT
     // ============================================================================
     function isZAnatomyLabelOrLineMesh(obj) {
       const n = (obj.name || '').toLowerCase();
@@ -735,7 +1114,7 @@
             child.geometry.boundingBox.getCenter(lc);
             child.userData.localCenter = lc;
 
-            enrichMetadata(child);
+            enrichBilingualMetadata(child);
             boneMeshes.push(child);
           }
         }
@@ -765,107 +1144,122 @@
       document.getElementById('loadingScreen').classList.add('hidden');
     }
 
-    function enrichMetadata(mesh) {
+    function enrichBilingualMetadata(mesh) {
       const d = mesh.userData;
       let raw = (d.label || mesh.name || 'Structure').replace(/\.\d+$/g, '').replace(/_/g, ' ').trim();
-      let side = "Midline / Unpaired";
+      let sideEn = "Midline / Unpaired";
+      let sideBn = "মধ্যরেখীয় / একক গঠন";
       const lowRaw = raw.toLowerCase();
 
       if (lowRaw.endsWith('.l') || lowRaw.endsWith(' l') || lowRaw.includes('left')) {
         raw = raw.replace(/\.[lL]$/, '').replace(/\s[lL]$/, '');
         if (!raw.toLowerCase().startsWith('left')) raw = "Left " + raw;
-        side = "Left Side";
+        sideEn = "Left Side";
+        sideBn = "বাম পাশ (Left Side)";
       } else if (lowRaw.endsWith('.r') || lowRaw.endsWith(' r') || lowRaw.includes('right')) {
         raw = raw.replace(/\.[rR]$/, '').replace(/\s[rR]$/, '');
         if (!raw.toLowerCase().startsWith('right')) raw = "Right " + raw;
-        side = "Right Side";
+        sideEn = "Right Side";
+        sideBn = "ডান পাশ (Right Side)";
       }
 
       const low = raw.toLowerCase();
-      let division = "Axial Division";
-      let region = "Thorax";
+      let division = "Axial / Central (CNS)";
+      let region = "Skull";
 
-      if (['frontal','parietal','occipital','temporal','sphenoid','mandible','skull','cranium','cerebr','brain','pons'].some(k => low.includes(k))) {
-        division = "Axial Division"; region = "Skull";
-      } else if (['vertebra','atlas','axis','sacrum','spinal'].some(k => low.includes(k))) {
-        division = "Axial Division"; region = "Vertebra";
-      } else if (['clavicle','scapula','humerus','radius','ulna','biceps','triceps','deltoid','brachial'].some(k => low.includes(k))) {
-        division = "Appendicular Division"; region = "Upper";
-      } else if (['pelvis','femur','patella','tibia','fibula','gluteus','sciatic'].some(k => low.includes(k))) {
-        division = "Appendicular Division"; region = "Lower";
+      if (['cerebr','cerebell','brain','pons','medulla','thalam','optic','trigeminal','facial','skull','cranium','frontal','parietal','mandible'].some(k => low.includes(k))) {
+        division = "Axial / Central (CNS)"; region = "Skull";
+      } else if (['spinal','vertebra','cauda','sacrum','cord'].some(k => low.includes(k))) {
+        division = "Axial / Central (CNS)"; region = "Vertebra";
+      } else if (['vagus','phrenic','sympathetic','rib','sternum','heart','lung','aorta'].some(k => low.includes(k))) {
+        division = "Axial / Autonomic"; region = "Thorax";
+      } else if (['brachial','median','radial','ulnar','axillary','musculocutaneous','clavicle','scapula','humerus'].some(k => low.includes(k))) {
+        division = "Appendicular / PNS"; region = "Upper";
+      } else if (['sciatic','femoral','obturator','tibial','peroneal','fibular','sacral','femur','tibia','fibula','pelvis'].some(k => low.includes(k))) {
+        division = "Appendicular / PNS"; region = "Lower";
       }
 
-      const matchedKey = Object.keys(MBBS_DB).find(k => low.includes(k));
-      const kb = matchedKey ? MBBS_DB[matchedKey] : null;
+      // Match against Bilingual Dictionary
+      const matchedKey = Object.keys(BILINGUAL_MBBS_DB).find(k => low.includes(k));
+      const entry = matchedKey ? BILINGUAL_MBBS_DB[matchedKey] : null;
+      const autoBnTitle = autoTranslateTitleToBn(raw);
 
       d.cleanTitle = raw;
-      d.latin = d.latin || `Terminologia (${raw})`;
-      d.division = d.division || division;
-      d.region = d.region || region;
-      d.bone_type = kb ? kb.type : (d.bone_type || "Anatomical Structure");
-      d.side_determination = kb ? `(${side}) ${kb.side}` : (d.side_determination || `${side}: Identify anatomical orientation, anterior/posterior surfaces, and medial/lateral relations.`);
-      d.features = kb ? kb.features : (d.features || `Key surfaces, borders, parts, and landmarks of ${raw}.`);
-      d.attachments = kb ? kb.attachments : (d.attachments || `Origins, insertions, branches, or neurovascular supply of ${raw}.`);
-      d.ossification = kb ? kb.ossification : (d.ossification || `Developmental origin & ossification timeline of ${raw}.`);
-      d.clinical = kb ? kb.clinical : (d.clinical || `High-yield MBBS clinical correlation & applied anatomy of ${raw}.`);
+      d.latin = d.latin || `Terminologia Anatomica (${raw})`;
+      d.division = division;
+      d.region = region;
+
+      d.en = entry ? {
+        title: `${raw} — ${entry.en.title}`,
+        type: entry.en.type,
+        side: `(${sideEn}) ${entry.en.side}`,
+        features: entry.en.features,
+        attachments: entry.en.attachments,
+        ossification: entry.en.ossification,
+        clinical: entry.en.clinical
+      } : {
+        title: raw,
+        type: d.bone_type || "Anatomical Structure",
+        side: `${sideEn}: Observe the exact anatomical root, course, and neighbor relations of ${raw} in the 3D viewport.`,
+        features: `Key nuclei, functional components, or anatomical landmarks of ${raw}.`,
+        attachments: `Branches, distribution, target muscles/organs, and vascular supply of ${raw}.`,
+        ossification: `Embryological derivation (Neural tube / Neural crest / Somite origin) of ${raw}.`,
+        clinical: `High-yield MBBS clinical lesion, nerve palsy, or surgical landmark of ${raw}.`
+      };
+
+      d.bn = entry ? {
+        title: `${entry.bn.title} [${sideBn}]`,
+        type: entry.bn.type,
+        side: `(${sideBn}) ${entry.bn.side}`,
+        features: entry.bn.features,
+        attachments: entry.bn.attachments,
+        ossification: entry.bn.ossification,
+        clinical: entry.bn.clinical
+      } : {
+        title: autoBnTitle,
+        type: `${region} অঞ্চলের শারীরস্থানিক গঠন`,
+        side: `${sideBn}: ত্রিমাত্রিক (3D) মডেলে ${autoBnTitle}-এর সঠিক উৎপত্তি, গতিপথ এবং পার্শ্ববর্তী অঙ্গসমূহের সাথে সম্পর্ক লক্ষ্য করুন।`,
+        features: `${autoBnTitle}-এর প্রধান কার্যকরী অংশ, নিউক্লিয়াস বা গঠনগত ল্যান্ডমার্কসমূহ।`,
+        attachments: `${autoBnTitle}-এর প্রধান শাখা-প্রশাখা, সংযুক্ত পেশী/অঙ্গ এবং রক্ত ও স্নায়ু সরবরাহ।`,
+        ossification: `ভ্রূণতত্ত্ব: ভ্রূণীয় নিউরাল টিউব, নিউরাল ক্রেস্ট বা মেসোডার্ম থেকে ${autoBnTitle}-এর বিকাশ ঘটে।`,
+        clinical: `ক্লিনিক্যাল গুরুত্ব (MBBS Viva): ${autoBnTitle} আঘাতপ্রাপ্ত বা ক্ষতিগ্রস্ত হলে সংশ্লিষ্ট অঙ্গের সংবেদনশীলতা বা মোটর কার্যকারিতা ব্যাহত হয়।`
+      };
     }
 
-    // Built-in Procedural 3D Models for All 5 Tabs (If .glb files aren't uploaded yet)
+    // Built-in Detailed 3D Nervous System & Skeleton Models
     function buildProceduralSystem(sysKey) {
       const g = new THREE.Group();
       let parts = [];
 
-      if (sysKey === 'cardio') {
+      if (sysKey === 'nervous') {
         parts = [
-          { name: "Left_Ventricle", color: 0xdc2626, pos: [0.12, -0.22, 0], geo: new THREE.SphereGeometry(0.36, 28, 28) },
-          { name: "Right_Ventricle", color: 0xb91c1c, pos: [-0.14, -0.20, 0.12], geo: new THREE.SphereGeometry(0.30, 28, 28) },
-          { name: "Arch_of_Aorta", color: 0xef4444, pos: [0.04, 0.32, 0], geo: new THREE.TorusGeometry(0.28, 0.09, 20, 40, Math.PI) },
-          { name: "Superior_Vena_Cava", color: 0x2563eb, pos: [-0.32, 0.25, 0.05], geo: new THREE.CylinderGeometry(0.08, 0.08, 0.65, 20) },
-          { name: "Pulmonary_Trunk", color: 0x3b82f6, pos: [0.15, 0.12, 0.18], geo: new THREE.CylinderGeometry(0.08, 0.08, 0.42, 20).rotateZ(-0.4) }
-        ];
-      } else if (sysKey === 'nervous') {
-        parts = [
-          { name: "Left_Cerebrum", color: 0xfde047, pos: [0.16, 0.55, 0], geo: new THREE.SphereGeometry(0.26, 28, 28) },
-          { name: "Right_Cerebrum", color: 0xfde047, pos: [-0.16, 0.55, 0], geo: new THREE.SphereGeometry(0.26, 28, 28) },
-          { name: "Cerebellum", color: 0xfacc15, pos: [0, 0.28, -0.20], geo: new THREE.SphereGeometry(0.18, 24, 24) },
-          { name: "Brainstem_Pons_Medulla", color: 0xeab308, pos: [0, 0.18, 0], geo: new THREE.CylinderGeometry(0.07, 0.05, 0.35, 20) },
-          { name: "Spinal_Cord", color: 0xfef08a, pos: [0, -0.35, -0.04], geo: new THREE.CylinderGeometry(0.035, 0.025, 0.85, 20) }
-        ];
-      } else if (sysKey === 'muscular') {
-        parts = [
-          { name: "Left_Pectoralis_Major", color: 0xbe123c, pos: [0.18, 0.42, 0.14], geo: new THREE.BoxGeometry(0.26, 0.22, 0.06) },
-          { name: "Right_Pectoralis_Major", color: 0xbe123c, pos: [-0.18, 0.42, 0.14], geo: new THREE.BoxGeometry(0.26, 0.22, 0.06) },
-          { name: "Left_Deltoid_Muscle", color: 0x9f1239, pos: [0.38, 0.48, 0], geo: new THREE.SphereGeometry(0.12, 20, 20) },
-          { name: "Left_Biceps_Brachii", color: 0xe11d48, pos: [0.38, 0.22, 0.04], geo: new THREE.CylinderGeometry(0.055, 0.045, 0.36, 20) },
-          { name: "Left_Quadriceps_Femoris", color: 0xbe123c, pos: [0.18, -0.45, 0.05], geo: new THREE.CylinderGeometry(0.08, 0.06, 0.55, 20) }
-        ];
-      } else if (sysKey === 'visceral') {
-        parts = [
-          { name: "Right_Lung", color: 0xf472b6, pos: [-0.22, 0.42, 0], geo: new THREE.SphereGeometry(0.22, 24, 24) },
-          { name: "Left_Lung", color: 0xf472b6, pos: [0.22, 0.42, 0], geo: new THREE.SphereGeometry(0.20, 24, 24) },
-          { name: "Liver_Hepatic", color: 0x7c2d12, pos: [-0.12, 0.08, 0.06], geo: new THREE.BoxGeometry(0.34, 0.18, 0.20) },
-          { name: "Stomach_Gastric", color: 0xfb923c, pos: [0.14, 0.04, 0.08], geo: new THREE.SphereGeometry(0.14, 24, 24) },
-          { name: "Left_Kidney", color: 0x991b1b, pos: [0.14, -0.12, -0.08], geo: new THREE.SphereGeometry(0.08, 20, 20) },
-          { name: "Right_Kidney", color: 0x991b1b, pos: [-0.14, -0.14, -0.08], geo: new THREE.SphereGeometry(0.08, 20, 20) }
+          { name: "Left_Cerebrum", color: 0xfef08a, pos: [0.15, 0.78, 0], geo: new THREE.SphereGeometry(0.19, 28, 28) },
+          { name: "Right_Cerebrum", color: 0xfef08a, pos: [-0.15, 0.78, 0], geo: new THREE.SphereGeometry(0.19, 28, 28) },
+          { name: "Thalamus", color: 0xf59e0b, pos: [0, 0.72, 0.02], geo: new THREE.SphereGeometry(0.08, 24, 24) },
+          { name: "Cerebellum", color: 0xfde047, pos: [0, 0.58, -0.15], geo: new THREE.SphereGeometry(0.13, 24, 24) },
+          { name: "Brainstem_Pons_Medulla", color: 0xfacc15, pos: [0, 0.52, 0], geo: new THREE.CylinderGeometry(0.05, 0.035, 0.24, 20) },
+          { name: "Optic_Nerve_Chiasma", color: 0x38bdf8, pos: [0, 0.68, 0.16], geo: new THREE.CylinderGeometry(0.015, 0.015, 0.16, 16).rotateZ(Math.PI / 2) },
+          { name: "Left_Trigeminal_Nerve", color: 0xfb923c, pos: [0.12, 0.56, 0.12], geo: new THREE.CylinderGeometry(0.014, 0.014, 0.16, 16).rotateX(0.7) },
+          { name: "Left_Facial_Nerve", color: 0x4ade80, pos: [0.15, 0.52, 0.06], geo: new THREE.CylinderGeometry(0.012, 0.012, 0.18, 16).rotateZ(-0.5) },
+          { name: "Left_Vagus_Nerve", color: 0x22d3ee, pos: [0.09, 0.22, 0.06], geo: new THREE.CylinderGeometry(0.014, 0.014, 0.58, 16) },
+          { name: "Spinal_Cord", color: 0xfef9c3, pos: [0, 0.08, -0.04], geo: new THREE.CylinderGeometry(0.028, 0.018, 0.72, 20) },
+          { name: "Left_Brachial_Plexus", color: 0xfacc15, pos: [0.18, 0.36, 0], geo: new THREE.CylinderGeometry(0.022, 0.028, 0.22, 16).rotateZ(1.1) },
+          { name: "Left_Median_Nerve", color: 0xfacc15, pos: [0.34, 0.06, 0.03], geo: new THREE.CylinderGeometry(0.012, 0.01, 0.52, 16) },
+          { name: "Left_Radial_Nerve", color: 0xf59e0b, pos: [0.37, 0.08, -0.03], geo: new THREE.CylinderGeometry(0.014, 0.01, 0.52, 16) },
+          { name: "Left_Ulnar_Nerve", color: 0xfde047, pos: [0.29, 0.06, 0], geo: new THREE.CylinderGeometry(0.011, 0.01, 0.52, 16) },
+          { name: "Left_Sciatic_Nerve", color: 0xeab308, pos: [0.15, -0.62, -0.02], geo: new THREE.CylinderGeometry(0.024, 0.016, 0.78, 20) },
+          { name: "Right_Sciatic_Nerve", color: 0xeab308, pos: [-0.15, -0.62, -0.02], geo: new THREE.CylinderGeometry(0.024, 0.016, 0.78, 20) }
         ];
       } else {
-        // Default Skeletal System
         parts = [
-          { name: "Skull_Cranium", color: 0xfef3c7, pos: [0, 0.85, 0], geo: new THREE.SphereGeometry(0.17, 28, 28) },
-          { name: "Sternum", color: 0xfef3c7, pos: [0, 0.40, 0.13], geo: new THREE.BoxGeometry(0.07, 0.32, 0.025) },
-          { name: "Vertebral_Column", color: 0xfef3c7, pos: [0, 0.30, -0.07], geo: new THREE.CylinderGeometry(0.045, 0.055, 0.82, 20) },
           { name: "Left_Clavicle", color: 0xfef3c7, pos: [0.19, 0.56, 0.08], geo: new THREE.CylinderGeometry(0.022, 0.022, 0.30, 16).rotateZ(Math.PI / 2.1) },
-          { name: "Right_Clavicle", color: 0xfef3c7, pos: [-0.19, 0.56, 0.08], geo: new THREE.CylinderGeometry(0.022, 0.022, 0.30, 16).rotateZ(-Math.PI / 2.1) },
-          { name: "Left_Scapula", color: 0xfef3c7, pos: [0.22, 0.44, -0.10], geo: new THREE.BoxGeometry(0.14, 0.22, 0.02) },
           { name: "Left_Humerus", color: 0xfef3c7, pos: [0.35, 0.26, 0], geo: new THREE.CylinderGeometry(0.035, 0.03, 0.48, 20) },
-          { name: "Right_Humerus", color: 0xfef3c7, pos: [-0.35, 0.26, 0], geo: new THREE.CylinderGeometry(0.035, 0.03, 0.48, 20) },
-          { name: "Left_Femur", color: 0xfef3c7, pos: [0.17, -0.45, 0], geo: new THREE.CylinderGeometry(0.045, 0.04, 0.64, 22) },
-          { name: "Right_Femur", color: 0xfef3c7, pos: [-0.17, -0.45, 0], geo: new THREE.CylinderGeometry(0.045, 0.04, 0.64, 22) }
+          { name: "Left_Femur", color: 0xfef3c7, pos: [0.17, -0.45, 0], geo: new THREE.CylinderGeometry(0.045, 0.04, 0.64, 22) }
         ];
       }
 
       parts.forEach(p => {
-        const m = new THREE.Mesh(p.geo, new THREE.MeshStandardMaterial({ color: p.color, roughness: 0.4 }));
+        const m = new THREE.Mesh(p.geo, new THREE.MeshStandardMaterial({ color: p.color, roughness: 0.35 }));
         m.name = p.name;
         m.position.set(...p.pos);
         g.add(m);
@@ -874,7 +1268,7 @@
     }
 
     // ============================================================================
-    // 6. TOUCH SELECTION & DOUBLE-TAP ISOLATE / ZOOM
+    // 8. TOUCH SELECTION, BILINGUAL DETAILS RENDERER & VOICE NARRATION
     // ============================================================================
     const raycaster = new THREE.Raycaster();
     const pointer = new THREE.Vector2();
@@ -910,24 +1304,30 @@
       selectedBone = bone;
       bone.material.emissive.setHex(0xd97706);
 
-      const d = bone.userData;
-      activeBoneTag.textContent = `📍 ${d.cleanTitle}`;
-      activeBoneTag.classList.remove('hidden');
-
       if (!isIsolatedMode) document.getElementById('btnExamineBone').classList.remove('hidden');
 
-      document.getElementById('detailTitle').textContent = d.cleanTitle;
+      renderBoneDetails(bone);
+      openRightPanel();
+    }
+
+    function renderBoneDetails(bone) {
+      const d = bone.userData;
+      const content = d[currentLang] || d.en;
+
+      activeBoneTag.textContent = `📍 ${content.title}`;
+      activeBoneTag.classList.remove('hidden');
+
+      document.getElementById('detailTitle').textContent = content.title;
       document.getElementById('detailLatin').textContent = d.latin;
       document.getElementById('badgeDivision').textContent = d.division;
-      document.getElementById('badgeRegion').textContent = `${d.region} Region`;
-      document.getElementById('badgeType').textContent = d.bone_type;
-      document.getElementById('detailSide').textContent = d.side_determination;
-      document.getElementById('detailFeatures').textContent = d.features;
-      document.getElementById('detailAttachments').textContent = d.attachments;
-      document.getElementById('detailOssification').textContent = d.ossification;
-      document.getElementById('detailClinical').textContent = d.clinical;
+      document.getElementById('badgeRegion').textContent = `${d.region}`;
+      document.getElementById('badgeType').textContent = content.type;
 
-      openRightPanel();
+      document.getElementById('detailSide').textContent = content.side;
+      document.getElementById('detailFeatures').textContent = content.features;
+      document.getElementById('detailAttachments').textContent = content.attachments;
+      document.getElementById('detailOssification').textContent = content.ossification;
+      document.getElementById('detailClinical').textContent = content.clinical;
     }
 
     function isolateAndZoomBone(bone) {
@@ -947,7 +1347,7 @@
 
       document.getElementById('btnExamineBone').classList.add('hidden');
       document.getElementById('btnBackToFull').classList.remove('hidden');
-      document.getElementById('btnPanelIsolate').textContent = "🔙 Return to Full System";
+      document.getElementById('btnPanelIsolate').textContent = UI_TEXT[currentLang].returnBtn;
     }
 
     function returnToFullSkeleton() {
@@ -967,7 +1367,7 @@
 
       document.getElementById('btnBackToFull').classList.add('hidden');
       if (selectedBone) document.getElementById('btnExamineBone').classList.remove('hidden');
-      document.getElementById('btnPanelIsolate').textContent = "🔍 Examine Alone (Zoom)";
+      document.getElementById('btnPanelIsolate').textContent = UI_TEXT[currentLang].examineBtn;
     }
 
     document.getElementById('btnExamineBone').onclick = () => isolateAndZoomBone(selectedBone);
@@ -986,19 +1386,28 @@
       }
     };
 
+    // Bilingual Voice Readout (Speaks Bengali in 'bn' mode and English in 'en' mode)
+    document.getElementById('btnSpeak').onclick = () => {
+      if (!selectedBone || !('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const content = selectedBone.userData[currentLang] || selectedBone.userData.en;
+      const u = new SpeechSynthesisUtterance(`${content.title}. ${content.side}. ${content.clinical}`);
+      u.lang = (currentLang === 'bn') ? 'bn-IN' : 'en-IN';
+      u.rate = 0.92;
+      window.speechSynthesis.speak(u);
+    };
+
     // ============================================================================
-    // 7. HIDE / UNHIDE LEFT & RIGHT DRAWERS + FILTERS
+    // 9. LEFT & RIGHT DRAWER TOGGLES + FILTERS
     // ============================================================================
     const leftPanel = document.getElementById('leftPanel');
     const rightPanel = document.getElementById('rightPanel');
     const leftBtnText = document.getElementById('leftBtnText');
-    let isLeftOpen = true;
-    let isRightOpen = false;
 
     function toggleLeftPanel() {
       isLeftOpen = !isLeftOpen;
       leftPanel.classList.toggle('-translate-x-[120%]', !isLeftOpen);
-      leftBtnText.textContent = isLeftOpen ? "Hide Tools" : "Show Tools";
+      leftBtnText.textContent = isLeftOpen ? UI_TEXT[currentLang].hideTools : UI_TEXT[currentLang].showTools;
     }
 
     function openRightPanel() {
@@ -1074,13 +1483,17 @@
       const q = e.target.value.trim().toLowerCase();
       searchDropdown.innerHTML = '';
       if (!q) { searchDropdown.classList.add('hidden'); return; }
-      const matches = boneMeshes.filter(b => b.userData.cleanTitle.toLowerCase().includes(q)).slice(0, 15);
+      const matches = boneMeshes.filter(b =>
+        b.userData.cleanTitle.toLowerCase().includes(q) ||
+        b.userData.bn.title.toLowerCase().includes(q)
+      ).slice(0, 15);
       if (matches.length > 0) {
         searchDropdown.classList.remove('hidden');
         matches.forEach(m => {
           const row = document.createElement('div');
           row.className = "px-3 py-1.5 hover:bg-slate-700 cursor-pointer flex justify-between items-center text-amber-300";
-          row.innerHTML = `<span>${m.userData.cleanTitle}</span> <span class="text-[10px] text-slate-400">Zoom ➔</span>`;
+          const displayTitle = (currentLang === 'bn') ? m.userData.bn.title : m.userData.cleanTitle;
+          row.innerHTML = `<span class="truncate pr-2">${displayTitle}</span> <span class="text-[10px] text-slate-400">Zoom ➔</span>`;
           row.onclick = () => {
             m.visible = true;
             selectBone(m);
@@ -1094,17 +1507,8 @@
       }
     };
 
-    document.getElementById('btnSpeak').onclick = () => {
-      if (!selectedBone || !('speechSynthesis' in window)) return;
-      window.speechSynthesis.cancel();
-      const d = selectedBone.userData;
-      const u = new SpeechSynthesisUtterance(`${d.cleanTitle}. ${d.side_determination}. Clinical correlation: ${d.clinical}`);
-      u.rate = 0.95;
-      window.speechSynthesis.speak(u);
-    };
-
     // ============================================================================
-    // 8. RENDER LOOP
+    // 10. RENDER LOOP
     // ============================================================================
     const projVec = new THREE.Vector3();
     function animate() {
