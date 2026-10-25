@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>3D Osteology & Skeleton Dissector</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: radial-gradient(circle at center, #1e293b 0%, #090d16 100%);
+      color:white;
+      font-family: system-ui, -apple-system, sans-serif;
+      touch-action: none;
+      user-select: none;
+    }
+    #canvas-container { width: 100vw; height: 100vh; position: relative; }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: #0f172a; }
+    ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+
+    /* Single Clean Floating Tag for Selected Bone */
+    #activeBoneTag {
+      position: absolute;
+      transform: translate(-50%, -140%);
+      pointer-events: none;
+      background: rgba(15, 23, 42, 0.92);
+      border: 1.5px solid #f59e0b;
+      color: #fef3c7;
+      padding: 4px 12px;
+      border-radius: 9999px;
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+      box-shadow: 0 4px 20px rgba(245, 158, 11, 0.45);
+      z-index: 15;
+      transition: opacity 0.15s;
+    }
+  </style>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+      }
+    }
+  </script>
+</head>
+<body>
+
+  <!-- 3D Viewport -->
+  <div id="canvas-container">
+    <div id="activeBoneTag" class="hidden">📍 Selected Bone</div>
+  </div>
+
+  <!-- TOP HEADER BAR -->
+  <header class="fixed top-0 left-0 right-0 z-30 flex flex-wrap items-center justify-between gap-2 px-3 py-2.5 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
+    <div class="flex items-center gap-2">
+      <!-- Left Panel Hide/Unhide Toggle Button -->
+      <button id="btnToggleLeft" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-600 text-xs font-semibold text-amber-400 flex items-center gap-1.5 transition">
+        <span>☰</span> <span id="leftBtnText">Hide Tools</span>
+      </button>
+
+      <div class="hidden sm:block ml-1">
+        <h1 class="text-sm font-bold text-white leading-tight">MBBS 3D Human Osteology</h1>
+        <p class="text-[10px] text-slate-400">Tap to Select • Double-Tap Bone to Isolate & Examine</p>
+      </div>
+    </div>
+
+    <!-- Center Action Bar: Isolate Bone / Return to Full Skeleton -->
+    <div class="flex items-center gap-2">
+      <button id="btnExamineBone" class="hidden bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-3.5 py-1.5 rounded-lg text-xs shadow-lg shadow-amber-500/20 transition transform active:scale-95">
+        🔍 Isolate & Zoom Bone
+      </button>
+
+      <button id="btnBackToFull" class="hidden bg-cyan-600 hover:bg-cyan-500 text-white font-bold px-3.5 py-1.5 rounded-lg text-xs shadow-lg transition">
+        🔙 Back to Full Skeleton
+      </button>
+
+      <button id="btnResetView" class="bg-slate-800 hover:bg-slate-700 border border-slate-700 px-3 py-1.5 rounded-lg text-xs font-medium transition">
+        🔄 Reset Camera
+      </button>
+
+      <!-- Right Panel Hide/Unhide Toggle Button -->
+      <button id="btnToggleRight" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 border border-slate-600 text-xs font-semibold text-cyan-400 transition">
+        📖 Details
+      </button>
+    </div>
+  </header>
+
+  <!-- LEFT PANEL: Collapsible Tools, Clutter Cleaner & Region Filters -->
+  <aside id="leftPanel" class="fixed top-14 left-3 z-20 w-72 max-h-[calc(100vh-4.5rem)] overflow-y-auto bg-slate-900/95 backdrop-blur-md border border-slate-800 rounded-2xl p-3.5 shadow-2xl transition-transform duration-300 ease-in-out">
+    <div class="flex justify-between items-center mb-2.5 border-b border-slate-800 pb-2">
+      <span class="text-xs font-bold uppercase tracking-wider text-amber-400">🛠️ Dissector Controls</span>
+      <button id="btnCloseLeft" class="text-slate-400 hover:text-white text-xs px-1.5 py-0.5 rounded bg-slate-800">✕ Hide</button>
+    </div>
+
+    <!-- Search Bone -->
+    <div class="mb-3 relative">
+      <input id="searchBone" type="text" placeholder="🔍 Search bone (e.g. Femur, Clavicle)..." 
+        class="w-full px-3 py-1.5 text-xs bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:border-amber-400 text-white" />
+      <div id="searchDropdown" class="mt-1 max-h-36 overflow-y-auto bg-slate-800 border border-slate-700 rounded-lg hidden divide-y divide-slate-700 text-xs"></div>
+    </div>
+
+    <!-- Fix Messy Z-Anatomy 3D Labels -->
+    <div class="mb-3 bg-slate-800/70 border border-slate-700/80 rounded-xl p-2.5">
+      <div class="flex justify-between items-center mb-1.5">
+        <span class="text-[11px] font-semibold text-emerald-400">🧹 Clutter Filter (Z-Anatomy)</span>
+        <span id="clutterCount" class="text-[10px] bg-emerald-950 text-emerald-300 px-1.5 py-0.5 rounded">Auto-Cleaned</span>
+      </div>
+      <div class="grid grid-cols-2 gap-1.5 text-[11px]">
+        <button id="btnToggle3DText" class="bg-slate-700 hover:bg-slate-600 py-1.5 px-2 rounded text-slate-200 font-medium transition">
+          3D Mesh Labels: OFF
+        </button>
+        <button id="btnGhostOthers" class="bg-indigo-600/80 hover:bg-indigo-500 py-1.5 px-2 rounded text-white font-medium transition">
+          👻 X-Ray Others
+        </button>
+      </div>
+    </div>
+
+    <!-- Skeletal Divisions -->
+    <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Skeletal System Filter</p>
+    <div class="grid grid-cols-3 gap-1.5 text-xs mb-3">
+      <button id="btnShowAllBones" class="bg-slate-700 hover:bg-slate-600 py-1.5 rounded-lg font-semibold text-white">All</button>
+      <button id="btnAxialOnly" class="bg-amber-500/20 border border-amber-500/40 text-amber-300 hover:bg-amber-500/30 py-1.5 rounded-lg font-semibold">Axial</button>
+      <button id="btnAppendicularOnly" class="bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 hover:bg-cyan-500/30 py-1.5 rounded-lg font-semibold">Appendicular</button>
+    </div>
+
+    <!-- Regional Trays -->
+    <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Osteology Trays (By Region)</p>
+    <div class="space-y-1 text-xs mb-3">
+      <button data-reg="Skull" class="tray-btn w-full text-left px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 flex justify-between">
+        <span>💀 Skull, Cranium & Mandible</span> <span class="text-slate-500">➔</span>
+      </button>
+      <button data-reg="Vertebra" class="tray-btn w-full text-left px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 flex justify-between">
+        <span>🦴 Vertebral Column & Sacrum</span> <span class="text-slate-500">➔</span>
+      </button>
+      <button data-reg="Thorax" class="tray-btn w-full text-left px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 flex justify-between">
+        <span>🫁 Thoracic Cage (Ribs & Sternum)</span> <span class="text-slate-500">➔</span>
+      </button>
+      <button data-reg="Upper" class="tray-btn w-full text-left px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 flex justify-between">
+        <span>💪 Upper Limb & Pectoral Girdle</span> <span class="text-slate-500">➔</span>
+      </button>
+      <button data-reg="Lower" class="tray-btn w-full text-left px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 flex justify-between">
+        <span>🦵 Lower Limb & Pelvic Girdle</span> <span class="text-slate-500">➔</span>
+      </button>
+    </div>
+
+    <!-- Explode / Disarticulate Slider -->
+    <div class="mb-3 border-t border-slate-800 pt-2.5">
+      <label class="text-xs text-slate-300 flex justify-between">
+        <span>💥 Disarticulate / Explode</span>
+        <span id="explodeVal" class="text-amber-400 font-mono">0%</span>
+      </label>
+      <input id="explodeSlider" type="range" min="0" max="1" step="0.01" value="0" class="w-full accent-amber-400 mt-1" />
+    </div>
+
+    <!-- Manual GLB File Fallback (If testing offline without local web server) -->
+    <div class="border-t border-slate-800 pt-2.5">
+      <label class="block w-full text-center cursor-pointer bg-emerald-600/20 border border-emerald-500/40 hover:bg-emerald-600/30 text-emerald-300 py-1.5 rounded-lg text-xs font-semibold transition">
+        📂 Load Custom .GLB File
+        <input id="fileInput" type="file" accept=".glb,.gltf" class="hidden" />
+      </label>
+    </div>
+  </aside>
+
+  <!-- RIGHT PANEL: Full MBBS Osteology Details & Examination Actions -->
+  <section id="rightPanel" class="fixed bottom-0 right-0 sm:top-14 sm:bottom-auto sm:right-3 z-20 w-full sm:w-96 max-h-[62vh] sm:max-h-[calc(100vh-4.5rem)] overflow-y-auto bg-slate-900/95 backdrop-blur-md border-t sm:border border-slate-700 rounded-t-2xl sm:rounded-2xl p-4 shadow-2xl transition-transform duration-300 ease-in-out translate-y-full sm:translate-y-0 sm:translate-x-[110%]">
+    <!-- Header -->
+    <div class="flex justify-between items-start border-b border-slate-800 pb-2.5 mb-3">
+      <div>
+        <div class="flex items-center gap-2">
+          <h2 id="detailTitle" class="text-base sm:text-lg font-bold text-amber-400">Select Any Bone</h2>
+          <button id="btnSpeak" title="Listen to Viva Summary" class="px-2 py-0.5 rounded bg-slate-800 hover:bg-slate-700 text-xs text-cyan-300 border border-slate-700">🔊 Audio</button>
+        </div>
+        <p id="detailLatin" class="text-xs italic text-slate-400">Terminologia Anatomica</p>
+      </div>
+      <button id="btnCloseRight" class="text-slate-400 hover:text-white px-2 py-0.5 rounded bg-slate-800 text-xs">✕</button>
+    </div>
+
+    <!-- Quick Bone Action Bar inside Right Panel -->
+    <div class="grid grid-cols-2 gap-2 mb-3 text-xs font-semibold">
+      <button id="btnPanelIsolate" class="bg-amber-500 hover:bg-amber-400 text-slate-950 py-2 rounded-lg transition shadow">
+        🔍 Examine Bone Alone
+      </button>
+      <button id="btnPanelHideBone" class="bg-rose-600/80 hover:bg-rose-500 text-white py-2 rounded-lg transition">
+        👁️ Hide This Bone
+      </button>
+    </div>
+
+    <!-- Classification Badges -->
+    <div class="flex flex-wrap gap-1.5 mb-3 text-[11px]">
+      <span id="badgeDivision" class="bg-amber-500/20 border border-amber-500/40 text-amber-300 px-2 py-0.5 rounded-full">Axial / Appendicular</span>
+      <span id="badgeRegion" class="bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 px-2 py-0.5 rounded-full">Region</span>
+      <span id="badgeType" class="bg-slate-800 border border-slate-700 text-slate-300 px-2 py-0.5 rounded-full">Bone Type</span>
+    </div>
+
+    <!-- Detailed MBBS Viva Sections -->
+    <div class="space-y-2.5 text-xs leading-relaxed">
+      <div class="bg-amber-950/30 border border-amber-700/50 p-2.5 rounded-xl">
+        <strong class="text-amber-400 block uppercase text-[10px] tracking-wider">🧭 1. Anatomical Position & Side Determination</strong>
+        <p id="detailSide" class="text-slate-200 mt-1">Tap any bone on the 3D skeleton to view its side determination points.</p>
+      </div>
+
+      <div class="bg-slate-800/70 border border-slate-700/60 p-2.5 rounded-xl">
+        <strong class="text-cyan-400 block uppercase text-[10px] tracking-wider">📌 2. Key Bony Landmarks, Parts & Surfaces</strong>
+        <p id="detailFeatures" class="text-slate-200 mt-1">-</p>
+      </div>
+
+      <div class="bg-slate-800/70 border border-slate-700/60 p-2.5 rounded-xl">
+        <strong class="text-emerald-400 block uppercase text-[10px] tracking-wider">💪 3. Muscle Origins, Insertions & Ligaments</strong>
+        <p id="detailAttachments" class="text-slate-200 mt-1">-</p>
+      </div>
+
+      <div class="bg-slate-800/70 border border-slate-700/60 p-2.5 rounded-xl">
+        <strong class="text-purple-400 block uppercase text-[10px] tracking-wider">🌱 4. Ossification & Growing End</strong>
+        <p id="detailOssification" class="text-slate-200 mt-1">-</p>
+      </div>
+
+      <div class="bg-rose-950/50 border border-rose-700/60 p-2.5 rounded-xl">
+        <strong class="text-rose-400 block uppercase text-[10px] tracking-wider">🏥 5. Clinical Anatomy & Fracture Relations</strong>
+        <p id="detailClinical" class="text-slate-100 mt-1">-</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Loading Overlay -->
+  <div id="loadingScreen" class="fixed inset-0 z-50 bg-slate-950/90 backdrop-blur-md flex flex-col items-center justify-center">
+    <div class="w-12 h-12 border-4 border-amber-400 border-t-transparent rounded-full animate-spin mb-3"></div>
+    <p id="loadingMsg" class="text-sm font-bold text-amber-300">Auto-Loading 3D Human Skeleton...</p>
+    <p class="text-xs text-slate-400 mt-1">Filtering Z-Anatomy 3D text clutter & preparing bones</p>
+  </div>
+
+  <script type="module">
+    import * as THREE from 'three';
+    import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+    import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+    import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+
+    // ============================================================================
+    // 1. SCENE, CAMERA & SMOOTH ORBIT CONTROLS
+    // ============================================================================
+    const container = document.getElementById('canvas-container');
+    const activeBoneTag = document.getElementById('activeBoneTag');
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.005, 2000);
+    camera.position.set(0, 1.0, 3.0);
+
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    container.appendChild(renderer.domElement);
+
+    const controls = new OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.07;
+
+    // Studio Osteology Lighting
+    scene.add(new THREE.AmbientLight(0xfffbeb, 0.9));
+    const dirLight1 = new THREE.DirectionalLight(0xffffff, 1.4);
+    dirLight1.position.set(5, 10, 8);
+    scene.add(dirLight1);
+    const dirLight2 = new THREE.DirectionalLight(0x93c5fd, 0.5);
+    dirLight2.position.set(-6, -4, -6);
+    scene.add(dirLight2);
+
+    // ============================================================================
+    // 2. STATE & BUILT-IN MBBS OSTEOLOGY KNOWLEDGE BASE
+    // ============================================================================
+    let rootModel = null;
+    let boneMeshes = [];      // Actual interactive 3D bones
+    let labelMeshes = [];     // Z-Anatomy 3D text/leader-line clutter meshes
+    let selectedBone = null;
+    let isIsolatedMode = false;
+    let show3DTextMeshes = false;
+    let isGhostMode = false;
+
+    // Default full-body camera state for smooth reset
+    let defaultCamPos = new THREE.Vector3(0, 1, 3);
+    let defaultTarget = new THREE.Vector3(0, 0, 0);
+
+    // Smooth Camera Animation Targets
+    let camAnimActive = false;
+    let targetCamPos = new THREE.Vector3();
+    let targetLookAt = new THREE.Vector3();
+
+    // High-Yield MBBS Osteology Dictionary (Auto-matches bone names from Z-Anatomy)
+    const MBBS_OSTEOLOGY_DB = {
+      "clavicle": {
+        type: "Modified Long Bone (Membranous)",
+        side: "1. Lateral (acromial) end is flat; Medial (sternal) end is large & quadrilateral. 2. Shaft's medial two-thirds is convex anteriorly, lateral one-third is concave anteriorly. 3. Subclavian groove lies on the inferior surface.",
+        features: "Sternal end, Acromial end, Shaft (medial 2/3 has 4 surfaces; lateral 1/3 has 2 borders & 2 surfaces), Conoid tubercle & Trapezoid ridge.",
+        attachments: "Origins: Pectoralis major (anterior medial 2/3), Deltoid (anterior border lateral 1/3), Sternocleidomastoid (superior medial 1/3). Insertions: Trapezius (posterior border lateral 1/3), Subclavius (subclavian groove), Coracoclavicular ligament (conoid & trapezoid parts).",
+        ossification: "First bone in the body to ossify (5th–6th week IU). Only long bone that ossifies in membrane with TWO primary centers for the shaft and 1 secondary center at sternal end (Growing end).",
+        clinical: "Most commonly fractured bone at the junction of medial 2/3 and lateral 1/3. Has NO medullary cavity. Cleidocranial dysostosis causes absent/imperfect clavicles."
+      },
+      "scapula": {
+        type: "Flat Triangular Bone",
+        side: "1. Glenoid cavity faces laterally, forward & slightly upward. 2. Coracoid process projects forward. 3. Spine of scapula & convex surface are posterior; concave subscapular fossa is anterior (costal).",
+        features: "2 Surfaces (Costal, Dorsal divided by spine into Supraspinous & Infraspinous fossae), 3 Borders (Superior with suprascapular notch, Lateral, Medial), 3 Angles, 3 Processes (Spine, Acromion, Coracoid).",
+        attachments: "Subscapularis, Supraspinatus, Infraspinatus (Rotator cuff origins); Long head of Biceps (supraglenoid tubercle); Long head of Triceps (infraglenoid tubercle); Pectoralis minor, Coracobrachialis & Short head of Biceps (coracoid process); Serratus anterior (medial border).",
+        ossification: "1 Primary center (8th wk IU) and 7 Secondary centers (1 for body, 2 for coracoid, 2 for acromion, 1 for medial border, 1 for inferior angle).",
+        clinical: "Winging of Scapula due to paralysis of Serratus Anterior (Long Thoracic Nerve of Bell C5, C6, C7 injury). Scapulothoracic anastomosis connects subclavian & axillary arteries."
+      },
+      "humerus": {
+        type: "Typical Long Bone",
+        side: "1. Upper end bears a rounded head facing medially, backward & upward. 2. Lesser tubercle & intertubercular sulcus (bicipital groove) face anteriorly. 3. Lower end is expanded with deep olecranon fossa posteriorly.",
+        features: "Upper end: Head, Anatomical neck, Surgical neck, Morphological neck, Greater & Lesser tubercles, Bicipital groove. Shaft: Deltoid tuberosity, Radial (spiral) groove. Lower end: Capitulum, Trochlea, Medial & Lateral epicondyles, Coronoid, Radial & Olecranon fossae.",
+        attachments: "Insertions: Supraspinatus, Infraspinatus, Teres minor (Greater tubercle); Subscapularis (Lesser tubercle); Pectoralis major (lateral lip), Latissimus dorsi (floor), Teres major (medial lip of bicipital groove); Deltoid (deltoid tuberosity). Origins: Brachialis, Brachioradialis, Common Flexor & Extensor origins.",
+        ossification: "1 Primary center for shaft (8th wk IU). Upper end: 3 secondary centers fusing into one compound epiphysis that fuses with shaft at 20 years (Growing End). Lower end: 4 secondary centers.",
+        clinical: "Three major nerves directly related to bone: 1. Axillary nerve (Surgical neck — loss of deltoid contour), 2. Radial nerve (Spiral groove — Wrist drop in mid-shaft fracture), 3. Ulnar nerve (Behind medial epicondyle)."
+      },
+      "radius": {
+        type: "Typical Long Bone (Lateral Bone of Forearm)",
+        side: "1. Disc-shaped head is superior; expanded lower end with styloid process is lateral. 2. Concave distal surface with Lister's dorsal tubercle faces posteriorly. 3. Sharp interosseous border faces medially.",
+        features: "Upper end: Head, Neck, Radial tuberosity. Shaft: Anterior, Posterior & sharp Medial (interosseous) borders. Lower end: Styloid process laterally, Ulnar notch medially, Dorsal tubercle of Lister posteriorly.",
+        attachments: "Insertion: Biceps brachii (posterior rough part of radial tuberosity), Supinator, Pronator teres (mid-shaft lateral surface), Brachioradialis (base of styloid process), Pronator quadratus.",
+        ossification: "1 Primary center (8th wk IU); Lower end is the Growing End (ossifies 1st yr, fuses 20th yr); Upper end ossifies 4th yr, fuses 18th yr.",
+        clinical: "Colles' Fracture: Transverse fracture of distal 2 cm of radius from fall on outstretched hand — causes 'Dinner Fork Deformity'. Pulled Elbow (subluxation of radial head from annular ligament) in children."
+      },
+      "ulna": {
+        type: "Typical Long Bone (Medial Bone of Forearm)",
+        side: "1. Hook-like upper end (olecranon & coronoid) is superior; small rounded head with styloid process is inferior. 2. Trochlear notch faces anteriorly. 3. Sharp interosseous border faces laterally.",
+        features: "Upper end: Olecranon & Coronoid processes, Trochlear & Radial notches, Ulnar tuberosity, Supinator crest. Shaft: Sharp lateral interosseous border. Lower end: Head & posteromedial Styloid process.",
+        attachments: "Insertions: Triceps brachii (superior surface of olecranon), Brachialis (ulnar tuberosity & anterior coronoid). Origins: Flexor digitorum profundus, Pronator quadratus, Supinator.",
+        ossification: "1 Primary center (8th wk IU). Lower end is the Growing End (fuses at 18–20 yrs).",
+        clinical: "Nightstick Fracture (isolated shaft fracture from direct blow); Monteggia Fracture (fracture of upper third of ulna with dislocation of radial head)."
+      },
+      "femur": {
+        type: "Longest & Strongest Long Bone",
+        side: "1. Spherical head is superior and directed medially, upward & slightly forward. 2. Cylindrical shaft is convex anteriorly. 3. Prominent longitudinal ridge (Linea Aspera) lies on the posterior border.",
+        features: "Upper end: Head (with fovea), Neck (125° neck-shaft angle), Greater & Lesser trochanters, Intertrochanteric line (anterior) & crest (posterior with quadrate tubercle). Shaft: Linea aspera, Gluteal tuberosity. Lower end: Medial & Lateral condyles, Intercondylar fossa, Adductor tubercle.",
+        attachments: "Insertions: Ligament of head of femur (fovea), Gluteus medius & minimus (greater trochanter), Iliopsoas (lesser trochanter), Gluteus maximus (gluteal tuberosity), Adductor magnus (adductor tubercle). Origins: Vastus lateralis, Vastus medialis, Vastus intermedius.",
+        ossification: "1 Primary shaft center (7th wk IU). Lower end secondary center appears at end of 9th month IU (Medicolegal proof of fetal viability at birth!) and is the Growing End.",
+        clinical: "Intracapsular fracture of Neck of Femur tears retinacular fibers of Medial Circumflex Femoral Artery, leading to Avascular Necrosis (AVN) of femoral head."
+      },
+      "tibia": {
+        type: "Long Bone (Medial Weight-Bearing Bone of Leg)",
+        side: "1. Expanded condylar end is superior; smaller end with medial malleolus is inferior. 2. Prominent tibial tuberosity & sharp shin border face anteriorly. 3. Medial malleolus lies on the medial side of the lower end.",
+        features: "Upper end: Medial & Lateral condyles, Intercondylar eminence, Tibial tuberosity, Gerdy's tubercle. Shaft: Subcutaneous medial surface, Soleal line posteriorly. Lower end: Medial malleolus, Fibular notch.",
+        attachments: "Insertion: Patellar tendon / Quadriceps femoris (tibial tuberosity), Sartorius, Gracilis, Semitendinosus ('Pes Anserinus' — Guy ropes on upper medial surface), Iliotibial tract (Gerdy's tubercle). Origin: Tibialis anterior, Soleus (soleal line).",
+        ossification: "1 Primary center (7th wk IU). Upper end is the Growing End (appears at birth, fuses at 18–20 yrs).",
+        clinical: "Subcutaneous medial surface is the commonest site of open (compound) fracture and delayed union due to poor muscular blood supply in lower third. Osgood-Schlatter disease affects tibial tuberosity."
+      },
+      "fibula": {
+        type: "Long Slender Bone (Non-Weight-Bearing Lateral Bone of Leg)",
+        side: "1. Rounded head with styloid process is superior; flattened lateral malleolus is inferior. 2. Articular facet of lateral malleolus faces medially. 3. Deep malleolar fossa lies posteriorly & medially on the lower end.",
+        features: "Upper end: Head, Styloid process, Neck. Shaft: 3 borders & 3 surfaces. Lower end: Lateral malleolus with triangular subcutaneous lateral surface and posteromedial malleolar fossa.",
+        attachments: "Insertion: Biceps femoris tendon & Fibular collateral ligament (head). Origins: Peroneus longus & brevis (lateral surface — common source of bone grafts!).",
+        ossification: "Violates the Law of Ossification! Lower end secondary center appears first (1st yr) and fuses first (15 yrs), while Upper end (Growing End) appears later (4th yr) and fuses later (18–20 yrs).",
+        clinical: "Common Peroneal (Fibular) Nerve winds directly around the Neck of Fibula — fracture or tight plaster cast causes Foot Drop and loss of sensation over dorsum of foot."
+      },
+      "sternum": {
+        type: "Flat Axial Bone",
+        side: "1. Broad thick Manubrium is superior; pointed Xiphoid process is inferior. 2. Anterior surface is slightly convex & rough; posterior surface is smooth & slightly concave.",
+        features: "Manubrium (Suprasternal/jugular notch, Clavicular notches), Sternal Angle of Louis (at T4/T5 intervertebral disc level), Body (4 sternebrae with costal facets), Xiphoid process.",
+        attachments: "Origins: Pectoralis major, Sternocleidomastoid, Sternohyoid, Sternothyroid, Diaphragm (posterior xiphoid). Insertion: Rectus abdominis.",
+        ossification: "Cartilaginous ossification from 6 vertical centers (1 manubrium, 4 body, 1 xiphoid).",
+        clinical: "Sternal Angle (Angle of Louis) articulates with 2nd costal cartilage (landmark for counting ribs in auscultation). Common site for Bone Marrow Aspiration & Median Sternotomy."
+      }
+    };
+
+    // ============================================================================
+    // 3. AUTO-LOAD SKELETON.GLB & FILTER Z-ANATOMY 3D TEXT CLUTTER
+    // ============================================================================
+    const draco = new DRACOLoader();
+    draco.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.6/');
+    const loader = new GLTFLoader();
+    loader.setDRACOLoader(draco);
+
+    // Automatically attempt ./skeleton.glb -> ./model.glb -> Fallback Demo Skeleton
+    loader.load(
+      './skeleton.glb',
+      (gltf) => processLoadedGLTF(gltf.scene),
+      undefined,
+      () => {
+        loader.load(
+          './model.glb',
+          (gltf) => processLoadedGLTF(gltf.scene),
+          undefined,
+          () => {
+            console.log("No local skeleton.glb found yet — loading interactive MBBS Skeleton Demo.");
+            buildFallbackSkeleton();
+          }
+        );
+      }
+    );
+
+    // Manual File Picker Support
+    document.getElementById('fileInput').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+      document.getElementById('loadingScreen').classList.remove('hidden');
+      loader.load(URL.createObjectURL(file), (gltf) => processLoadedGLTF(gltf.scene));
+    });
+
+    // Detects whether a mesh in Z-Anatomy is a 3D Text Label or Leader Line instead of a true bone
+    function isZAnatomyLabelOrLineMesh(obj) {
+      const n = (obj.name || '').toLowerCase();
+      const pName = (obj.parent && obj.parent.name ? obj.parent.name : '').toLowerCase();
+
+      // 1. Z-Anatomy naming conventions for 3D labels, text & leader lines
+      if (
+        n.endsWith('.t') || n.includes('_t_') || n.includes('text') ||
+        n.includes('label') || n.includes('line') || n.includes('leader') ||
+        n.includes('curve') || n.includes('arrow') || n.includes('pin') ||
+        pName.endsWith('.t') || pName.includes('label') || pName.includes('text')
+      ) {
+        return true;
+      }
+
+      // 2. Geometric check: Leader lines & flat 2D text planes have near-zero thickness on one axis
+      if (obj.geometry) {
+        obj.geometry.computeBoundingBox();
+        const bb = obj.geometry.boundingBox;
+        if (bb) {
+          const s = new THREE.Vector3();
+          bb.getSize(s);
+          const minDim = Math.min(s.x, s.y, s.z);
+          const maxDim = Math.max(s.x, s.y, s.z);
+          // Flat text glyph or ultra-thin leader line
+          if (minDim < 0.0002 && maxDim < 0.08) return true;
+        }
+      }
+      return false;
+    }
+
+    function processLoadedGLTF(sceneRoot) {
+      if (rootModel) scene.remove(rootModel);
+      boneMeshes = [];
+      labelMeshes = [];
+      selectedBone = null;
+      isIsolatedMode = false;
+
+      rootModel = sceneRoot;
+      scene.add(rootModel);
+
+      // Step 1: Identify true bones vs Z-Anatomy 3D label clutter
+      rootModel.traverse((child) => {
+        if (child.isMesh) {
+          if (isZAnatomyLabelOrLineMesh(child)) {
+            child.visible = false;        // Hide messy 3D text by default!
+            child.raycast = () => {};     // Never block mouse/touch clicks on bones!
+            labelMeshes.push(child);
+          } else {
+            child.material = child.material.clone();
+            child.material.side = THREE.DoubleSide;
+            child.userData.origPos = child.position.clone();
+
+            child.geometry.computeBoundingBox();
+            const localCenter = new THREE.Vector3();
+            child.geometry.boundingBox.getCenter(localCenter);
+            child.userData.localCenter = localCenter;
+
+            enrichBoneMetadata(child);
+            boneMeshes.push(child);
+          }
+        }
+      });
+
+      // Step 2: Center & Frame only the True Bone Meshes (ignoring distant floating labels)
+      const boneBox = new THREE.Box3();
+      boneMeshes.forEach(b => boneBox.expandByObject(b));
+      if (boneBox.isEmpty()) boneBox.setFromObject(rootModel);
+
+      const center = boneBox.getCenter(new THREE.Vector3());
+      const size = boneBox.getSize(new THREE.Vector3()).length();
+      rootModel.position.sub(center);
+
+      // Compute outward vector for each bone relative to skeleton center
+      boneMeshes.forEach(b => {
+        const wb = new THREE.Box3().setFromObject(b);
+        const wc = wb.getCenter(new THREE.Vector3());
+        b.userData.explodeDir = wc.length() > 0.001 ? wc.normalize() : new THREE.Vector3(0, 1, 0);
+      });
+
+      defaultCamPos.set(0, size * 0.08, size * 1.15);
+      defaultTarget.set(0, 0, 0);
+      camera.position.copy(defaultCamPos);
+      controls.target.copy(defaultTarget);
+      controls.update();
+
+      document.getElementById('clutterCount').textContent = `${labelMeshes.length} Labels Hidden`;
+      document.getElementById('loadingScreen').classList.add('hidden');
+    }
+
+    // Enriches any bone mesh with clean names, regions, and MBBS Osteology Viva data
+    function enrichBoneMetadata(mesh) {
+      const d = mesh.userData;
+      let raw = (d.label || mesh.name || 'Bone').replace(/\.\d+$/g, '').replace(/_/g, ' ').trim();
+
+      let side = "Midline / Unpaired Bone";
+      const lowerRaw = raw.toLowerCase();
+      if (lowerRaw.endsWith('.l') || lowerRaw.endsWith(' l') || lowerRaw.includes('left')) {
+        raw = raw.replace(/\.[lL]$/, '').replace(/\s[lL]$/, '');
+        if (!raw.toLowerCase().startsWith('left')) raw = "Left " + raw;
+        side = "Left Side";
+      } else if (lowerRaw.endsWith('.r') || lowerRaw.endsWith(' r') || lowerRaw.includes('right')) {
+        raw = raw.replace(/\.[rR]$/, '').replace(/\s[rR]$/, '');
+        if (!raw.toLowerCase().startsWith('right')) raw = "Right " + raw;
+        side = "Right Side";
+      }
+
+      const low = raw.toLowerCase();
+
+      // Regional & Axial/Appendicular Classification
+      let division = "Axial Skeleton";
+      let region = "Skull";
+      if (anyMatch(low, ['frontal', 'parietal', 'occipital', 'temporal', 'sphenoid', 'ethmoid', 'maxilla', 'mandible', 'zygomatic', 'nasal', 'lacrimal', 'vomer', 'palatine', 'hyoid', 'skull', 'cranium'])) {
+        division = "Axial Skeleton"; region = "Skull";
+      } else if (anyMatch(low, ['vertebra', 'atlas', 'axis', 'cervical', 'thoracic', 'lumbar', 'sacrum', 'coccyx'])) {
+        division = "Axial Skeleton"; region = "Vertebra";
+      } else if (anyMatch(low, ['rib', 'costa', 'sternum', 'manubrium', 'xiphoid'])) {
+        division = "Axial Skeleton"; region = "Thorax";
+      } else if (anyMatch(low, ['clavicle', 'scapula', 'humerus', 'radius', 'ulna', 'carpal', 'scaphoid', 'lunate', 'triquetrum', 'pisiform', 'trapezium', 'trapezoid', 'capitate', 'hamate', 'metacarpal'])) {
+        division = "Appendicular Skeleton"; region = "Upper";
+      } else if (anyMatch(low, ['hip', 'pelvis', 'ilium', 'ischium', 'pubis', 'femur', 'patella', 'tibia', 'fibula', 'tarsal', 'talus', 'calcaneus', 'navicular', 'cuboid', 'cuneiform', 'metatarsal', 'phalang'])) {
+        division = "Appendicular Skeleton"; region = "Lower";
+      }
+
+      // Match against built-in MBBS Osteology dictionary
+      let matchedKey = Object.keys(MBBS_OSTEOLOGY_DB).find(k => low.includes(k));
+      const kb = matchedKey ? MBBS_OSTEOLOGY_DB[matchedKey] : null;
+
+      d.cleanTitle = raw;
+      d.latin = d.latin || `Os / Terminologia (${raw})`;
+      d.division = d.division || division;
+      d.region = d.region || region;
+      d.bone_type = kb ? kb.type : (d.bone_type || "Skeletal Bone");
+      d.side_determination = kb ? `(${side}) ${kb.side}` : (d.side_determination || `${side}: 1. Identify Superior vs Inferior extremity, 2. Anterior vs Posterior surface, 3. Medial vs Lateral border.`);
+      d.features = kb ? kb.features : (d.features || `Principal anatomical surfaces, borders, processes, and articular facets of ${raw}.`);
+      d.attachments = kb ? kb.attachments : (d.attachments || `Major muscular origins, insertions, and ligamentous attachments of ${raw}.`);
+      d.ossification = kb ? kb.ossification : (d.ossification || `Primary center in intrauterine life; secondary epiphyseal centers follow the growing-end rule.`);
+      d.clinical = kb ? kb.clinical : (d.clinical || `High-yield fracture mechanism, neurovascular relations, and surgical landmarks of ${raw}.`);
+    }
+
+    function anyMatch(str, keywords) {
+      return keywords.some(k => str.includes(k));
+    }
+
+    // Fallback Articulated Demo Skeleton (if opening HTML without skeleton.glb)
+    function buildFallbackSkeleton() {
+      const group = new THREE.Group();
+      const mat = new THREE.MeshStandardMaterial({ color: 0xfef3c7, roughness: 0.4 });
+      const parts = [
+        { name: "Skull_Cranium", pos: [0, 0.85, 0], geo: new THREE.SphereGeometry(0.17, 28, 28) },
+        { name: "Sternum", pos: [0, 0.40, 0.13], geo: new THREE.BoxGeometry(0.07, 0.32, 0.025) },
+        { name: "Vertebral_Column", pos: [0, 0.30, -0.07], geo: new THREE.CylinderGeometry(0.045, 0.055, 0.82, 20) },
+        { name: "Left_Clavicle", pos: [0.19, 0.56, 0.08], geo: new THREE.CylinderGeometry(0.022, 0.022, 0.30, 16).rotateZ(Math.PI / 2.1) },
+        { name: "Right_Clavicle", pos: [-0.19, 0.56, 0.08], geo: new THREE.CylinderGeometry(0.022, 0.022, 0.30, 16).rotateZ(-Math.PI / 2.1) },
+        { name: "Left_Scapula", pos: [0.22, 0.44, -0.10], geo: new THREE.BoxGeometry(0.14, 0.22, 0.02) },
+        { name: "Left_Humerus", pos: [0.35, 0.26, 0], geo: new THREE.CylinderGeometry(0.035, 0.03, 0.48, 20) },
+        { name: "Right_Humerus", pos: [-0.35, 0.26, 0], geo: new THREE.CylinderGeometry(0.035, 0.03, 0.48, 20) },
+        { name: "Left_Radius", pos: [0.40, -0.22, 0.02], geo: new THREE.CylinderGeometry(0.022, 0.028, 0.40, 16) },
+        { name: "Left_Ulna", pos: [0.33, -0.22, -0.01], geo: new THREE.CylinderGeometry(0.026, 0.018, 0.42, 16) },
+        { name: "Left_Femur", pos: [0.17, -0.45, 0], geo: new THREE.CylinderGeometry(0.045, 0.04, 0.64, 22) },
+        { name: "Right_Femur", pos: [-0.17, -0.45, 0], geo: new THREE.CylinderGeometry(0.045, 0.04, 0.64, 22) },
+        { name: "Left_Tibia", pos: [0.16, -1.05, 0.01], geo: new THREE.CylinderGeometry(0.038, 0.03, 0.54, 20) },
+        { name: "Left_Fibula", pos: [0.22, -1.05, -0.01], geo: new THREE.CylinderGeometry(0.016, 0.016, 0.52, 16) }
+      ];
+      parts.forEach(p => {
+        const m = new THREE.Mesh(p.geo, mat.clone());
+        m.name = p.name;
+        m.position.set(...p.pos);
+        group.add(m);
+      });
+      processLoadedGLTF(group);
+    }
+
+    // ============================================================================
+    // 4. TOUCH SELECTION & DOUBLE-TAP TO ISOLATE/ZOOM BONE
+    // ============================================================================
+    const raycaster = new THREE.Raycaster();
+    const pointer = new THREE.Vector2();
+    let downPt = { x: 0, y: 0 };
+    let lastTapTime = 0;
+
+    renderer.domElement.addEventListener('pointerdown', (e) => {
+      downPt = { x: e.clientX, y: e.clientY };
+    });
+
+    renderer.domElement.addEventListener('pointerup', (e) => {
+      // Ignore if finger/mouse dragged to rotate
+      if (Math.hypot(e.clientX - downPt.x, e.clientY - downPt.y) > 6) return;
+
+      pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
+      pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
+      raycaster.setFromCamera(pointer, camera);
+
+      const visibleBones = boneMeshes.filter(b => b.visible);
+      const hits = raycaster.intersectObjects(visibleBones, false);
+
+      if (hits.length > 0) {
+        const hitBone = hits[0].object;
+        const now = performance.now();
+
+        // Double-tap / Double-click immediately isolates & zooms into the bone!
+        if (selectedBone === hitBone && (now - lastTapTime) < 350) {
+          isolateAndZoomBone(hitBone);
+        } else {
+          selectBone(hitBone);
+        }
+        lastTapTime = now;
+      }
+    });
+
+    function selectBone(bone) {
+      boneMeshes.forEach(b => b.material.emissive.setHex(0x000000));
+      selectedBone = bone;
+      bone.material.emissive.setHex(0xd97706); // Warm amber highlight
+
+      const d = bone.userData;
+
+      // Show single clean floating badge
+      activeBoneTag.textContent = `📍 ${d.cleanTitle}`;
+      activeBoneTag.classList.remove('hidden');
+
+      // Show top Isolate button
+      if (!isIsolatedMode) {
+        document.getElementById('btnExamineBone').classList.remove('hidden');
+      }
+
+      // Populate Right Details Panel & Slide It In
+      document.getElementById('detailTitle').textContent = d.cleanTitle;
+      document.getElementById('detailLatin').textContent = d.latin;
+      document.getElementById('badgeDivision').textContent = d.division;
+      document.getElementById('badgeRegion').textContent = `${d.region} Region`;
+      document.getElementById('badgeType').textContent = d.bone_type;
+      document.getElementById('detailSide').textContent = d.side_determination;
+      document.getElementById('detailFeatures').textContent = d.features;
+      document.getElementById('detailAttachments').textContent = d.attachments;
+      document.getElementById('detailOssification').textContent = d.ossification;
+      document.getElementById('detailClinical').textContent = d.clinical;
+
+      openRightPanel();
+    }
+
+    // ============================================================================
+    // 5. ISOLATE & ZOOM SINGLE BONE (360° OSTEOLOGY VIVA EXAMINATION)
+    // ============================================================================
+    function isolateAndZoomBone(bone) {
+      if (!bone) return;
+      isIsolatedMode = true;
+
+      // Hide all other bones so student can inspect all surfaces unobstructed
+      boneMeshes.forEach(b => {
+        b.visible = (b === bone);
+      });
+
+      // Compute exact world center and bounding sphere of this single bone
+      const box = new THREE.Box3().setFromObject(bone);
+      const boneCenter = box.getCenter(new THREE.Vector3());
+      const sphere = box.getBoundingSphere(new THREE.Sphere());
+      const radius = Math.max(sphere.radius, 0.08);
+
+      // Animate camera smoothly to face the bone and set orbit pivot to bone's center
+      targetLookAt.copy(boneCenter);
+      const viewDir = camera.position.clone().sub(controls.target).normalize();
+      if (viewDir.lengthSq() < 0.01) viewDir.set(0, 0.2, 1);
+      targetCamPos.copy(boneCenter).addScaledVector(viewDir, radius * 2.8);
+      camAnimActive = true;
+
+      // Update Header Buttons
+      document.getElementById('btnExamineBone').classList.add('hidden');
+      document.getElementById('btnBackToFull').classList.remove('hidden');
+      document.getElementById('btnPanelIsolate').textContent = "🔙 Return to Full Skeleton";
+    }
+
+    function returnToFullSkeleton() {
+      isIsolatedMode = false;
+      boneMeshes.forEach(b => {
+        b.visible = true;
+        b.material.transparent = false;
+        b.material.opacity = 1.0;
+        b.position.copy(b.userData.origPos);
+      });
+
+      document.getElementById('explodeSlider').value = 0;
+      document.getElementById('explodeVal').textContent = '0%';
+
+      targetLookAt.copy(defaultTarget);
+      targetCamPos.copy(defaultCamPos);
+      camAnimActive = true;
+
+      document.getElementById('btnBackToFull').classList.add('hidden');
+      if (selectedBone) document.getElementById('btnExamineBone').classList.remove('hidden');
+      document.getElementById('btnPanelIsolate').textContent = "🔍 Examine Bone Alone";
+    }
+
+    document.getElementById('btnExamineBone').onclick = () => isolateAndZoomBone(selectedBone);
+    document.getElementById('btnBackToFull').onclick = returnToFullSkeleton;
+
+    document.getElementById('btnPanelIsolate').onclick = () => {
+      if (isIsolatedMode) {
+        returnToFullSkeleton();
+      } else if (selectedBone) {
+        isolateAndZoomBone(selectedBone);
+      }
+    };
+
+    document.getElementById('btnPanelHideBone').onclick = () => {
+      if (selectedBone) {
+        selectedBone.visible = false;
+        activeBoneTag.classList.add('hidden');
+      }
+    };
+
+    document.getElementById('btnResetView').onclick = returnToFullSkeleton;
+
+    // ============================================================================
+    // 6. HIDE / UNHIDE LEFT & RIGHT PANELS
+    // ============================================================================
+    const leftPanel = document.getElementById('leftPanel');
+    const rightPanel = document.getElementById('rightPanel');
+    const leftBtnText = document.getElementById('leftBtnText');
+    let isLeftOpen = true;
+    let isRightOpen = false;
+
+    function toggleLeftPanel() {
+      isLeftOpen = !isLeftOpen;
+      if (isLeftOpen) {
+        leftPanel.classList.remove('-translate-x-[120%]');
+        leftBtnText.textContent = "Hide Tools";
+      } else {
+        leftPanel.classList.add('-translate-x-[120%]');
+        leftBtnText.textContent = "Show Tools";
+      }
+    }
+
+    function openRightPanel() {
+      isRightOpen = true;
+      rightPanel.classList.remove('translate-y-full', 'sm:translate-x-[110%]');
+    }
+
+    function closeRightPanel() {
+      isRightOpen = false;
+      rightPanel.classList.add('translate-y-full', 'sm:translate-x-[110%]');
+    }
+
+    document.getElementById('btnToggleLeft').onclick = toggleLeftPanel;
+    document.getElementById('btnCloseLeft').onclick = toggleLeftPanel;
+
+    document.getElementById('btnToggleRight').onclick = () => {
+      if (isRightOpen) closeRightPanel();
+      else openRightPanel();
+    };
+    document.getElementById('btnCloseRight').onclick = closeRightPanel;
+
+    // ============================================================================
+    // 7. LEFT PANEL FILTERS, CLUTTER TOGGLE & SEARCH
+    // ============================================================================
+    // Toggle Z-Anatomy's native 3D mesh labels/lines
+    document.getElementById('btnToggle3DText').onclick = (e) => {
+      show3DTextMeshes = !show3DTextMeshes;
+      labelMeshes.forEach(m => { m.visible = show3DTextMeshes; });
+      e.target.textContent = show3DTextMeshes ? "3D Mesh Labels: ON" : "3D Mesh Labels: OFF";
+      e.target.className = show3DTextMeshes
+        ? "bg-amber-600 py-1.5 px-2 rounded text-white font-medium transition"
+        : "bg-slate-700 hover:bg-slate-600 py-1.5 px-2 rounded text-slate-200 font-medium transition";
+    };
+
+    // X-Ray Ghost Others
+    document.getElementById('btnGhostOthers').onclick = () => {
+      isGhostMode = !isGhostMode;
+      boneMeshes.forEach(b => {
+        if (b !== selectedBone) {
+          b.material.transparent = isGhostMode;
+          b.material.opacity = isGhostMode ? 0.16 : 1.0;
+          b.material.depthWrite = !isGhostMode;
+        }
+      });
+    };
+
+    // Axial / Appendicular / All Filters
+    document.getElementById('btnShowAllBones').onclick = returnToFullSkeleton;
+    document.getElementById('btnAxialOnly').onclick = () => {
+      isIsolatedMode = false;
+      boneMeshes.forEach(b => { b.visible = (b.userData.division === "Axial Skeleton"); });
+    };
+    document.getElementById('btnAppendicularOnly').onclick = () => {
+      isIsolatedMode = false;
+      boneMeshes.forEach(b => { b.visible = (b.userData.division === "Appendicular Skeleton"); });
+    };
+
+    // Regional Trays + Auto Camera Frame
+    document.querySelectorAll('.tray-btn').forEach(btn => {
+      btn.onclick = () => {
+        const reg = btn.getAttribute('data-reg');
+        isIsolatedMode = false;
+        const regBox = new THREE.Box3();
+        boneMeshes.forEach(b => {
+          const match = (b.userData.region === reg);
+          b.visible = match;
+          if (match) regBox.expandByObject(b);
+        });
+        if (!regBox.isEmpty()) {
+          const c = regBox.getCenter(new THREE.Vector3());
+          const s = regBox.getSize(new THREE.Vector3()).length();
+          targetLookAt.copy(c);
+          targetCamPos.set(c.x, c.y + s * 0.1, c.z + Math.max(s * 1.4, 0.5));
+          camAnimActive = true;
+        }
+      };
+    });
+
+    // Explode Slider
+    document.getElementById('explodeSlider').oninput = (e) => {
+      const factor = parseFloat(e.target.value);
+      document.getElementById('explodeVal').textContent = Math.round(factor * 100) + '%';
+      boneMeshes.forEach(b => {
+        b.position.copy(b.userData.origPos).addScaledVector(b.userData.explodeDir, factor * 0.45);
+      });
+    };
+
+    // Live Search Dropdown
+    const searchBone = document.getElementById('searchBone');
+    const searchDropdown = document.getElementById('searchDropdown');
+
+    searchBone.oninput = (e) => {
+      const q = e.target.value.trim().toLowerCase();
+      searchDropdown.innerHTML = '';
+      if (!q) {
+        searchDropdown.classList.add('hidden');
+        return;
+      }
+      const matches = boneMeshes.filter(b => b.userData.cleanTitle.toLowerCase().includes(q)).slice(0, 15);
+      if (matches.length > 0) {
+        searchDropdown.classList.remove('hidden');
+        matches.forEach(m => {
+          const row = document.createElement('div');
+          row.className = "px-3 py-1.5 hover:bg-slate-700 cursor-pointer flex justify-between items-center text-amber-300";
+          row.innerHTML = `<span>${m.userData.cleanTitle}</span> <span class="text-[10px] text-slate-400">Zoom ➔</span>`;
+          row.onclick = () => {
+            m.visible = true;
+            selectBone(m);
+            isolateAndZoomBone(m);
+            searchDropdown.classList.add('hidden');
+          };
+          searchDropdown.appendChild(row);
+        });
+      } else {
+        searchDropdown.classList.add('hidden');
+      }
+    };
+
+    // Voice Narration
+    document.getElementById('btnSpeak').onclick = () => {
+      if (!selectedBone || !('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const d = selectedBone.userData;
+      const u = new SpeechSynthesisUtterance(
+        `${d.cleanTitle}. ${d.bone_type}. Side determination: ${d.side_determination}. Clinical anatomy: ${d.clinical}`
+      );
+      u.rate = 0.95;
+      window.speechSynthesis.speak(u);
+    };
+
+    // ============================================================================
+    // 8. RENDER LOOP & SMOOTH CAMERA ANIMATION
+    // ============================================================================
+    const projVec = new THREE.Vector3();
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      // Smoothly glide camera & orbit pivot when examining or resetting a bone
+      if (camAnimActive) {
+        camera.position.lerp(targetCamPos, 0.12);
+        controls.target.lerp(targetLookAt, 0.12);
+        if (camera.position.distanceTo(targetCamPos) < 0.01 && controls.target.distanceTo(targetLookAt) < 0.01) {
+          camAnimActive = false;
+        }
+      }
+
+      controls.update();
+
+      // Update Floating Pin position for the currently selected bone
+      if (selectedBone && selectedBone.visible) {
+        projVec.copy(selectedBone.userData.localCenter);
+        selectedBone.localToWorld(projVec);
+        projVec.project(camera);
+
+        if (projVec.z > 1) {
+          activeBoneTag.classList.add('hidden');
+        } else {
+          activeBoneTag.classList.remove('hidden');
+          activeBoneTag.style.left = `${(projVec.x * 0.5 + 0.5) * window.innerWidth}px`;
+          activeBoneTag.style.top = `${(-(projVec.y * 0.5) + 0.5) * window.innerHeight}px`;
+        }
+      } else {
+        activeBoneTag.classList.add('hidden');
+      }
+
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+  </script>
+</body>
+</html>
