@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>MBBS 3D Interactive Anatomy Hub + Live Wikipedia Sync (English & বাংলা)</title>
+  <title>MBBS 3D Interactive Anatomy Hub (English & বাংলা)</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     :root {
@@ -97,6 +97,7 @@
   <header class="fixed top-0 left-0 right-0 z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800 px-3 py-1.5 flex flex-wrap items-center justify-between gap-2 shadow-xl">
     
     <div class="flex items-center gap-2">
+      <!-- Redirects cleanly to Home Page URL -->
       <a id="btnOpenHome" href="?" class="px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs flex items-center gap-1.5 shadow transition">
         <span>🏠</span> <span id="uiHomeBtn">Home Page</span>
       </a>
@@ -117,7 +118,7 @@
         🧠 <span class="tab-lbl" data-en="Nervous" data-bn="স্নায়ুতন্ত্র">Nervous</span>
       </a>
       <a href="?page=cardio" data-sys="cardio" class="sys-tab px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 whitespace-nowrap flex items-center gap-1.5 transition">
-        <span id="dot-cardio" class="w-2 h-2 rounded-full bg-emerald-400"></span>
+        <span id="dot-cardio" class="w-2 h-2 rounded-full bg-red-700"></span>
         🫀 <span class="tab-lbl" data-en="Cardiovascular" data-bn="হৃৎ-সংবহনতন্ত্র">Cardiovascular</span>
       </a>
       <a href="?page=muscular" data-sys="muscular" class="sys-tab px-2.5 py-1.5 rounded-xl text-xs font-semibold bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 whitespace-nowrap flex items-center gap-1.5 transition">
@@ -176,13 +177,13 @@
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-center bg-gradient-to-br from-slate-900 via-slate-900 to-teal-950/60 border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl mb-8">
         <div class="lg:col-span-2 space-y-3">
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-xs font-semibold">
-            <span>🩺 Bilingual MBBS 3D Platform + Live Wikipedia Encyclopedia Sync</span>
+            <span>🩺 Bilingual MBBS 3D Education Platform (English & বাংলা)</span>
           </div>
           <h1 id="heroTitle" class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight">
             MBBS 3D Virtual Dissector & <span class="text-amber-400">Clinical Viva Hub</span>
           </h1>
           <p id="heroDesc" class="text-sm sm:text-base text-slate-300 leading-relaxed">
-            Click any anatomical system card below to open its dedicated 3D page containing the full interactive model, <strong>Live Wikipedia Encyclopedia integration</strong>, and complete details of <strong>Parts, Physiological Function, Exact Anatomical Location, Terminologia Anatomica, and Medical Importance</strong> in both English & বাংলা.
+            Click any anatomical system card below to open its dedicated 3D page containing the full interactive model and complete details of <strong>Parts, Physiological Function, Exact Anatomical Location, Terminologia Anatomica, and Medical/Clinical Importance</strong> in both English & বাংলা.
           </p>
 
           <!-- Legend for Available vs Upcoming 3D Models -->
@@ -198,9 +199,6 @@
           </div>
 
           <div class="pt-2 flex flex-wrap gap-3">
-            <a href="?page=cardio" class="bg-rose-500 hover:bg-rose-400 text-slate-950 font-bold px-5 py-2.5 rounded-xl text-sm shadow-lg shadow-rose-500/20 transition">
-              🫀 Open Cardiovascular System Page ➔
-            </a>
             <a href="?page=skeletal" class="bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-5 py-2.5 rounded-xl text-sm shadow-lg shadow-amber-500/20 transition">
               🦴 Open Skeletal System Page ➔
             </a>
@@ -220,10 +218,13 @@
           <span class="text-[10px] uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-bold mb-1">
             Creator & Lead Developer
           </span>
-          <h3 class="text-base font-bold text-white">3D Medical Education Suite</h3>
+          <h3 class="text-base font-bold text-white">Bholanath Debnath, Assistant Teacher </h3>
           <p class="text-xs text-slate-400 mt-1 leading-relaxed">
-            Interactive WebGL Dissector powered by Blender, Z-Anatomy, Three.js & Live Wikipedia REST API in English & বাংলা.
+            email- bholanath891@gmail.com 
           </p>
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://w3.org">
+  <path fill-rule="evenodd" clip-rule="evenodd" d="M12.031 2C6.446 2 1.922 6.477 1.922 12.008c0 1.93.551 3.73 1.505 5.257L2 22l4.914-1.272a10.016 10.016 0 005.117 1.38c5.585 0 10.109-4.477 10.109-10.008C22.14 6.477 17.616 2 12.031 2zm5.783 14.155c-.244.68-.971 1.253-1.637 1.4-1.39.308-3.327-.373-5.59-2.228-2.257-1.85-3.666-4.237-4.103-5.263-.122-.294-.486-1.127-.486-1.925 0-1.026.54-1.505.748-1.722.185-.19.467-.282.766-.282.1 0 .19 0 .267.005.234.01.35.023.504.38.196.452.668 1.605.727 1.722.059.117.098.254.019.408-.077.155-.164.254-.325.435-.16.182-.338.404-.482.545-.16.155-.327.323-.138.64.19.317.842 1.37.1 1.8.807 1.42 2.612 2.395 3.037 2.571.396.164.63.14.862-.122.234-.263.998-1.148 1.264-1.543.266-.395.532-.33.898-.196.365.133 2.32 1.08 2.719 1.275.398.196.664.295.76.46.099.167.099.967-.145 1.647z" fill="#25D366"/>
+</svg>--9153040938
         </div>
       </div>
 
@@ -241,7 +242,7 @@
             </div>
             <h3 class="text-base font-bold text-white group-hover:text-amber-400 transition">1. Skeletal System (কঙ্কালতন্ত্র)</h3>
             <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
-              Complete 3D Osteology page: Parts, physiological functions, exact bone locations, Terminologia Anatomica, fractures & live Wikipedia sync.
+              Complete 3D Osteology page: Parts, physiological functions, exact bone locations, Terminologia Anatomica & fracture importance.
             </p>
           </div>
           <div class="mt-4 pt-3 border-t border-slate-800/80 flex justify-between items-center text-xs font-semibold text-emerald-400">
@@ -261,7 +262,7 @@
             </div>
             <h3 class="text-base font-bold text-white group-hover:text-yellow-400 transition">2. Nervous System (স্নায়ুতন্ত্র)</h3>
             <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
-              Brain, brainstem, cranial nerves (CN I–XII), spinal cord & plexuses with parts, functions, locations, clinical lesions & Wikipedia sync.
+              Brain, brainstem, cranial nerves (CN I–XII), spinal cord & plexuses with parts, functions, locations & clinical lesions.
             </p>
           </div>
           <div class="mt-4 pt-3 border-t border-slate-800/80 flex justify-between items-center text-xs font-semibold text-emerald-400">
@@ -270,22 +271,22 @@
           </div>
         </a>
 
-        <!-- 3. Cardiovascular System Card (NOW AVAILABLE GREEN!) -->
-        <a href="?page=cardio" id="card-cardio" class="group block bg-slate-900/90 hover:bg-slate-800/90 border-2 border-emerald-500/60 hover:border-emerald-400 rounded-2xl p-5 transition-all shadow-lg flex flex-col justify-between">
+        <!-- 3. Cardiovascular System Card -->
+        <a href="?page=cardio" id="card-cardio" class="group block bg-slate-900/90 hover:bg-slate-800/90 border-2 border-red-900/80 hover:border-red-600 rounded-2xl p-5 transition-all shadow-lg flex flex-col justify-between">
           <div>
             <div class="flex justify-between items-start mb-3">
               <span class="text-3xl bg-rose-500/10 border border-rose-500/30 p-2.5 rounded-2xl">🫀</span>
-              <span id="status-cardio" class="text-[11px] font-bold badge-avail px-3 py-1 rounded-full flex items-center gap-1.5">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Available 3D
+              <span id="status-cardio" class="text-[11px] font-bold badge-upcoming px-3 py-1 rounded-full flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-red-500"></span> Upcoming Soon
               </span>
             </div>
             <h3 class="text-base font-bold text-white group-hover:text-rose-400 transition">3. Cardiovascular (হৃৎ-সংবহনতন্ত্র)</h3>
             <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
-              Heart chambers, valves, coronary arteries, arch of aorta & venae cavae with functions, locations, medical importance & live Wikipedia data.
+              Heart chambers, valves, coronary arteries, arch of aorta & venae cavae with functions, locations & medical importance.
             </p>
           </div>
-          <div class="mt-4 pt-3 border-t border-slate-800/80 flex justify-between items-center text-xs font-semibold text-emerald-400">
-            <span>Open Dedicated 3D Page (cardiovascular.glb)</span>
+          <div class="mt-4 pt-3 border-t border-slate-800/80 flex justify-between items-center text-xs font-semibold text-rose-400">
+            <span>Open Page (cardiovascular.glb)</span>
             <span class="group-hover:translate-x-1 transition">➔</span>
           </div>
         </a>
@@ -301,7 +302,7 @@
             </div>
             <h3 class="text-base font-bold text-white group-hover:text-red-400 transition">4. Muscular System (পেশীতন্ত্র)</h3>
             <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
-              Origin, insertion, muscle actions, anatomical compartments, nerve supply & clinical myotome testing with Wikipedia sync.
+              Origin, insertion, muscle actions, anatomical compartments, nerve supply & clinical myotome testing.
             </p>
           </div>
           <div class="mt-4 pt-3 border-t border-slate-800/80 flex justify-between items-center text-xs font-semibold text-red-400">
@@ -321,10 +322,10 @@
             </div>
             <h3 class="text-base font-bold text-white group-hover:text-cyan-400 transition">5. Visceral Organs (অভ্যন্তরীণ অঙ্গ)</h3>
             <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
-              Lungs, liver, stomach, kidneys & peritoneal relations with physiological functions, clinical importance & Wikipedia sync.
+              Lungs, liver, stomach, kidneys & peritoneal relations with physiological functions & clinical importance.
             </p>
           </div>
-          <div class="mt-4 pt-3 border-t border-slate-800/80 flex justify-between items-center text-xs font-semibold text-red-400">
+          <div class="mt-4 pt-3 border-t border-slate-800/80 flex justify-between items-center text-xs font-semibold text-cyan-400">
             <span>Open Page (visceral.glb)</span>
             <span class="group-hover:translate-x-1 transition">➔</span>
           </div>
@@ -339,7 +340,7 @@
             </div>
             <h3 class="text-base font-bold text-white group-hover:text-emerald-400 transition">Test Any Local .GLB File</h3>
             <p class="text-xs text-slate-400 mt-1.5 leading-relaxed">
-              Load your exported <code class="text-emerald-300">cardiovascular.glb</code> or any other <code class="text-emerald-300">.glb</code> file directly from your device with live Wikipedia lookup!
+              Load any exported <code class="text-emerald-300">.glb</code> file directly from your device to inspect its 3D parts and bilingual MBBS notes.
             </p>
           </div>
           <div class="mt-4 pt-3 border-t border-slate-800/80 flex justify-between items-center text-xs font-semibold text-emerald-400">
@@ -361,7 +362,7 @@
   </div>
 
   <div id="bottomBar" class="hidden fixed bottom-4 left-1/2 -translate-x-1/2 z-20 flex-wrap items-center justify-center gap-2 bg-slate-900/95 backdrop-blur border border-slate-700 px-3.5 py-1.5 rounded-full shadow-2xl">
-    <span id="activeSystemIndicator" class="text-xs font-bold text-amber-400 px-2">🫀 Cardiovascular System</span>
+    <span id="activeSystemIndicator" class="text-xs font-bold text-amber-400 px-2">🦴 Skeletal System</span>
     <span id="pageStatusBadge" class="text-[10px] font-bold px-2.5 py-0.5 rounded-full badge-avail">Available 3D</span>
     <button id="btnExamineBone" class="hidden bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold px-3.5 py-1 rounded-full text-xs transition">
       🔍 Isolate & Zoom
@@ -387,7 +388,7 @@
     </div>
 
     <div class="mb-3 relative">
-      <input id="searchBone" type="text" placeholder="🔍 Search (e.g. Aorta, Ventricle, Coronary)..." 
+      <input id="searchBone" type="text" placeholder="🔍 Search part (e.g. Vagus, Femur, Aorta)..." 
         class="w-full px-3 py-1.5 text-xs bg-slate-800 border border-slate-700 rounded-lg focus:outline-none focus:border-amber-400 text-white" />
       <div id="searchDropdown" class="mt-1 max-h-36 overflow-y-auto bg-slate-800 border border-slate-700 rounded-lg hidden divide-y divide-slate-700 text-xs"></div>
     </div>
@@ -411,27 +412,27 @@
     <p id="uiDivHeader" class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">System Division Filter</p>
     <div class="grid grid-cols-3 gap-1.5 text-xs mb-3">
       <button id="btnShowAllBones" class="bg-slate-700 hover:bg-slate-600 py-1.5 rounded-lg font-semibold text-white">All / সব</button>
-      <button id="btnAxialOnly" class="bg-amber-500/20 border border-amber-500/40 text-amber-300 hover:bg-amber-500/30 py-1.5 rounded-lg font-semibold">Central / Heart</button>
-      <button id="btnAppendicularOnly" class="bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 hover:bg-cyan-500/30 py-1.5 rounded-lg font-semibold">Peripheral</button>
+      <button id="btnAxialOnly" class="bg-amber-500/20 border border-amber-500/40 text-amber-300 hover:bg-amber-500/30 py-1.5 rounded-lg font-semibold">CNS / Axial</button>
+      <button id="btnAppendicularOnly" class="bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 hover:bg-cyan-500/30 py-1.5 rounded-lg font-semibold">PNS / Limb</button>
     </div>
 
     <!-- Regional Trays -->
     <p id="uiRegHeader" class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5">Regional Trays (অঞ্চলসমূহ)</p>
     <div class="space-y-1 text-xs mb-3">
-      <button data-reg="Thorax" class="tray-btn w-full text-left px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 flex justify-between">
-        <span>🫀 Heart, Valves & Great Vessels</span> <span class="text-slate-500">➔</span>
-      </button>
       <button data-reg="Skull" class="tray-btn w-full text-left px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 flex justify-between">
-        <span>🧠 Head, Neck, Brain & Skull</span> <span class="text-slate-500">➔</span>
+        <span>🧠 Brain, Cranial Nerves & Skull</span> <span class="text-slate-500">➔</span>
       </button>
       <button data-reg="Vertebra" class="tray-btn w-full text-left px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 flex justify-between">
-        <span>🦴 Spine, Aorta & Vertebral Column</span> <span class="text-slate-500">➔</span>
+        <span>🦴 Spinal Cord & Vertebral Column</span> <span class="text-slate-500">➔</span>
+      </button>
+      <button data-reg="Thorax" class="tray-btn w-full text-left px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 flex justify-between">
+        <span>🫁 Thorax, Heart & Autonomics</span> <span class="text-slate-500">➔</span>
       </button>
       <button data-reg="Upper" class="tray-btn w-full text-left px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 flex justify-between">
-        <span>💪 Upper Limb Vessels, Nerves & Bones</span> <span class="text-slate-500">➔</span>
+        <span>💪 Brachial Plexus & Upper Limb</span> <span class="text-slate-500">➔</span>
       </button>
       <button data-reg="Lower" class="tray-btn w-full text-left px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 flex justify-between">
-        <span>🦵 Lower Limb & Pelvic Region</span> <span class="text-slate-500">➔</span>
+        <span>🦵 Lumbosacral, Sciatic & Lower Limb</span> <span class="text-slate-500">➔</span>
       </button>
     </div>
 
@@ -452,9 +453,10 @@
   </aside>
 
   <!-- ========================================================================== -->
-  <!-- 5. COLLAPSIBLE RIGHT PANEL: MBBS DETAILS + LIVE WIKIPEDIA API SECTION      -->
+  <!-- 5. COLLAPSIBLE RIGHT PANEL: WHOLE DETAILS OF PARTS, FUNCTION, LOCATION,   -->
+  <!--    ANATOMICAL TERMS & MEDICAL IMPORTANCE (BILINGUAL EN & বাংলা)             -->
   <!-- ========================================================================== -->
-  <section id="rightPanel" class="hidden fixed bottom-0 right-0 sm:top-16 sm:bottom-auto sm:right-3 z-20 w-full sm:w-96 max-h-[70vh] sm:max-h-[calc(100vh-5.5rem)] overflow-y-auto bg-slate-900/95 backdrop-blur-md border-t sm:border border-slate-700 rounded-t-2xl sm:rounded-2xl p-4 shadow-2xl transition-transform duration-300 ease-in-out">
+  <section id="rightPanel" class="hidden fixed bottom-0 right-0 sm:top-16 sm:bottom-auto sm:right-3 z-20 w-full sm:w-96 max-h-[68vh] sm:max-h-[calc(100vh-5.5rem)] overflow-y-auto bg-slate-900/95 backdrop-blur-md border-t sm:border border-slate-700 rounded-t-2xl sm:rounded-2xl p-4 shadow-2xl transition-transform duration-300 ease-in-out">
     
     <!-- Top Title + Quick Language Switcher inside Drawer + Voice -->
     <div class="flex justify-between items-start border-b border-slate-800 pb-2.5 mb-3">
@@ -466,7 +468,7 @@
         <button id="btnDrawerLang" class="px-2 py-1 rounded bg-emerald-500/20 border border-emerald-500/50 text-[11px] font-bold text-emerald-300">
           বাংলা / EN
         </button>
-        <button id="btnSpeak" title="Read Aloud (Includes Wikipedia Summary)" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-xs text-cyan-300 border border-slate-700">
+        <button id="btnSpeak" title="Read Aloud" class="px-2 py-1 rounded bg-slate-800 hover:bg-slate-700 text-xs text-cyan-300 border border-slate-700">
           🔊
         </button>
         <button id="btnCloseRight" class="text-slate-400 hover:text-white px-2 py-1 rounded bg-slate-800 text-xs">✕</button>
@@ -488,25 +490,6 @@
       <span id="badgeDivision" class="bg-amber-500/20 border border-amber-500/40 text-amber-300 px-2 py-0.5 rounded-full">System</span>
       <span id="badgeRegion" class="bg-cyan-500/20 border border-cyan-500/40 text-cyan-300 px-2 py-0.5 rounded-full">Region</span>
       <span id="badgeType" class="bg-slate-800 border border-slate-700 text-slate-300 px-2 py-0.5 rounded-full">Classification</span>
-    </div>
-
-    <!-- LIVE WIKIPEDIA ENCYCLOPEDIA CARD (FETCHED AUTOMATICALLY FROM WIKIPEDIA REST API) -->
-    <div id="wikiCard" class="mb-3 bg-sky-950/40 border border-sky-500/50 p-3 rounded-xl text-xs leading-relaxed">
-      <div class="flex justify-between items-center mb-1.5">
-        <strong id="hdrWiki" class="text-sky-300 uppercase text-[10px] tracking-wider flex items-center gap-1.5">
-          <span>🌐 Live Wikipedia Encyclopedia</span>
-          <span id="wikiSpinner" class="w-3 h-3 border-2 border-sky-400 border-t-transparent rounded-full animate-spin hidden"></span>
-        </strong>
-        <a id="wikiLink" href="https://en.wikipedia.org" target="_blank" rel="noopener noreferrer" class="text-[10px] font-bold text-amber-300 hover:underline">
-          Read Article ↗
-        </a>
-      </div>
-      <div class="flex gap-2.5 items-start">
-        <img id="wikiThumb" src="" alt="Wikipedia Thumbnail" class="w-16 h-16 rounded-lg object-cover border border-sky-700/60 bg-slate-900 hidden shrink-0" />
-        <p id="detailWiki" class="text-slate-200 text-xs leading-relaxed">
-          Click any 3D structure to fetch its live anatomical encyclopedia summary from Wikipedia...
-        </p>
-      </div>
     </div>
 
     <!-- 5 Complete MBBS Sections: Location, Parts, Function, Anatomical Terms, Medical Importance -->
@@ -546,7 +529,7 @@
       <div class="flex justify-between items-center px-5 py-3.5 border-b border-slate-800">
         <div>
           <h3 class="text-base font-bold text-amber-400">📋 Complete System Directory: Parts, Locations, Functions & Medical Importance</h3>
-          <p class="text-xs text-slate-400">Click any row to highlight, zoom & fetch live Wikipedia details for that structure</p>
+          <p class="text-xs text-slate-400">Click any row to highlight & zoom into that structure on the 3D model</p>
         </div>
         <button id="btnCloseCatalog" class="px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold">✕ Close</button>
       </div>
@@ -558,7 +541,7 @@
   <div id="loadingScreen" class="fixed inset-0 z-40 bg-slate-950/85 backdrop-blur-md flex flex-col items-center justify-center hidden">
     <div class="w-12 h-12 border-4 border-amber-400 border-t-transparent rounded-full animate-spin mb-3"></div>
     <p id="loadingMsg" class="text-sm font-bold text-amber-300">Loading Dedicated 3D Anatomy Page...</p>
-    <p class="text-xs text-slate-400 mt-1">Preparing 3D meshes, functions, locations & live Wikipedia sync</p>
+    <p class="text-xs text-slate-400 mt-1">Preparing 3D meshes, functions, locations & medical importance</p>
   </div>
 
   <script type="module">
@@ -568,14 +551,33 @@
     import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
 
     // ============================================================================
-    // 1. SOFT AMBIENT BACKGROUND MUSIC SYNTHESIZER (WEB AUDIO API)
+    // 1. SOFT AMBIENT BACKGROUND MUSIC SYNTHESIZER (WEB AUDIO API - NO MP3 NEEDED)
     // ============================================================================
     let audioCtx = null;
     let masterGain = null;
+    let isMusicPlaying = false;
     let isMuted = true;
+    let chordTimer = null;
 
     const btnMusicMute = document.getElementById('btnMusicMute');
     const musicVolSlider = document.getElementById('musicVolSlider');
+if (musicVolSlider) musicVolSlider.value = "100";
+
+window.addEventListener('DOMContentLoaded', () => {
+      // Attempt auto-play immediately
+      setTimeout(() => {
+        initAmbientMusic();
+      }, 300);
+    });
+
+window.addEventListener('pointerdown', function autoStartAudio() {
+      if (!audioCtx) {
+        initAmbientMusic();
+      } else if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+        if (masterGain) masterGain.gain.setValueAtTime(0.25, audioCtx.currentTime);
+      }
+    }, { once: true });
 
     function initAmbientMusic() {
       if (audioCtx) return;
@@ -585,6 +587,7 @@
       masterGain.gain.value = (parseFloat(musicVolSlider.value) / 100) * 0.14;
       masterGain.connect(audioCtx.destination);
 
+      // Calm ambient medical study chords (Cmaj7 -> Fmaj7 -> Am7 -> G6)
       const chords = [
         [261.63, 329.63, 392.00, 493.88],
         [174.61, 261.63, 349.23, 440.00],
@@ -616,10 +619,11 @@
         });
       }
 
+      isMusicPlaying = true;
       isMuted = false;
       btnMusicMute.textContent = "🎵";
       playSoftPadChord();
-      setInterval(playSoftPadChord, 6500);
+      chordTimer = setInterval(playSoftPadChord, 6500);
     }
 
     btnMusicMute.onclick = () => {
@@ -657,149 +661,7 @@
     };
 
     // ============================================================================
-    // 2. LIVE WIKIPEDIA REST API FETCHER (WITH ENGLISH & বাংলা SUPPORT + CACHE)
-    // ============================================================================
-    const wikiCache = {};
-
-    // Maps anatomical structure names to their exact Bengali Wikipedia article titles where available
-    const BN_WIKI_TITLE_MAP = {
-      "heart": "হৃৎপিণ্ড",
-      "aorta": "মহাধমনী",
-      "arch of aorta": "মহাধমনী",
-      "left ventricle": "হৃৎপিণ্ড",
-      "right ventricle": "হৃৎপিণ্ড",
-      "left atrium": "হৃৎপিণ্ড",
-      "right atrium": "হৃৎপিণ্ড",
-      "superior vena cava": "মহাশিরা",
-      "inferior vena cava": "মহাশিরা",
-      "pulmonary artery": "ফুসফুসীয় ধমনী",
-      "pulmonary trunk": "ফুসফুসীয় ধমনী",
-      "coronary artery": "করোনারি ধমনী",
-      "cerebrum": "গুরুমস্তিষ্ক",
-      "cerebellum": "লঘুমস্তিষ্ক",
-      "spinal cord": "সুষুম্নাকাণ্ড",
-      "vagus nerve": "ভেগাস স্নায়ু",
-      "optic nerve": "অপটিক স্নায়ু",
-      "femur": "ফিমার",
-      "humerus": "হিউমেরাস",
-      "clavicle": "ক্ল্যাভিকল",
-      "skull": "মাথার খুলি"
-    };
-
-    function cleanNameForWikiQuery(rawName) {
-      let q = rawName.replace(/\.\d+$/g, '').replace(/_/g, ' ').trim();
-      // Preserve Left/Right for specific chambers & coronary arteries where Wikipedia has dedicated pages
-      const low = q.toLowerCase();
-      if (low.includes('ventricle') || low.includes('atrium') || low.includes('coronary artery')) {
-        return q;
-      }
-      // Otherwise strip leading Left/Right so e.g. "Left Femur" -> "Femur"
-      return q.replace(/^(Left|Right)\s+/i, '').trim();
-    }
-
-    async function fetchWikipediaSummaryForMesh(mesh) {
-      const detailWiki = document.getElementById('detailWiki');
-      const wikiThumb = document.getElementById('wikiThumb');
-      const wikiLink = document.getElementById('wikiLink');
-      const wikiSpinner = document.getElementById('wikiSpinner');
-
-      const rawTitle = mesh.userData.wiki_query || mesh.userData.cleanTitle || mesh.name;
-      const engQuery = cleanNameForWikiQuery(rawTitle);
-      const cacheKey = `${currentLang}:${engQuery.toLowerCase()}`;
-
-      if (wikiCache[cacheKey]) {
-        renderWikiData(wikiCache[cacheKey]);
-        return;
-      }
-
-      wikiSpinner.classList.remove('hidden');
-      detailWiki.textContent = (currentLang === 'bn')
-        ? `উইকিপিডিয়া (Wikipedia) থেকে "${engQuery}"-এর তথ্য অনুসন্ধান করা হচ্ছে...`
-        : `Fetching live medical encyclopedia entry for "${engQuery}" from Wikipedia...`;
-      wikiThumb.classList.add('hidden');
-
-      try {
-        let data = null;
-
-        // 1. If user is in Bengali mode, check Bengali Wikipedia first
-        if (currentLang === 'bn') {
-          const bnTitle = BN_WIKI_TITLE_MAP[engQuery.toLowerCase()] || engQuery;
-          const bnUrl = `https://bn.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(bnTitle)}`;
-          const bnRes = await fetch(bnUrl);
-          if (bnRes.ok) {
-            const json = await bnRes.json();
-            if (json.extract) data = { extract: json.extract, thumb: json.thumbnail?.source, url: json.content_urls?.desktop?.page || `https://bn.wikipedia.org/wiki/${encodeURIComponent(bnTitle)}`, lang: 'bn' };
-          }
-        }
-
-        // 2. Query English Wikipedia REST API (Direct Summary)
-        if (!data) {
-          const enUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(engQuery)}`;
-          const enRes = await fetch(enUrl);
-          if (enRes.ok) {
-            const json = await enRes.json();
-            if (json.extract && json.type !== 'disambiguation') {
-              data = { extract: json.extract, thumb: json.thumbnail?.source, url: json.content_urls?.desktop?.page || `https://en.wikipedia.org/wiki/${encodeURIComponent(engQuery)}`, lang: 'en' };
-            }
-          }
-        }
-
-        // 3. Fallback: Search Wikipedia OpenSearch API if exact title had slight variation
-        if (!data) {
-          const searchUrl = `https://en.wikipedia.org/w/api.php?action=opensearch&search=${encodeURIComponent(engQuery + ' anatomy')}&limit=1&namespace=0&format=json&origin=*`;
-          const sRes = await fetch(searchUrl);
-          if (sRes.ok) {
-            const sJson = await sRes.json();
-            const bestTitle = sJson[1] && sJson[1][0] ? sJson[1][0] : null;
-            if (bestTitle) {
-              const sumRes = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(bestTitle)}`);
-              if (sumRes.ok) {
-                const sumJson = await sumRes.json();
-                data = { extract: sumJson.extract, thumb: sumJson.thumbnail?.source, url: sumJson.content_urls?.desktop?.page || `https://en.wikipedia.org/wiki/${encodeURIComponent(bestTitle)}`, lang: 'en' };
-              }
-            }
-          }
-        }
-
-        if (data) {
-          wikiCache[cacheKey] = data;
-          // Also store on mesh userData so Audio Narration can read it
-          mesh.userData.wikiExtract = data.extract;
-          renderWikiData(data);
-        } else {
-          detailWiki.textContent = (currentLang === 'bn')
-            ? `উইকিপিডিয়ায় "${engQuery}"-এর সরাসরি প্রবন্ধ পাওয়া যায়নি; নিচে বিস্তারিত MBBS ক্লিনিক্যাল নোট দেখুন।`
-            : `No direct Wikipedia summary found for "${engQuery}"; see the full structured MBBS clinical notes below.`;
-          wikiLink.href = `https://en.wikipedia.org/wiki/Special:Search?search=${encodeURIComponent(engQuery)}`;
-        }
-      } catch (err) {
-        detailWiki.textContent = (currentLang === 'bn')
-          ? `অফলাইন মোড: নিচে সংরক্ষিত MBBS শারীরস্থান ও ক্লিনিক্যাল তথ্য প্রদর্শিত হচ্ছে।`
-          : `Offline mode: Displaying built-in MBBS anatomical and clinical database below.`;
-      } finally {
-        wikiSpinner.classList.add('hidden');
-      }
-    }
-
-    function renderWikiData(data) {
-      const detailWiki = document.getElementById('detailWiki');
-      const wikiThumb = document.getElementById('wikiThumb');
-      const wikiLink = document.getElementById('wikiLink');
-
-      detailWiki.textContent = data.extract;
-      wikiLink.href = data.url;
-      wikiLink.textContent = (currentLang === 'bn') ? "উইকিপিডিয়ায় সম্পূর্ণ পড়ুন ↗" : "Full Wikipedia Article ↗";
-
-      if (data.thumb) {
-        wikiThumb.src = data.thumb;
-        wikiThumb.classList.remove('hidden');
-      } else {
-        wikiThumb.classList.add('hidden');
-      }
-    }
-
-    // ============================================================================
-    // 3. LANGUAGE STATE & UI DICTIONARY (ENGLISH ⇄ বাংলা)
+    // 2. LANGUAGE STATE & UI DICTIONARY (ENGLISH ⇄ বাংলা)
     // ============================================================================
     let currentLang = 'en';
 
@@ -828,7 +690,7 @@
         showTools: "টুলস দেখুন",
         notes: "বিস্তারিত তথ্য",
         toolsHdr: "🛠️ ডিসেক্টর কন্ট্রোল",
-        divHdr: "বিভাগ ফিল্টার",
+        divHdr: "বিভাগ ফিল্টার (CNS / PNS)",
         regHdr: "শারীরস্থানিক অঞ্চল (Regions)",
         explodeLbl: "💥 স্তর পৃথকীকরণ (Explode)",
         examineBtn: "🔍 এককভাবে জুম করে দেখুন",
@@ -845,13 +707,12 @@
     const BN_TERM_MAP = {
       "left": "বাম (Left)", "right": "ডান (Right)", "nerve": "স্নায়ু", "plexus": "প্লেক্সাস (স্নায়ুজালক)",
       "ganglion": "গ্যাংলিয়ন", "tract": "ট্র্যাক্ট", "nucleus": "নিউক্লিয়াস", "cortex": "কর্টেক্স",
-      "lobe": "লোব (খণ্ড)", "gyrus": "গাইরাস", "sulcus": "সালকাস", "ventricle": "নিলয় / ভেন্ট্রিকল",
-      "atrium": "অলিন্দ / অ্যাট্রিয়াম", "aorta": "মহাধমনী (Aorta)", "valve": "কপাটিকা (Valve)",
+      "lobe": "লোব (খণ্ড)", "gyrus": "গাইরাস", "sulcus": "সালকাস", "ventricle": "ভেন্ট্রিকল (প্রকোষ্ঠ)",
       "artery": "ধমনী", "vein": "শিরা", "bone": "অস্থি", "muscle": "পেশী",
       "anterior": "অগ্র", "posterior": "পশ্চাৎ", "superior": "ঊর্ধ্ব", "inferior": "নিম্ন",
       "medial": "মধ্য", "lateral": "পার্শ্বীয়", "superficial": "উপরিষ্ঠ", "deep": "গভীর",
       "internal": "অভ্যন্তরীণ", "external": "বাহ্যিক", "branch": "শাখা", "cord": "রজ্জু",
-      "root": "মূল", "trunk": "ট্রাঙ্ক", "coronary": "করোনারি"
+      "root": "মূল", "trunk": "ট্রাঙ্ক", "cutaneous": "ত্বকীয়"
     };
 
     function autoTranslateTitleToBn(engTitle) {
@@ -864,276 +725,213 @@
     }
 
     // ============================================================================
-    // 4. BILINGUAL MBBS DATABASE (CARDIOVASCULAR + NERVOUS + SKELETAL)
+    // 3. BILINGUAL MBBS DATABASE (LOCATION, PARTS, FUNCTION, TERMS, IMPORTANCE)
     // ============================================================================
     const BILINGUAL_MBBS_DB = {
-      // ---------------- CARDIOVASCULAR SYSTEM (HEART & GREAT VESSELS) ----------------
-      "right atrium": {
-        en: {
-          title: "Right Atrium (Atrium Dextrum)",
-          type: "Receiving Cardiac Chamber • Forms Right Border of Heart",
-          side: "Location: Anterior and to the right of Left Atrium; forms the entire right border and part of sternocostal surface & base of the heart.",
-          features: "Parts: 1. Smooth posterior Sinus Venarum (receives SVC, IVC & Coronary Sinus), 2. Rough anterior Atrium Proper with Pectinate Muscles (Musculi pectinati) & Right Auricle, 3. Crista Terminalis (internal ridge corresponding to external Sulcus Terminalis), 4. Interatrial Septum with Fossa Ovalis & Limbus Fossa Ovalis.",
-          attachments: "Function & Conduction: Receives deoxygenated systemic venous blood and pumps it across Tricuspid orifice into Right Ventricle. Houses the Sinoatrial (SA) Node ('Pacemaker of Heart' at upper sulcus terminalis near SVC) & Atrioventricular (AV) Node (in Triangle of Koch).",
-          ossification: "Anatomical Term: Atrium cordis dextrum. Embryology: Smooth part from Right Horn of Sinus Venosus; Rough trabeculated part from Primitive Atrium.",
-          clinical: "Medical Importance: Ostium Secundum Atrial Septal Defect (ASD) occurs at Fossa Ovalis (left-to-right shunt with fixed split S2 heart sound). Triangle of Koch (bounded by Tendon of Todaro, septal cusp of tricuspid valve & coronary sinus orifice) is the surgical landmark for the AV Node."
-        },
-        bn: {
-          title: "ডান অলিন্দ — রাইট অ্যাট্রিয়াম (Right Atrium)",
-          type: "হৃৎপিণ্ডের রক্ত গ্রহণকারী প্রকোষ্ঠ • হৃৎপিণ্ডের ডান প্রান্ত গঠন করে",
-          side: "অবস্থান: বাম অলিন্দের সামনে ও ডান দিকে অবস্থিত; এটি হৃৎপিণ্ডের সম্পূর্ণ ডান কিনারা (Right border) এবং স্টার্নোকোস্টাল তলের অংশ গঠন করে।",
-          features: "অংশসমূহ: ১. পিছনের মসৃণ 'সাইনাস ভেনারাম' (যেখানে ঊর্ধ্ব ও নিম্ন মহাশিরা উন্মুক্ত হয়), ২. সামনের অমসৃণ পেক্টিনেট পেশীযুক্ত অংশ ও রাইট অরিকল, ৩. ক্রিস্টা টার্মিনালিস, এবং ৪. আন্তঃঅলিন্দ প্রাচীরে ফোসা ওভালিস (Fossa ovalis)।",
-          attachments: "কাজ ও পরিবহন: সমগ্র দেহ থেকে কার্বন ডাই-অক্সাইডযুক্ত রক্ত গ্রহণ করে ট্রাইকাসপিড কপাটিকার মাধ্যমে ডান নিলয়ে পাঠায়। এতে হৃৎপিণ্ডের ছন্দনিয়ন্ত্রক SA Node (পেসমেকার) এবং কোচের ত্রিভুজে (Triangle of Koch) AV Node অবস্থিত।",
-          ossification: "শারীরস্থানিক পরিভাষা: Atrium cordis dextrum। ভ্রূণতত্ত্ব: মসৃণ অংশ সাইনাস ভেনোসাসের ডান শিং থেকে এবং অমসৃণ অংশ আদি অলিন্দ (Primitive atrium) থেকে উৎপন্ন।",
-          clinical: "চিকিৎসাগত গুরুত্ব: ফোসা ওভালিসে ছিদ্র থাকলে তাকে অ্যাট্রিয়াল সেপ্টাল ডিফেক্ট (ASD) বলে। অস্ত্রোপচারে AV Node চিহ্নিত করতে 'Triangle of Koch' ব্যবহৃত হয়।"
-        }
-      },
-      "right ventricle": {
-        en: {
-          title: "Right Ventricle (Ventriculus Dexter)",
-          type: "Pulmonary Pumping Chamber • Forms Most of Sternocostal Surface",
-          side: "Location: Anterior most chamber of heart behind sternum & left 3rd–6th costal cartilages; crescentic in cross-section because thick Interventricular Septum bulges into it.",
-          features: "Parts: 1. Rough Inflow part with Trabeculae Carneae and 3 Papillary Muscles (Anterior, Posterior, Septal) attached via Chordae Tendineae to Tricuspid Valve, 2. Septomarginal Trabecula (Moderator Band — carries Right Bundle Branch!), 3. Smooth funnel-shaped Outflow part (Infundibulum / Conus Arteriosus) leading to Pulmonary Valve, separated by Supraventricular Crest.",
-          attachments: "Function & Supply: Pumps deoxygenated blood at low pressure (~25/8 mmHg) into Pulmonary Trunk for gas exchange in lungs. Supplied predominantly by Right Coronary Artery (RCA) & Anterior Interventricular (LAD) branches.",
-          ossification: "Anatomical Term: Ventriculus cordis dexter. Embryology: Rough part from Proximal Bulbus Cordis; Smooth Infundibulum from Conus Cordis.",
-          clinical: "Medical Importance: Wall thickness (3–4 mm) is 1/3rd that of Left Ventricle. Hypertrophies in Pulmonary Hypertension / Cor Pulmonale (causing left parasternal heave). Inferior wall MI (RCA occlusion) often causes Right Ventricular Infarction."
-        },
-        bn: {
-          title: "ডান নিলয় — রাইট ভেন্ট্রিকল (Right Ventricle)",
-          type: "ফুসফুসীয় পাম্পিং প্রকোষ্ঠ • হৃৎপিণ্ডের সামনের প্রধান তল গঠন করে",
-          side: "অবস্থান: স্টার্নামের ঠিক পিছনে হৃৎপিণ্ডের সবচেয়ে সামনের প্রকোষ্ঠ; প্রস্থচ্ছেদে এটি অর্ধচন্দ্রাকার (Crescentic) দেখায়।",
-          features: "অংশসমূহ: ১. অমসৃণ আগমনী অংশ (Trabeculae carneae ও ৩টি প্যাপিলারি পেশী), ২. মডারেটর ব্যান্ড বা সেপ্টোমার্জিনাল ট্রাবেকুলা (যা ডান বান্ডল ব্রাঞ্চ বহন করে!), এবং ৩. মসৃণ ফানেল আকৃতির নির্গমন পথ (Infundibulum) যা পালমোনারি কপাটিকায় উন্মুক্ত হয়।",
-          attachments: "কাজ ও সরবরাহ: কম চাপে (~২৫/৮ মিমি পারদ) কার্বন ডাই-অক্সাইডযুক্ত রক্ত ফুসফুসীয় ধমনীতে পাম্প করে। প্রধানত ডান করোনারি ধমনী (RCA) দ্বারা পুষ্ট।",
-          ossification: "শারীরস্থানিক পরিভাষা: Ventriculus cordis dexter। ভ্রূণতত্ত্ব: বাল্বাস কর্ডিস (Bulbus cordis) ও কোনাস কর্ডিস থেকে উৎপন্ন।",
-          clinical: "চিকিৎসাগত গুরুত্ব: এর প্রাচীর বাম নিলয়ের চেয়ে তিনগুণ পাতলা (৩–৪ মিমি)। ফুসফুসের উচ্চ রক্তচাপে (Cor pulmonale) ডান নিলয় বড় হয়ে যায়।"
-        }
-      },
-      "left atrium": {
-        en: {
-          title: "Left Atrium (Atrium Sinistrum)",
-          type: "Oxygenated Receiving Chamber • Forms Base (Posterior Surface) of Heart",
-          side: "Location: Most posterior chamber of the heart directly in front of the Thoracic Esophagus and Descending Thoracic Aorta (separated by Oblique Pericardial Sinus) at T5–T8 vertebrae level.",
-          features: "Parts: Cuboidal smooth-walled cavity receiving 4 valveless Pulmonary Veins (2 right, 2 left); small anterior muscular Left Auricle containing pectinate muscles (site of thrombus formation in atrial fibrillation).",
-          attachments: "Function: Receives oxygenated blood from lungs via 4 Pulmonary Veins and empties across Bicuspid (Mitral) Valve into Left Ventricle.",
-          ossification: "Anatomical Term: Atrium cordis sinistrum. Embryology: Smooth wall formed by absorption of embryonic Pulmonary Veins; Left Auricle from Primitive Atrium.",
-          clinical: "Medical Importance: In Mitral Stenosis, Left Atrium enlarges posteriorly — compressing the Esophagus (causing Dysphagia) and Left Recurrent Laryngeal Nerve (causing Hoarseness / Ortner's Syndrome). Transesophageal Echocardiography (TEE) views Left Atrium directly through the esophagus."
-        },
-        bn: {
-          title: "বাম অলিন্দ — লেফট অ্যাট্রিয়াম (Left Atrium)",
-          type: "অক্সিজেনযুক্ত রক্ত গ্রহণকারী প্রকোষ্ঠ • হৃৎপিণ্ডের পশ্চাৎ ভিত্তি (Base) গঠন করে",
-          side: "অবস্থান: হৃৎপিণ্ডের সবচেয়ে পিছনের প্রকোষ্ঠ যা T5–T8 কশেরুকা স্তরে খাদ্যনালী (Esophagus) এবং মহাধমনীর ঠিক সামনে অবস্থিত (অবলিক পেরিকার্ডিয়াল সাইনাস দ্বারা পৃথক)।",
-          features: "অংশসমূহ: ৪টি কপাটিকাবিহীন ফুসফুসীয় শিরা (Pulmonary veins) এর মসৃণ প্রাচীরে উন্মুক্ত হয়; সামনের ছোট বাম অরিকলে (Left auricle) পেক্টিনেট পেশী থাকে।",
-          attachments: "কাজ: ফুসফুস থেকে ৪টি পালমোনারি শিরার মাধ্যমে বিশুদ্ধ অক্সিজেনযুক্ত রক্ত গ্রহণ করে মাইট্রাল (বাইকাসপিড) কপাটিকার মধ্য দিয়ে বাম নিলয়ে পাঠায়।",
-          ossification: "শারীরস্থানিক পরিভাষা: Atrium cordis sinistrum। ভ্রূণতত্ত্ব: ফুসফুসীয় শিরার শোষিত অংশ ও আদি অলিন্দ থেকে গঠিত।",
-          clinical: "চিকিৎসাগত গুরুত্ব: মাইট্রাল স্টেনোসিস রোগে বাম অলিন্দ বড় হয়ে পিছনের খাদ্যনালীকে চাপ দেয় (ফলে গিলতে অসুবিধা বা Dysphagia হয়) এবং বাম রিকারেন্ট ল্যারিনজিয়াল স্নায়ুতে চাপ দিয়ে স্বরভঙ্গ (Ortner's syndrome) ঘটায়।"
-        }
-      },
-      "left ventricle": {
-        en: {
-          title: "Left Ventricle (Ventriculus Sinister)",
-          type: "High-Pressure Systemic Pumping Chamber • Forms Cardiac Apex",
-          side: "Location: Forms the Apex of the Heart (left 5th intercostal space, 9 cm from midline just medial to midclavicular line), left obtuse border, and major 2/3rd of diaphragmatic surface.",
-          features: "Parts: Circular in cross-section with thick muscular walls (8–12 mm, 3x thicker than RV); 1. Rough Inflow part with dense Trabeculae Carneae & 2 large Papillary Muscles (Anterior & Posterior) attached to Mitral Valve cusps, 2. Smooth-walled Outflow part (Aortic Vestibule) leading to Aortic Valve.",
-          attachments: "Function & Supply: Pumps oxygenated blood at high systemic pressure (~120/80 mmHg) into Ascending Aorta. Supplied by Left Anterior Descending (LAD) and Left Circumflex (LCx) branches of Left Coronary Artery.",
-          ossification: "Anatomical Term: Ventriculus cordis sinister. Embryology: Rough trabeculated part from Primitive Ventricle; Smooth Aortic Vestibule from Conus Cordis.",
-          clinical: "Medical Importance: Anterior wall & Septal Myocardial Infarction results from occlusion of LAD ('Widow-Maker Artery'). Systemic hypertension and Aortic Stenosis cause concentric Left Ventricular Hypertrophy (LVH) with forceful heaving apex beat."
-        },
-        bn: {
-          title: "বাম নিলয় — লেফট ভেন্ট্রিকল (Left Ventricle)",
-          type: "উচ্চচাপযুক্ত সিস্টেমিক পাম্পিং প্রকোষ্ঠ • হৃৎপিণ্ডের শীর্ষবিন্দু (Apex) গঠন করে",
-          side: "অবস্থান: হৃৎপিণ্ডের শীর্ষবিন্দু (Apex - বাম ৫ম ইন্টারকোস্টাল স্থানে মধ্যরেখা থেকে ৯ সেমি দূরে), বাম কিনারা এবং ডায়াফ্রাগম্যাটিক তলের ২/৩ অংশ গঠন করে।",
-          features: "অংশসমূহ: প্রস্থচ্ছেদে গোলাকার এবং প্রাচীর অত্যন্ত পুরু (৮–১২ মিমি, ডান নিলয়ের ৩ গুণ); ১. অমসৃণ আগমনী অংশে ২টি বড় প্যাপিলারি পেশী (Anterior ও Posterior) থাকে যা মাইট্রাল কপাটিকায় যুক্ত, ২. মসৃণ নির্গমন পথ (Aortic vestibule) যা অ্যাওর্টিক কপাটিকায় যায়।",
-          attachments: "কাজ ও সরবরাহ: উচ্চ চাপে (~১২০/৮০ মিমি পারদ) অক্সিজেনযুক্ত রক্ত মহাধমনীর মাধ্যমে সারা দেহে পাম্প করে। বাম করোনারি ধমনীর LAD ও সার্কামফ্লেক্স শাখা রক্ত জোগায়।",
-          ossification: "শারীরস্থানিক পরিভাষা: Ventriculus cordis sinister। ভ্রূণতত্ত্ব: আদি নিলয় (Primitive ventricle) এবং কোনাস কর্ডিস থেকে উৎপন্ন।",
-          clinical: "চিকিৎসাগত গুরুত্ব: LAD ধমনী ('Widow-maker artery') বন্ধ হলে বাম নিলয়ের সামনের প্রাচীরে হার্ট অ্যাটাক (Anterior wall MI) হয়। উচ্চ রক্তচাপে বাম নিলয়ের প্রাচীর মোটা হয়ে যায় (LVH)।"
-        }
-      },
-      "aorta": {
-        en: {
-          title: "Aorta & Arch of Aorta (Arcus Aortae)",
-          type: "Main Systemic Elastic Arterial Trunk of Body",
-          side: "Location: Ascending Aorta begins at Aortic orifice of LV inside pericardium; Arch of Aorta lies wholly in Superior Mediastinum behind lower half of Manubrium Sterni (arches backward & to the left over root of left lung from right 2nd costal cartilage to lower border of T4 vertebra); continues as Descending Thoracic & Abdominal Aorta (bifurcates at L4).",
-          features: "Parts & Branches: 1. Ascending Aorta (3 Aortic Sinuses of Valsalva giving Right & Left Coronary Arteries), 2. Arch of Aorta (gives 3 Supra-aortic trunks: Brachiocephalic trunk, Left Common Carotid artery, Left Subclavian artery), 3. Descending Thoracic & Abdominal Aorta.",
-          attachments: "Function & Relations: Elastic windkessel vessel conducting oxygenated blood to the entire body. Ligamentum Arteriosum connects lower concave surface of Arch to Left Pulmonary Artery (hooks Left Recurrent Laryngeal Nerve).",
-          ossification: "Anatomical Term: Aorta / Arcus aortae. Embryology: Ascending Aorta from Truncus Arteriosus; Arch from Aortic Sac & Left 4th Pharyngeal Arch Artery.",
-          clinical: "Medical Importance: 1. Aortic Knuckle shadow on PA Chest X-ray. 2. Patent Ductus Arteriosus (PDA) causes continuous 'machinery murmur'. 3. Coarctation of Aorta causes upper limb hypertension & rib notching. 4. Aortic Dissection / Aneurysm."
-        },
-        bn: {
-          title: "মহাধমনী ও অ্যাওর্টিক আর্চ (Aorta & Arch of Aorta)",
-          type: "মানবদেহের প্রধান ও বৃহত্তম স্থিতিস্থাপক ধমনী",
-          side: "অবস্থান: বাম নিলয় থেকে অ্যাসেন্ডিং অ্যাওর্টা হিসেবে শুরু হয়ে সুপিরিয়র মিডিয়াস্টিনামে ম্যানুব্রিয়াম স্টার্নাই-এর পিছনে বাম ফুসফুসের মূলের ওপর দিয়ে বাঁকা হয়ে T4 কশেরুকার নিচের প্রান্তে ডিসেন্ডিং অ্যাওর্টায় পরিণত হয় এবং L4 স্তরে দ্বিখণ্ডিত হয়।",
-          features: "অংশ ও শাখা: ১. অ্যাসেন্ডিং অ্যাওর্টা (ডান ও বাম করোনারি ধমনী উৎপন্ন হয়), ২. আর্চ অব অ্যাওর্টা (৩টি প্রধান শাখা: ব্রাকিওসেফালিক ট্রাঙ্ক, বাম কমন ক্যারোটিড ও বাম সাবক্ল্যাভিয়ান ধমনী), ৩. বক্ষীয় ও উদরীয় মহাধমনী।",
-          attachments: "কাজ ও সম্পর্ক: সারা দেহে অক্সিজেনযুক্ত রক্ত সরবরাহ করে। এর নিচে লিগামেন্টাম আর্টেরিওসাম থাকে যার নিচ দিয়ে বাম রিকারেন্ট ল্যারিনজিয়াল স্নায়ু ঘুরে যায়।",
-          ossification: "শারীরস্থানিক পরিভাষা: Arcus aortae। ভ্রূণতত্ত্ব: অ্যাওর্টিক স্যাক এবং বাম ৪র্থ ফ্যারিনজিয়াল আর্চ ধমনী থেকে উৎপন্ন।",
-          clinical: "চিকিৎসাগত গুরুত্ব: বুকের এক্স-রেতে 'Aortic knuckle' হিসেবে দেখা যায়। জন্মগত ত্রুটির মধ্যে পেটেন্ট ডাক্টাস আর্টেরিওসাস (PDA), কোয়ার্কটেশন অব অ্যাওর্টা ও অ্যাওর্টিক অ্যানিউরিজম প্রধান।"
-        }
-      },
-      "coronary": {
-        en: {
-          title: "Coronary Arteries (Right & Left Coronary Circulation)",
-          type: "Vasa Vasorum of Heart • Arise from Ascending Aorta Sinuses",
-          side: "Location: Run in the epicardial fat within the Coronary (Atrioventricular) Sulcus and Anterior & Posterior Interventricular Grooves.",
-          features: "Parts: 1. Left Coronary Artery (arises from Left Posterior Aortic Sinus -> divides into Anterior Interventricular / LAD & Circumflex artery). 2. Right Coronary Artery (arises from Anterior Aortic Sinus -> gives SA Nodal, Right Marginal & Posterior Interventricular / PDA in 85% Right-Dominant hearts).",
-          attachments: "Function: Myocardial oxygen delivery — uniquely perfused primarily during DIASTOLE when ventricular myocardium relaxes and aortic valve closes!",
-          ossification: "Anatomical Term: Arteria coronaria dextra et sinistra. Embryology: Epicardial angioblastic plexus invading aortic sinuses.",
-          clinical: "Medical Importance: Functional end-arteries! Obstruction by atherosclerotic plaque causes Angina Pectoris or Myocardial Infarction (Order of frequency: LAD 40–50% > RCA 30–40% > LCx 15–20%). Evaluated by Coronary Angiography and treated via PCI stenting or CABG bypass."
-        },
-        bn: {
-          title: "করোনারি ধমনী — হৃৎপিণ্ডের নিজস্ব রক্ত সরবরাহ (Coronary Arteries)",
-          type: "হৃৎপেশীর পুষ্টিদানকারী ধমনী • অ্যাসেন্ডিং অ্যাওর্টা থেকে উৎপন্ন",
-          side: "অবস্থান: হৃৎপিণ্ডের বাইরের খাঁজে (Coronary sulcus এবং Interventricular groove) এপিকার্ডিয়াল চর্বির মধ্য দিয়ে প্রবাহিত হয়।",
-          features: "অংশসমূহ: ১. বাম করোনারি ধমনী (LCA — দুটি প্রধান শাখা: অ্যান্টেরিয়র ইন্টারভেন্ট্রিকুলার বা LAD এবং সার্কামফ্লেক্স শাখা)। ২. ডান করোনারি ধমনী (RCA — SA নোডাল, রাইট মার্জিনাল ও ৮৫% ক্ষেত্রে পোস্টেরিয়র ইন্টারভেন্ট্রিকুলার শাখা বা PDA দেয়)।",
-          attachments: "কাজ: হৃৎপেশীতে (Myocardium) অক্সিজেন সরবরাহ করে — বিশেষ বৈশিষ্ট্য হলো নিলয়ের প্রসারণকালে (Diastole দশায়) করোনারি ধমনীতে সবচেয়ে বেশি রক্ত প্রবাহিত হয়!",
-          ossification: "শারীরস্থানিক পরিভাষা: Arteria coronaria। ভ্রূণতত্ত্ব: এপিকার্ডিয়াল রক্তজালিকা থেকে উৎপন্ন।",
-          clinical: "চিকিৎসাগত গুরুত্ব: করোনারি ধমনীতে চর্বি জমে ব্লক হলে বুকে ব্যথা (Angina) এবং হার্ট অ্যাটাক (Myocardial Infarction - সবচেয়ে বেশি হয় LAD শাখায়) ঘটে; চিকিৎসায় অ্যাঞ্জিওপ্লাস্টি স্টেন্ট বা বাইপাস সার্জারি (CABG) করা হয়।"
-        }
-      },
-      "vena cava": {
-        en: {
-          title: "Superior & Inferior Venae Cavae (Great Systemic Veins)",
-          type: "Main Venous Trunks Returning Blood to Right Atrium",
-          side: "Location: SVC (7 cm long, valveless) lies in right Superior & Middle Mediastinum; formed behind right 1st costal cartilage by union of Right & Left Brachiocephalic veins, enters Right Atrium at 3rd costal cartilage. IVC pierces central tendon of Diaphragm at T8 level.",
-          features: "Parts: Extrapericardial & Intrapericardial segments of SVC (receives Azygos vein at T4 / sternal angle before piercing fibrous pericardium); IVC receives Hepatic, Renal, Gonadal, Suprarenal & Common Iliac veins.",
-          attachments: "Function: Returns deoxygenated blood from upper body (SVC) and lower body/abdomen (IVC) into Sinus Venarum of Right Atrium.",
-          ossification: "Anatomical Term: Vena cava superior et inferior. Embryology: SVC from Right Anterior & Common Cardinal veins; IVC from composite Subcardinal, Supracardinal & Vitelline segments.",
-          clinical: "Medical Importance: Superior Vena Cava Obstruction (due to right upper lobe bronchogenic carcinoma or mediastinal lymphoma) causes facial plethora, non-pulsatile JVP elevation, and thoraco-epigastric venous collaterals."
-        },
-        bn: {
-          title: "ঊর্ধ্ব ও নিম্ন মহাশিরা (Superior & Inferior Vena Cava)",
-          type: "দেহের প্রধান দুটি মহাশিরা • ডান অলিন্দে রক্ত ফিরিয়ে আনে",
-          side: "অবস্থান: ঊর্ধ্ব মহাশিরা (SVC - ৭ সেমি দীর্ঘ, কপাটিকাবিহীন) ডান ১ম পর্শুকা তরুণাস্থির পিছনে ডান ও বাম ব্রাকিওসেফালিক শিরার মিলনে গঠিত হয়ে ৩য় তরুণাস্থি স্তরে ডান অলিন্দে প্রবেশ করে। নিম্ন মহাশিরা (IVC) T8 স্তরে মধ্যচ্ছদা ভেদ করে হৃৎপিণ্ডে ঢোকে।",
-          features: "অংশ ও উপশাখা: SVC-তে অ্যাজাইগস শিরা (Azygos vein) এসে মেশে; IVC-তে যকৃৎ, বৃক্ক ও নিম্নবাহুর শিরাগুলো যুক্ত হয়।",
-          attachments: "কাজ: দেহের উপরের অংশ (SVC) এবং নিচের অংশ (IVC) থেকে কার্বন ডাই-অক্সাইডযুক্ত রক্ত ডান অলিন্দে ফিরিয়ে আনে।",
-          ossification: "শারীরস্থানিক পরিভাষা: Vena cava superior / inferior। ভ্রূণতত্ত্ব: ডান অ্যান্টেরিয়র ও কমন কার্ডিনাল শিরা থেকে SVC উৎপন্ন হয়।",
-          clinical: "চিকিৎসাগত গুরুত্ব: ফুসফুসের ক্যান্সারে ঊর্ধ্ব মহাশিরা চাপে বন্ধ হলে (SVC Obstruction) মুখমণ্ডল ফুলে লালচে হয়ে যায় এবং গলার শিরা ফুলে ওঠে।"
-        }
-      },
-      "pulmonary": {
-        en: {
-          title: "Pulmonary Trunk & Pulmonary Arteries",
-          type: "Arterial Conduit of Pulmonary Circulation (Carries Deoxygenated Blood)",
-          side: "Location: Arises from Infundibulum of Right Ventricle at left 3rd chondrosternal junction; ascends 5 cm inside fibrous pericardium spiraling anteriorly & to the left of Ascending Aorta, then bifurcates under Arch of Aorta (at T5 level) into Right & Left Pulmonary Arteries.",
-          features: "Parts: Pulmonary Trunk (guarded by 3 Semilunar cusps of Pulmonary Valve), Right Pulmonary Artery (longer, passes behind Ascending Aorta & SVC to right lung hilum), Left Pulmonary Artery (connected to Arch of Aorta by Ligamentum Arteriosum).",
-          attachments: "Function: Transports deoxygenated venous blood from Right Ventricle to pulmonary alveolar capillaries for oxygenation.",
-          ossification: "Anatomical Term: Truncus pulmonalis. Embryology:Truncus Arteriosus divided by spiral Aorticopulmonary Septum + 6th Pharyngeal Arch arteries.",
-          clinical: "Medical Importance: Saddle Pulmonary Embolus (deep vein thrombosis clot lodging at bifurcation of Pulmonary Trunk) causes acute right heart strain, electromechanical dissociation, and sudden death."
-        },
-        bn: {
-          title: "ফুসফুসীয় কাণ্ড ও ফুসফুসীয় ধমনী (Pulmonary Trunk & Arteries)",
-          type: "ফুসফুসীয় সংবহনের প্রধান ধমনী (অক্সিজেনবিহীন রক্ত বহন করে)",
-          side: "অবস্থান: ডান নিলয়ের ইনফান্ডিবুলাম থেকে উৎপন্ন হয়ে পেরিকার্ডিয়ামের ভেতরে অ্যাসেন্ডিং অ্যাওর্টার সামনে দিয়ে ৫ সেমি উপরে উঠে অ্যাওর্টিক আর্চের নিচে (T5 স্তরে) ডান ও বাম ফুসফুসীয় ধমনীতে বিভক্ত হয়।",
-          features: "অংশসমূহ: পালমোনারি ট্রাঙ্ক (পালমোনারি সেমিলুনার কপাটিকা যুক্ত), ডান পালমোনারি ধমনী এবং বাম পালমোনারি ধমনী।",
-          attachments: "কাজ: দেহের একমাত্র ধমনী যা ডান নিলয় থেকে কার্বন ডাই-অক্সাইডযুক্ত রক্ত পরিশোধনের জন্য দুই ফুসফুসে নিয়ে যায়।",
-          ossification: "শারীরস্থানিক পরিভাষা: Truncus pulmonalis। ভ্রূণতত্ত্ব: ট্রাঙ্কাস আর্টেরিওসাস ও ৬ষ্ঠ ফ্যারিনজিয়াল আর্চ ধমনী থেকে উৎপন্ন।",
-          clinical: "চিকিৎসাগত গুরুত্ব: পায়ের গভীর শিরার জমাট রক্ত (DVT) এসে পালমোনারি ট্রাঙ্কের বিভাজনস্থলে আটকে গেলে তাকে 'স্যাডল পালমোনারি এমবোলিজম' (Pulmonary Embolism) বলে যা জীবনঘাতী হতে পারে।"
-        }
-      },
-      "valve": {
-        en: {
-          title: "Cardiac Valves (Tricuspid, Mitral, Aortic & Pulmonary)",
-          type: "Unidirectional Fibrous Leaflets of Cardiac Skeleton",
-          side: "Location: Surface projection of valves lies obliquely behind sternum ('P-A-M-T' from upper left to lower right); Auscultatory areas are WIDE apart (Mitral at left 5th ICS apex; Tricuspid at lower left sternal border; Aortic at right 2nd ICS; Pulmonary at left 2nd ICS).",
-          features: "Parts: 1. Atrioventricular Valves: Tricuspid (3 cusps: Anterior, Posterior, Septal) & Mitral/Bicuspid (2 cusps: large Anterior/Aortic cusp & Posterior cusp anchored by Chordae Tendineae & Papillary muscles). 2. Semilunar Valves: Aortic & Pulmonary (3 pocket-like cusps with central Nodules of Arantius & Lunules; NO chordae tendineae).",
-          attachments: "Function: Prevent backflow of blood; Closure of AV valves (Mitral + Tricuspid) produces 1st Heart Sound (S1 'Lub'); Closure of Semilunar valves (Aortic + Pulmonary) produces 2nd Heart Sound (S2 'Dub').",
-          ossification: "Anatomical Term: Valvae cordis. Embryology: Subendocardial mesenchymal cushions & neural crest cells (semilunar valves).",
-          clinical: "Medical Importance: Rheumatic Fever most commonly affects Mitral Valve (Mitral Stenosis -> mid-diastolic murmur) followed by Aortic Valve. Papillary muscle rupture after MI causes acute severe Mitral Regurgitation."
-        },
-        bn: {
-          title: "হৃৎপিণ্ডের কপাটিকাসমূহ — ট্রাইকাসপিড, মাইট্রাল, অ্যাওর্টিক ও পালমোনারি (Heart Valves)",
-          type: "হৃৎপিণ্ডের একমুখী রক্তপ্রবাহ রক্ষাকারী কপাটিকা",
-          side: "অবস্থান: স্টার্নামের পিছনে তির্যকভাবে অবস্থিত; স্টেথোস্কোপ দিয়ে শোনার স্থান: মাইট্রাল (বাম ৫ম ICS অ্যাপেক্স), ট্রাইকাসপিড (স্টার্নামের নিচের বাম প্রান্ত), অ্যাওর্টিক (ডান ২য় ICS) এবং পালমোনারি (বাম ২য় ICS)।",
-          features: "অংশসমূহ: ১. অ্যাট্রিও-ভেন্ট্রিকুলার কপাটিকা: ট্রাইকাসপিড (৩টি পত্রক) ও মাইট্রাল বা বাইকাসপিড (২টি পত্রক যা কর্ডি টেন্ডিনি ও প্যাপিলারি পেশী দ্বারা যুক্ত)। ২. সেমিলুনার বা অর্ধচন্দ্রাকার কপাটিকা: অ্যাওর্টিক ও পালমোনারি (৩টি পকেট আকৃতির কাস্প, এতে কর্ডি টেন্ডিনি থাকে না)।",
-          attachments: "কাজ: রক্তের বিপরীতমুখী প্রবাহ রোধ করে; মাইট্রাল ও ট্রাইকাসপিড বন্ধ হলে ১ম হৃদধ্বনি (S1 'লাব') এবং অ্যাওর্টিক ও পালমোনারি বন্ধ হলে ২য় হৃদধ্বনি (S2 'ডাব') সৃষ্টি হয়।",
-          ossification: "শারীরস্থানিক পরিভাষা: Valvae cordis। ভ্রূণতত্ত্ব: এন্ডোকার্ডিয়াল কুশন ও নিউরাল ক্রেস্ট কোষ থেকে গঠিত।",
-          clinical: "চিকিৎসাগত গুরুত্ব: বাতজ্বরে (Rheumatic fever) মাইট্রাল কপাটিকা সবচেয়ে বেশি ক্ষতিগ্রস্ত হয়ে 'মাইট্রাল স্টেনোসিস' ঘটায়।"
-        }
-      },
-
-      // ---------------- NERVOUS & SKELETAL ENTRIES PRESERVED ----------------
       "cerebrum": {
         en: {
           title: "Cerebrum (Cerebral Hemisphere)",
           type: "Telencephalon • Central Nervous System (CNS)",
-          side: "Location: Occupies anterior & middle cranial fossae above tentorium cerebelli; divided by longitudinal fissure.",
-          features: "Parts: 4 Lobes (Frontal, Parietal, Temporal, Occipital), Corpus Callosum, Internal Capsule, Basal Ganglia & Ventricles.",
-          attachments: "Function & Supply: Controls movement, sensation, speech, memory & vision. Supplied by ACA, MCA & PCA.",
-          ossification: "Anatomical Term: Hemispherium cerebri. Embryology: Telencephalon.",
-          clinical: "Medical Importance: MCA Stroke causes contralateral hemiplegia and aphasia."
+          side: "Location: Occupies anterior & middle cranial fossae above tentorium cerebelli; divided by longitudinal fissure containing Falx Cerebri.",
+          features: "Parts: 4 Lobes (Frontal, Parietal, Temporal, Occipital), Corpus Callosum, Internal Capsule, Basal Ganglia, and Lateral Ventricles. Gyri include Precentral (Area 4), Postcentral (Areas 3,1,2), Broca's (44,45) & Wernicke's (22).",
+          attachments: "Function & Supply: Controls conscious movement, somatosensory perception, speech, memory, and vision. Supplied by Anterior, Middle & Posterior Cerebral Arteries.",
+          ossification: "Anatomical Term: Cerebrum / Hemispherium cerebri. Embryology: Telencephalic vesicles of Prosencephalon.",
+          clinical: "Medical Importance: MCA Stroke causes contralateral hemiplegia (face/arm > leg) and aphasia (if left hemisphere affected)."
         },
         bn: {
           title: "গুরুমস্তিষ্ক / সেরিব্রাম (Cerebrum)",
           type: "টেলেনসেফালন • কেন্দ্রীয় স্নায়ুতন্ত্র (CNS)",
-          side: "অবস্থান: করোটির অগ্র ও মধ্য ক্র্যানিয়াল ফোসায় অবস্থিত; লংগিটিউডিনাল ফিসার দ্বারা ডান ও বাম গোলার্ধে বিভক্ত।",
-          features: "অংশসমূহ: ৪টি লোব (ফ্রন্টাল, প্যারাইটাল, টেম্পোরাল, অক্সিপিটাল), কর্পাস ক্যালোসাম, ব্যাসাল গ্যাংলিয়া ও ভেন্ট্রিকল।",
-          attachments: "কাজ ও সরবরাহ: চলাফেরা, অনুভূতি, কথা বলা, স্মৃতি ও দর্শন নিয়ন্ত্রণ করে। ACA, MCA ও PCA রক্ত জোগায়।",
-          ossification: "শারীরস্থানিক পরিভাষা: Hemispherium cerebri। ভ্রূণতত্ত্ব: টেলেনসেফালন।",
-          clinical: "চিকিৎসাগত গুরুত্ব: মিডল সেরিব্রাল ধমনী স্ট্রোকে বিপরীত পাশে পক্ষাঘাত ও কথা বলার অক্ষমতা দেখা দেয়।"
+          side: "অবস্থান: করোটির অগ্র ও মধ্য ক্র্যানিয়াল ফোসায় টেন্টোরিয়াম সেরিবেলাই-এর উপরে অবস্থিত; লংগিটিউডিনাল ফিসার দ্বারা ডান ও বাম গোলার্ধে বিভক্ত।",
+          features: "অংশসমূহ: ৪টি লোব (ফ্রন্টাল, প্যারাইটাল, টেম্পোরাল, অক্সিপিটাল), কর্পাস ক্যালোসাম, ব্যাসাল গ্যাংলিয়া ও ল্যাটারাল ভেন্ট্রিকল; প্রি-সেন্ট্রাল (মোটর ৪), পোস্ট-সেন্ট্রাল (৩,১,২) ও ব্রোকার বাক্-কেন্দ্র (৪৪,৪৫)।",
+          attachments: "কাজ ও সরবরাহ: ঐচ্ছিক অঙ্গ সঞ্চালন, অনুভূতি, কথা বলা, স্মৃতি, চিন্তা ও দর্শন নিয়ন্ত্রণ করে। অ্যান্টেরিয়র, মিডল ও পোস্টেরিয়র সেরিব্রাল ধমনী রক্ত সরবরাহ করে।",
+          ossification: "শারীরস্থানিক পরিভাষা: Hemispherium cerebri। ভ্রূণতত্ত্ব: অগ্রমস্তিষ্কের (Prosencephalon) টেলেনসেফালিক ভেসিকল থেকে উৎপন্ন।",
+          clinical: "চিকিৎসাগত গুরুত্ব: মিডল সেরিব্রাল ধমনী স্ট্রোকে (MCA Stroke) দেহের বিপরীত পাশে মুখমণ্ডল ও হাতের পক্ষাঘাত এবং কথা বলার অক্ষমতা (Aphasia) দেখা দেয়।"
+        }
+      },
+      "cerebellum": {
+        en: {
+          title: "Cerebellum (Little Brain)",
+          type: "Metencephalon • Hindbrain (CNS)",
+          side: "Location: Posterior Cranial Fossa underneath Tentorium Cerebelli, posterior to Pons and Medulla separated by the 4th Ventricle.",
+          features: "Parts: Midline Vermis & 2 Lateral Hemispheres; 3 Lobes (Anterior, Posterior, Flocculonodular); 4 Deep Nuclei: Dentate, Emboliform, Globose, Fastigial; 3 Cerebellar Peduncles (Superior, Middle, Inferior).",
+          attachments: "Function & Supply: Coordinates posture, balance, smooth skilled movements, and muscle tone. Supplied by SCA, AICA, and PICA.",
+          ossification: "Anatomical Term: Cerebellum. Embryology: Rhombic lips of Alar plate of Metencephalon.",
+          clinical: "Medical Importance: Lesions cause ipsilateral DANISH signs — Dysdiadochokinesia, Ataxia, Nystagmus, Intention tremor, Slurred speech, Hypotonia."
+        },
+        bn: {
+          title: "লঘুমস্তিষ্ক / সেরিবেলাম (Cerebellum)",
+          type: "মেটেনসেফালন • পশ্চাৎ মস্তিষ্ক (CNS)",
+          side: "অবস্থান: পশ্চাৎ ক্র্যানিয়াল ফোসায় টেন্টোরিয়াম সেরিবেলাই-এর নিচে এবং পনস ও মেডুলার পিছনে অবস্থিত।",
+          features: "অংশসমূহ: মাঝখানে ভার্মিস ও দুটি পার্শ্বীয় গোলার্ধ; ৩টি লোব; ৪টি গভীর নিউক্লিয়াস (ডেন্টেট, এমবলিফর্ম, গ্লোবোস, ফ্যাস্টিজিয়াল) এবং ৩ জোড়া পেডাঙ্কল।",
+          attachments: "কাজ ও সরবরাহ: দেহের ভারসাম্য রক্ষা, পেশীর টান ও সুশৃঙ্খল সূক্ষ্ম চলাফেরা নিয়ন্ত্রণ করে। SCA, AICA ও PICA ধমনী রক্ত জোগায়।",
+          ossification: "শারীরস্থানিক পরিভাষা: Cerebellum। ভ্রূণতত্ত্ব: মেটেনসেফালনের অ্যালার প্লেটের রম্বিক লিপ থেকে উৎপন্ন।",
+          clinical: "চিকিৎসাগত গুরুত্ব: সেরিবেলামের ক্ষতে একই পাশে দেহের ভারসাম্যহীনতা (Ataxia), ইনটেনশন ট্রেমর, নিস্ট্যাগযাস ও অস্পষ্ট কথা (DANISH লক্ষণ) দেখা দেয়।"
+        }
+      },
+      "brainstem": {
+        en: {
+          title: "Brainstem (Midbrain, Pons & Medulla)",
+          type: "Central Stalk of Brain • CNS",
+          side: "Location: Rests on Clivus of occipital bone in posterior cranial fossa; connects Diencephalon above to Spinal Cord below at Foramen Magnum.",
+          features: "Parts: 1. Midbrain (Cerebral peduncles, Tectum/Colliculi, CN III & IV), 2. Pons (Basis pontis, Tegmentum, CN V–VIII), 3. Medulla Oblongata (Pyramids, Olives, CN IX–XII).",
+          attachments: "Function & Supply: Vital cardiac & respiratory centers, consciousness (Reticular Activating System), and cranial nerve reflexes. Supplied by Vertebro-Basilar arteries.",
+          ossification: "Anatomical Term: Truncus encephali. Embryology: Mesencephalon, Metencephalon & Myelencephalon.",
+          clinical: "Medical Importance: Lateral Medullary (Wallenberg) Syndrome in PICA thrombosis; brainstem herniation causes fatal cardiorespiratory arrest."
+        },
+        bn: {
+          title: "ব্রেনস্টেম — মিডব্রেন, পনস ও মেডুলা (Brainstem)",
+          type: "মস্তিষ্কের কেন্দ্রীয় কাণ্ড • CNS",
+          side: "অবস্থান: পশ্চাৎ ক্র্যানিয়াল ফোসায় ক্লিভাসের ওপর অবস্থিত এবং ফোরামেন ম্যাগনামের মাধ্যমে সুষুম্নাকাণ্ডের সাথে যুক্ত।",
+          features: "অংশসমূহ: ১. মিডব্রেন (CN III, IV), ২. পনস (CN V–VIII), এবং ৩. মেডুলা অবলংগাটা (পিরামিড, অলিভ ও CN IX–XII)।",
+          attachments: "কাজ ও সরবরাহ: হৃদস্পন্দন, শ্বাস-প্রশ্বাস, রক্তচাপ ও চেতনা নিয়ন্ত্রণ করে। ভার্টিব্রো-ব্যাসিলার ধমনী রক্ত সরবরাহ করে।",
+          ossification: "শারীরস্থানিক পরিভাষা: Truncus encephali। ভ্রূণতত্ত্ব: মেসেনসেফালন, মেটেনসেফালন ও মায়েলেনসেফালন।",
+          clinical: "চিকিৎসাগত গুরুত্ব: PICA অবরুদ্ধ হলে ওয়ালেনবার্গ সিনড্রোম (গিলতে অসুবিধা, হর্নার সিনড্রোম ও অনুভূতি লোপ) ঘটে।"
+        }
+      },
+      "thalamus": {
+        en: {
+          title: "Thalamus & Diencephalon",
+          type: "Great Sensory Relay Station • CNS",
+          side: "Location: Paired ovoid gray matter mass forming lateral walls of 3rd Ventricle, medial to Posterior Limb of Internal Capsule.",
+          features: "Parts: Anterior, Medial & Lateral nuclear groups (VPL for body, VPM for face/taste), Lateral Geniculate Body (vision), Medial Geniculate Body (hearing).",
+          attachments: "Function & Supply: Gatekeeper relaying all sensory impulses (except olfaction) and motor feedback to cerebral cortex. Supplied by Posterior Cerebral Artery (PCA).",
+          ossification: "Anatomical Term: Thalamus dorsalis. Embryology: Alar plate of Diencephalon.",
+          clinical: "Medical Importance: Thalamic Pain Syndrome (Dejerine-Roussy) causes contralateral anesthesia followed by agonizing burning pain."
+        },
+        bn: {
+          title: "থ্যালামাস ও ডায়েনসেফালন (Thalamus)",
+          type: "প্রধান সংজ্ঞাবহ রিলে কেন্দ্র • CNS",
+          side: "অবস্থান: ৩য় ভেন্ট্রিকলের দুই পাশে এবং ইন্টারনাল ক্যাপসুলের ভেতরের দিকে অবস্থিত ডিম্বাকৃতি ধূসর বস্তু।",
+          features: "অংশসমূহ: VPL নিউক্লিয়াস (দেহ), VPM নিউক্লিয়াস (মুখমণ্ডল ও স্বাদ), LGN (দৃষ্টি) এবং MGN (শ্রবণ)।",
+          attachments: "কাজ ও সরবরাহ: ঘ্রাণ ব্যতীত দেহের সকল সংবেদী উদ্দীপনা সেরিব্রাল কর্টেক্সে প্রেরণ করে। পোস্টেরিয়র সেরিব্রাল ধমনী (PCA) রক্ত জোগায়।",
+          ossification: "শারীরস্থানিক পরিভাষা: Thalamus। ভ্রূণতত্ত্ব: ডায়েনসেফালনের অ্যালার প্লেট।",
+          clinical: "চিকিৎসাগত গুরুত্ব: থ্যালামিক পেইন সিনড্রোমে দেহের বিপরীত পাশে অনুভূতি লোপ পায় এবং তীব্র জ্বালাপোড়া ব্যথা অনুভূত হয়।"
+        }
+      },
+      "spinal": {
+        en: {
+          title: "Spinal Cord (Medulla Spinalis)",
+          type: "Central Nervous System • 31 Segments",
+          side: "Location: Upper 2/3 of vertebral canal from Foramen Magnum to lower border of L1 vertebra in adults (L3 in neonates).",
+          features: "Parts: Cervical (C5–T1) & Lumbosacral (L1–S3) enlargements, Conus Medullaris, Cauda Equina, Filum Terminale, Central H-shaped Gray Horns & White Funiculi.",
+          attachments: "Function & Supply: Conducts ascending sensory & descending motor tracts and mediates spinal reflexes. Supplied by 1 Anterior & 2 Posterior Spinal Arteries + Artery of Adamkiewicz.",
+          ossification: "Anatomical Term: Medulla spinalis. Embryology: Caudal neural tube.",
+          clinical: "Medical Importance: Lumbar Puncture is safely performed at L3–L4 or L4–L5 interspace below Conus Medullaris."
+        },
+        bn: {
+          title: "সুষুম্নাকাণ্ড / স্পাইনাল কর্ড (Spinal Cord)",
+          type: "কেন্দ্রীয় স্নায়ুতন্ত্র • ৩১ জোড়া খণ্ডাংশ",
+          side: "অবস্থান: কশেরুকা নালীর ভেতরে ফোরামেন ম্যাগনাম থেকে প্রাপ্তবয়স্কদের ১ম লাম্বার কশেরুকার (L1) নিচের প্রান্ত পর্যন্ত বিস্তৃত।",
+          features: "অংশসমূহ: সার্ভাইকাল ও লাম্বোস্যাক্রাল স্ফীতি, কোনাস মেডুলারিস, কডা ইকুইনা, ফাইলাম টার্মিনালি এবং H-আকৃতির ধূসর বস্তু।",
+          attachments: "কাজ ও সরবরাহ: মস্তিষ্ক ও দেহের মধ্যে সংবেদী ও মোটর সংকেত পরিবহন এবং প্রতিবর্ত ক্রিয়া (Reflex) নিয়ন্ত্রণ করে।",
+          ossification: "শারীরস্থানিক পরিভাষা: Medulla spinalis। ভ্রূণতত্ত্ব: নিউরাল টিউবের পশ্চাৎ অংশ।",
+          clinical: "চিকিৎসাগত গুরুত্ব: সুষুম্নাকাণ্ড L1-এ শেষ হওয়ায় নিরাপদে L3–L4 বা L4–L5 স্তরে লাম্বার পাংচার (Lumbar Puncture) করা হয়।"
+        }
+      },
+      "vagus": {
+        en: {
+          title: "Vagus Nerve (Cranial Nerve X)",
+          type: "Longest Parasympathetic & Mixed Nerve",
+          side: "Location: Exits Medulla via Jugular Foramen, descends in Carotid Sheath of neck, traverses Mediastinum, enters Abdomen at T10 esophageal hiatus.",
+          features: "Parts & Branches: Superior & Inferior (Nodose) ganglia, Pharyngeal branch, Superior Laryngeal Nerve, Recurrent Laryngeal Nerve, Cardiac, Pulmonary & Celiac plexuses.",
+          attachments: "Function: Motor to palate, pharynx & larynx; parasympathetic secretomotor to heart (slows HR), lungs & GI tract up to right 2/3 of transverse colon.",
+          ossification: "Anatomical Term: Nervus vagus (CN X). Embryology: 4th and 6th Pharyngeal Arches.",
+          clinical: "Medical Importance: Left Recurrent Laryngeal Nerve hooks under Arch of Aorta (aneurysm causes hoarseness); uvula deviates to normal side in lesion."
+        },
+        bn: {
+          title: "ভেগাস স্নায়ু — ১০ম করোটিক স্নায়ু (Vagus Nerve - CN X)",
+          type: "দীর্ঘতম প্যারাসিমপ্যাথেটিক ও মিশ্র স্নায়ু",
+          side: "অবস্থান: মেডুলা থেকে জুগুলার ফোরামেন দিয়ে বের হয়ে ক্যারোটিড শীথের মধ্য দিয়ে বক্ষ ও উদরগহ্বরে (T10 স্তরে) প্রবেশ করে।",
+          features: "অংশ ও শাখা: ফ্যারিনজিয়াল শাখা, সুপিরিয়র ল্যারিনজিয়াল স্নায়ু, রিকারেন্ট ল্যারিনজিয়াল স্নায়ু এবং কার্ডিয়াক ও সিলিয়াক শাখা।",
+          attachments: "কাজ: গলবিল ও স্বরযন্ত্রের পেশী সঞ্চালন, হৃদস্পন্দন কমানো এবং ফুসফুস ও পরিপাকতন্ত্রের প্যারাসিমপ্যাথেটিক নিয়ন্ত্রণ।",
+          ossification: "শারীরস্থানিক পরিভাষা: Nervus vagus। ভ্রূণতত্ত্ব: ৪র্থ ও ৬ষ্ঠ ফ্যারিনজিয়াল আর্চ।",
+          clinical: "চিকিৎসাগত গুরুত্ব: বাম রিকারেন্ট ল্যারিনজিয়াল স্নায়ু অ্যাওর্টিক আর্চের নিচে চাপে পড়লে স্বরভঙ্গ (Hoarseness) হয় এবং আলজিহ্বা সুস্থ পাশে বেঁকে যায়।"
+        }
+      },
+      "sciatic": {
+        en: {
+          title: "Sciatic Nerve (L4, L5, S1, S2, S3)",
+          type: "Thickest & Longest Nerve in Human Body",
+          side: "Location: Exits pelvis via Greater Sciatic Foramen below Piriformis, descends in posterior thigh, divides at apex of Popliteal Fossa.",
+          features: "Parts: Tibial division (ventral L4–S3) & Common Peroneal/Fibular division (dorsal L4–S2) enclosed in a common fibrous epineurial sheath.",
+          attachments: "Function: Motor to Hamstrings (knee flexion & hip extension) and all muscles of leg and foot; sensory to leg and foot (except saphenous territory).",
+          ossification: "Anatomical Term: Nervus ischiadicus. Embryology: Lumbosacral plexus (L4–S3).",
+          clinical: "Medical Importance: Gluteal IM injections are given in Upper Outer Quadrant to avoid nerve injury; disc prolapse causes Sciatica; complete cut causes Foot Drop."
+        },
+        bn: {
+          title: "সায়াটিক স্নায়ু — মানবদেহের বৃহত্তম স্নায়ু (Sciatic Nerve: L4–S3)",
+          type: "দেহের সবচেয়ে মোটা ও দীর্ঘতম প্রান্তীয় স্নায়ু",
+          side: "অবস্থান: গ্রেটার সায়াটিক ফোরামেন দিয়ে পিরিফর্মিস পেশীর নিচ দিয়ে বের হয়ে উরুর পিছন দিয়ে নেমে পপলিটিয়াল ফোসার শীর্ষে বিভক্ত হয়।",
+          features: "অংশসমূহ: টিবিয়াল বিভাগ (L4–S3) এবং কমন পেরোনিয়াল বিভাগ (L4–S2)।",
+          attachments: "কাজ: হ্যামস্ট্রিং পেশীর মাধ্যমে হাঁটু ভাঁজ করা এবং পা ও পায়ের পাতার সকল পেশী ও অনুভূতি নিয়ন্ত্রণ করা।",
+          ossification: "শারীরস্থানিক পরিভাষা: Nervus ischiadicus। ভ্রূণতত্ত্ব: স্যাক্রাল প্লেক্সাস (L4–S3)।",
+          clinical: "চিকিৎসাগত গুরুত্ব: আঘাত এড়াতে নিতম্বের উপরের বাইরের চতুর্থাংশে ইনজেকশন দেওয়া হয়; ডিস্ক প্রলাপ্সে সায়াটিকা ব্যথা ও কাটলে ফুট ড্রপ হয়।"
         }
       },
       "clavicle": {
         en: {
           title: "Clavicle (Collar Bone)",
           type: "Modified Long Bone • Pectoral Girdle",
-          side: "Location: Horizontally at root of neck articulating with Manubrium & Acromion.",
-          features: "Parts: Sternal end, Shaft (medial 2/3 convex anteriorly, lateral 1/3 concave), Acromial end with Conoid tubercle.",
-          attachments: "Function: Strut holding upper limb away from trunk; Pectoralis major, Deltoid, Trapezius, SCM.",
-          ossification: "Anatomical Term: Clavicula. First bone to ossify (5th–6th wk IU) in membrane.",
-          clinical: "Medical Importance: Most commonly fractured at junction of medial 2/3 and lateral 1/3."
+          side: "Location: Horizontally at root of neck across superior thorax; articulates medially with Manubrium sterni and laterally with Acromion of scapula.",
+          features: "Parts: Large quadrilateral Sternal end, Shaft (medial 2/3 convex anteriorly, lateral 1/3 concave anteriorly with subclavian groove), Flat Acromial end with Conoid tubercle & Trapezoid ridge.",
+          attachments: "Function & Attachments: Strut holding upper limb away from trunk and transmitting weight to axial skeleton. Attachments: Pectoralis major, Deltoid, Trapezius, SCM, Subclavius & Coracoclavicular ligament.",
+          ossification: "Anatomical Term: Clavicula. Embryology: First bone to ossify (5th–6th wk IU) in membrane with 2 primary centers; no medullary cavity.",
+          clinical: "Medical Importance: Most commonly fractured at junction of medial 2/3 and lateral 1/3 by fall on outstretched hand."
         },
         bn: {
           title: "ক্ল্যাভিকল বা কণ্ঠাস্থি (Clavicle)",
           type: "রূপান্তরিত দীর্ঘ অস্থি • বক্ষ অস্থিচক্র",
-          side: "অবস্থান: গ্রীবার মূলদেশে অনুভূমিকভাবে স্টার্নাম ও অ্যাক্রোমিয়নের মধ্যে অবস্থিত।",
-          features: "অংশসমূহ: স্টার্নাল প্রান্ত, শ্যাফট ও চ্যাপ্টা অ্যাক্রোমিয়াল প্রান্ত; কোনো মজ্জা গহ্বর নেই।",
-          attachments: "কাজ: হাতকে দেহকাণ্ড থেকে দূরে ধরে রাখে; ডেল্টয়েড, পেক্টোরালিস মেজর ও ট্রাপিজিয়াস যুক্ত থাকে।",
-          ossification: "শারীরস্থানিক পরিভাষা: Clavicula। দেহের প্রথম অস্থিভবনকারী অস্থি।",
-          clinical: "চিকিৎসাগত গুরুত্ব: ভেতরের ২/৩ ও বাইরের ১/৩ অংশের সংযোগস্থলে সবচেয়ে বেশি ভাঙে।"
+          side: "অবস্থান: গ্রীবার মূলদেশে অনুভূমিকভাবে অবস্থিত; ভেতরের দিকে স্টার্নাম ও বাইরের দিকে স্ক্যাপুলার অ্যাক্রোমিয়নের সাথে যুক্ত।",
+          features: "অংশসমূহ: স্টার্নাল প্রান্ত, শ্যাফট (ভেতরের ২/৩ উত্তল, বাইরের ১/৩ অবতল ও সাবক্ল্যাভিয়ান খাঁজযুক্ত) এবং চ্যাপ্টা অ্যাক্রোমিয়াল প্রান্ত।",
+          attachments: "কাজ ও সংযুক্তি: হাতকে দেহকাণ্ড থেকে দূরে ধরে রাখে এবং হাতের ওজন অক্ষীয় কঙ্কালে প্রেরণ করে। পেক্টোরালিস মেজর, ডেল্টয়েড, ট্রাপিজিয়াস ও SCM পেশী যুক্ত থাকে।",
+          ossification: "শারীরস্থানিক পরিভাষা: Clavicula। ভ্রূণতত্ত্ব: দেহের প্রথম অস্থিভবনকারী অস্থি (৫ম-৬ষ্ঠ সপ্তাহ), মজ্জা গহ্বর নেই।",
+          clinical: "চিকিৎসাগত গুরুত্ব: হাতের ওপর ভর দিয়ে পড়ে গেলে ভেতরের ২/৩ ও বাইরের ১/৩ অংশের সংযোগস্থলে সবচেয়ে বেশি ভেঙে যায়।"
         }
       },
       "humerus": {
         en: {
           title: "Humerus (Bone of Arm)",
           type: "Typical Long Bone • Upper Limb",
-          side: "Location: Arm region between Scapula (shoulder) and Radius/Ulna (elbow).",
-          features: "Parts: Head, Surgical neck, Greater/Lesser tubercles, Spiral groove, Capitulum, Trochlea, Olecranon fossa.",
-          attachments: "Function: Lever for arm movement; Rotator cuff, Deltoid, Biceps, Triceps.",
-          ossification: "Anatomical Term: Humerus. Upper end is Growing End (fuses at 20 yrs).",
-          clinical: "Medical Importance: Axillary nerve (Surgical neck), Radial nerve (Spiral groove — Wrist drop), Ulnar nerve (Medial epicondyle)."
+          side: "Location: Brachium (arm) region; articulates superiorly with Glenoid cavity of Scapula (shoulder joint) and inferiorly with Radius & Ulna (elbow joint).",
+          features: "Parts: Upper end (Head, Anatomical & Surgical necks, Greater & Lesser tubercles, Bicipital groove), Shaft (Deltoid tuberosity, Spiral groove), Lower end (Capitulum, Trochlea, Epicondyles, Olecranon fossa).",
+          attachments: "Function & Attachments: Lever for arm & elbow movements. Attachments: Rotator cuff (SITS), Pectoralis major, Latissimus dorsi, Teres major, Deltoid, Brachialis, Triceps.",
+          ossification: "Anatomical Term: Humerus. Ossification: 1 Primary shaft center (8th wk IU); Upper end fuses at 20 yrs (Growing End).",
+          clinical: "Medical Importance: 3 Direct Nerves — Axillary nerve (Surgical neck), Radial nerve (Spiral groove — Wrist drop), Ulnar nerve (Medial epicondyle)."
         },
         bn: {
           title: "হিউমেরাস — বাহুর অস্থি (Humerus)",
           type: "আদর্শ দীর্ঘ অস্থি • ঊর্ধ্বাঙ্গ",
-          side: "অবস্থান: কাঁধ ও কনুইয়ের মধ্যবর্তী বাহু অঞ্চলে অবস্থিত।",
-          features: "অংশসমূহ: মস্তক, সার্জিক্যাল গ্রীবা, টিউবারকলদ্বয়, স্পাইরাল গ্রুভ, ক্যাপিচুলাম ও ট্রকলিয়া।",
-          attachments: "কাজ: বাহু সঞ্চালনের লিভার; রোটেটর কাফ, ডেল্টয়েড ও ট্রাইসেপস যুক্ত থাকে।",
-          ossification: "শারীরস্থানিক পরিভাষা: Humerus। উপরের প্রান্তটি বর্ধনশীল প্রান্ত।",
-          clinical: "চিকিৎসাগত গুরুত্ব: অ্যাক্সিলারি, রেডিয়াল (রিস্ট ড্রপ) ও আলনার স্নায়ু সরাসরি অস্থির সংস্পর্শে থাকে।"
+          side: "অবস্থান: বাহু অঞ্চলে (Arm) অবস্থিত; উপরে স্ক্যাপুলার গ্লেনয়েড গহ্বর এবং নিচে রেডিয়াস ও আলনার সাথে যুক্ত।",
+          features: "অংশসমূহ: ঊর্ধ্ব প্রান্ত (মস্তক, সার্জিক্যাল গ্রীবা, গ্রেটার ও লেসার টিউবারকল), শ্যাফট (ডেল্টয়েড টিউবারোসিটি, স্পাইরাল গ্রুভ), নিম্ন প্রান্ত (ক্যাপিচুলাম, ট্রকলিয়া, ওলেক্র্যানন ফোসা)।",
+          attachments: "কাজ ও সংযুক্তি: কাঁধ ও কনুইয়ের সঞ্চালনে প্রধান লিভার হিসেবে কাজ করে। রোটেটর কাফ, ডেল্টয়েড, বাইসেপস ও ট্রাইসেপস পেশী যুক্ত থাকে।",
+          ossification: "শারীরস্থানিক পরিভাষা: Humerus। অস্থিভবন: উপরের প্রান্তটি বর্ধনশীল প্রান্ত (Growing end) যা ২০ বছরে যুক্ত হয়।",
+          clinical: "চিকিৎসাগত গুরুত্ব: ৩টি প্রধান স্নায়ু সরাসরি অস্থির সংস্পর্শে থাকে — অ্যাক্সিলারি (সার্জিক্যাল গ্রীবা), রেডিয়াল (স্পাইরাল গ্রুভ - রিস্ট ড্রপ), এবং আলনার স্নায়ু।"
         }
       },
       "femur": {
         en: {
           title: "Femur (Thigh Bone)",
           type: "Longest & Strongest Bone of Body",
-          side: "Location: Thigh region articulating with Hip Acetabulum above and Tibia/Patella below.",
-          features: "Parts: Head with fovea, Neck (125°), Greater/Lesser trochanters, Linea aspera, Condyles.",
-          attachments: "Function: Weight transmission & locomotion; Glutei, Iliopsoas, Quadriceps, Adductors.",
-          ossification: "Anatomical Term: Os femoris. Lower end ossifies at 9th month IU (medicolegal viability).",
-          clinical: "Medical Importance: Fracture of Neck of Femur tears Medial Circumflex Femoral Artery causing AVN of head."
+          side: "Location: Thigh region; articulates superiorly with Acetabulum of hip bone and inferiorly with Tibia and Patella at knee joint.",
+          features: "Parts: Upper end (Head with fovea, Neck at 125° angle, Greater & Lesser trochanters), Shaft (Linea aspera, Gluteal tuberosity), Lower end (Medial & Lateral condyles, Adductor tubercle).",
+          attachments: "Function & Attachments: Transmits body weight in standing & locomotion. Attachments: Gluteus medius/minimus/maximus, Iliopsoas, Quadriceps femoris, Adductor magnus.",
+          ossification: "Anatomical Term: Os femoris. Ossification: Lower end center appears at 9th month IU (Medicolegal viability of newborn!).",
+          clinical: "Medical Importance: Intracapsular fracture of Neck of Femur tears Medial Circumflex Femoral Artery branches causing Avascular Necrosis (AVN) of femoral head."
         },
         bn: {
           title: "ফিমার — উরুর অস্থি (Femur)",
-          type: "মানবদেহের দীর্ঘতম ও শক্তিশালী অস্থি",
-          side: "অবস্থান: উরু অঞ্চলে হিপ জয়েন্ট ও হাঁটুর মাঝখানে অবস্থিত।",
-          features: "অংশসমূহ: মস্তক, গ্রীবা, ট্রোক্যান্টারদ্বয়, লিনিয়া অ্যাসপেরা ও কন্ডাইলদ্বয়।",
-          attachments: "কাজ: দেহের ওজন বহন ও হাঁটাচলা; গ্লুটিয়াস ও কোয়াড্রিসেপস পেশী যুক্ত।",
-          ossification: "শারীরস্থানিক পরিভাষা: Os femoris। নিচের প্রান্ত জন্মের ঠিক আগে অস্থিভবন শুরু করে।",
-          clinical: "চিকিৎসাগত গুরুত্ব: ফিমারের গ্রীবা ভাঙলে মস্তকে রক্ত সরবরাহ বন্ধ হয়ে অ্যাভাসকুলার নেক্রোসিস (AVN) ঘটে।"
+          type: "মানবদেহের দীর্ঘতম ও সবচেয়ে শক্তিশালী অস্থি",
+          side: "অবস্থান: উরু অঞ্চলে অবস্থিত; উপরে হিপ অস্থির অ্যাসিটাবুলাম এবং নিচে টিবিয়া ও প্যাটেলার সাথে জানুসন্ধি গঠন করে।",
+          features: "অংশসমূহ: ঊর্ধ্ব প্রান্ত (মস্তক, গ্রীবা, গ্রেটার ও লেসার ট্রোক্যান্টার), শ্যাফট (লিনিয়া অ্যাসপেরা), নিম্ন প্রান্ত (মিডিয়াল ও ল্যাটারাল কন্ডাইল, অ্যাডাক্টর টিউবারকল)।",
+          attachments: "কাজ ও সংযুক্তি: দেহের ওজন বহন ও হাঁটাচলায় প্রধান ভূমিকা পালন করে। গ্লুটিয়াস, ইলিওসোয়াস, কোয়াড্রিসেপস ও অ্যাডাক্টর পেশী যুক্ত থাকে।",
+          ossification: "শারীরস্থানিক পরিভাষা: Os femoris। অস্থিভবন: নিচের প্রান্তের কেন্দ্র জন্মের ঠিক আগে (৯ম মাসে) আবির্ভূত হয় (ফরেনসিক প্রমাণ)।",
+          clinical: "চিকিৎসাগত গুরুত্ব: ফিমারের গ্রীবা ভাঙলে মিডিয়াল সার্কামফ্লেক্স ফিমোরাল ধমনী ছিঁড়ে মস্তকে অ্যাভাসকুলার নেক্রোসিস (AVN) ঘটে।"
         }
       }
     };
 
     // ============================================================================
-    // 5. SYSTEM MODULES REGISTRY & LIVE AVAILABILITY CHECKER
+    // 4. SYSTEM MODULES REGISTRY & LIVE AVAILABILITY CHECKER
     // ============================================================================
     const SYSTEM_MODULES = {
       skeletal: {
@@ -1152,7 +950,7 @@
         titleEn: "🫀 Cardiovascular System",
         titleBn: "🫀 হৃৎ-সংবহনতন্ত্র (Cardiovascular)",
         urls: ['./cardiovascular.glb', './heart.glb', './models/cardiovascular.glb'],
-        available: true
+        available: false
       },
       muscular: {
         titleEn: "💪 Muscular System",
@@ -1168,6 +966,7 @@
       }
     };
 
+    // Dynamically probes each system's .glb file via HEAD request so uploaded files turn GREEN automatically!
     async function checkAllModulesAvailability() {
       for (const [key, mod] of Object.entries(SYSTEM_MODULES)) {
         let found = false;
@@ -1209,7 +1008,7 @@
     checkAllModulesAvailability();
 
     // ============================================================================
-    // 6. THREE.JS SCENE SETUP
+    // 5. THREE.JS SCENE SETUP
     // ============================================================================
     const container = document.getElementById('canvas-container');
     const activeBoneTag = document.getElementById('activeBoneTag');
@@ -1235,7 +1034,7 @@
     dirLight2.position.set(-6, -4, -6);
     scene.add(dirLight2);
 
-    let activeSysKey = 'cardio';
+    let activeSysKey = 'skeletal';
     let rootModel = null;
     let boneMeshes = [];
     let labelMeshes = [];
@@ -1258,15 +1057,12 @@
     loader.setDRACOLoader(draco);
 
     // ============================================================================
-    // 7. LANGUAGE SWITCHING ENGINE
+    // 6. LANGUAGE SWITCHING ENGINE
     // ============================================================================
     function toggleLanguage() {
       currentLang = (currentLang === 'en') ? 'bn' : 'en';
       applyLanguageUI();
-      if (selectedBone) {
-        renderBoneDetails(selectedBone);
-        fetchWikipediaSummaryForMesh(selectedBone);
-      }
+      if (selectedBone) renderBoneDetails(selectedBone);
       populateCatalogModal();
     }
 
@@ -1295,7 +1091,7 @@
         el.textContent = el.getAttribute(`data-${currentLang}`);
       });
 
-      const mod = SYSTEM_MODULES[activeSysKey] || SYSTEM_MODULES.cardio;
+      const mod = SYSTEM_MODULES[activeSysKey] || SYSTEM_MODULES.skeletal;
       document.getElementById('activeSystemIndicator').textContent = (currentLang === 'bn') ? mod.titleBn : mod.titleEn;
     }
 
@@ -1303,7 +1099,7 @@
     document.getElementById('btnDrawerLang').onclick = toggleLanguage;
 
     // ============================================================================
-    // 8. DEDICATED PAGE ROUTING (?page=cardio, ?page=skeletal, ?page=nervous)
+    // 7. DEDICATED PAGE ROUTING (?page=skeletal, ?page=nervous, etc.)
     // ============================================================================
     const urlParams = new URLSearchParams(window.location.search);
     const requestedPage = urlParams.get('page');
@@ -1311,8 +1107,9 @@
     if (requestedPage && SYSTEM_MODULES[requestedPage]) {
       openDedicatedSystemPage(requestedPage);
     } else {
+      // We are on the Home Page
       document.getElementById('homeOverlay').classList.remove('hidden');
-      tryLoadUrlsSequentially(SYSTEM_MODULES.cardio.urls, 0, 'cardio', true);
+      tryLoadUrlsSequentially(SYSTEM_MODULES.skeletal.urls, 0, 'skeletal', true);
     }
 
     function openDedicatedSystemPage(sysKey) {
@@ -1331,7 +1128,7 @@
       });
 
       const mod = SYSTEM_MODULES[sysKey];
-      document.title = `${mod.titleEn} — MBBS 3D Anatomy + Wikipedia`;
+      document.title = `${mod.titleEn} — MBBS 3D Anatomy Page`;
       document.getElementById('activeSystemIndicator').textContent = (currentLang === 'bn') ? mod.titleBn : mod.titleEn;
 
       const loadingScreen = document.getElementById('loadingScreen');
@@ -1343,6 +1140,7 @@
 
     function tryLoadUrlsSequentially(urlList, idx, sysKey, isBackgroundHome) {
       if (idx >= urlList.length) {
+        // File not uploaded yet -> mark as Dark Red Upcoming Soon & show interactive 3D preview
         const pageBadge = document.getElementById('pageStatusBadge');
         if (pageBadge && !isBackgroundHome) {
           if (SYSTEM_MODULES[sysKey].available) {
@@ -1400,7 +1198,7 @@
     document.getElementById('homeFileInput').addEventListener('change', handleLocalGLB);
 
     // ============================================================================
-    // 9. Z-ANATOMY CLUTTER FILTER & METADATA ENRICHMENT
+    // 8. Z-ANATOMY CLUTTER FILTER & METADATA ENRICHMENT
     // ============================================================================
     function isZAnatomyLabelOrLineMesh(obj) {
       const n = (obj.name || '').toLowerCase();
@@ -1424,6 +1222,43 @@
       return false;
     }
 
+// Automatic Medical PBR Color Restorer (Fixes white/grey untextured GLB exports)
+    function restoreAnatomicalMaterial(mesh) {
+      const mat = mesh.material.clone();
+      mat.side = THREE.DoubleSide;
+
+      const n = (mesh.userData.label || mesh.name || '').toLowerCase();
+      const c = mat.color;
+      // Check if Blender exported a blank white, grey, or black material
+      const isBlankColor = (Math.abs(c.r - c.g) < 0.05 && Math.abs(c.g - c.b) < 0.05);
+
+      if (isBlankColor) {
+        if (['vein', 'vena', 'cava', 'jugular', 'sinus', 'azygos', 'saphenous', 'cephalic', 'basilic', 'portal', 'venous', 'right_atrium', 'right atrium', 'right_ventricle', 'right ventricle'].some(k => n.includes(k))) {
+          mat.color.setHex(0x2563eb); // Deep Venous Blue
+          mat.roughness = 0.35;
+          mat.metalness = 0.08;
+        } else if (['coronary', 'aorta', 'aortic', 'artery', 'arteria', 'carotid', 'subclavian', 'brachiocephalic', 'iliac', 'femoral', 'radial', 'ulnar', 'trunk', 'pulmonary'].some(k => n.includes(k))) {
+          mat.color.setHex(0xdc2626); // Bright Arterial Crimson
+          mat.roughness = 0.32;
+          mat.metalness = 0.1;
+        } else if (['atrium', 'ventricle', 'auricle', 'myocard', 'heart', 'cor ', 'papillary', 'septum', 'muscle', 'biceps', 'pectoralis', 'deltoid'].some(k => n.includes(k))) {
+          mat.color.setHex(0xb91c1c); // Rich Myocardial / Muscular Red
+          mat.roughness = 0.42;
+          mat.metalness = 0.05;
+        } else if (['valve', 'valva', 'cusp', 'mitral', 'tricuspid', 'chordae', 'fibrous', 'tendon', 'ligament'].some(k => n.includes(k))) {
+          mat.color.setHex(0xfde68a); // Fibrous Valve Ivory-Gold
+          mat.roughness = 0.4;
+        } else if (['nerve', 'plexus', 'ganglion', 'vagus', 'sciatic', 'spinal', 'cerebr', 'cerebell', 'brain', 'pons', 'medulla', 'thalam', 'optic', 'tract', 'node', 'bundle'].some(k => n.includes(k))) {
+          mat.color.setHex(0xfacc15); // Neural / Conducting System Yellow
+          mat.roughness = 0.38;
+        } else {
+          mat.color.setHex(0xfef3c7); // Warm Osteology Bone Ivory
+          mat.roughness = 0.45;
+        }
+      }
+      return mat;
+    }
+
     function processLoadedGLTF(sceneRoot, isBackgroundHome = false) {
       if (rootModel) scene.remove(rootModel);
       boneMeshes = [];
@@ -1433,7 +1268,9 @@
 
       rootModel = sceneRoot;
       scene.add(rootModel);
+      rootModel.updateMatrixWorld(true);
 
+      // Step 1: Collect meshes and restore missing Z-Anatomy colors
       rootModel.traverse((child) => {
         if (child.isMesh) {
           if (isZAnatomyLabelOrLineMesh(child)) {
@@ -1441,36 +1278,73 @@
             child.raycast = () => {};
             labelMeshes.push(child);
           } else {
-            child.material = child.material.clone();
-            child.material.side = THREE.DoubleSide;
-            child.userData.origPos = child.position.clone();
+            enrichBilingualMetadata(child);
+            child.material = restoreAnatomicalMaterial(child);
 
             child.geometry.computeBoundingBox();
             const lc = new THREE.Vector3();
             child.geometry.boundingBox.getCenter(lc);
             child.userData.localCenter = lc;
 
-            enrichBilingualMetadata(child);
             boneMeshes.push(child);
           }
         }
       });
 
-      const box = new THREE.Box3();
-      boneMeshes.forEach(b => box.expandByObject(b));
-      if (box.isEmpty()) box.setFromObject(rootModel);
-
-      const center = box.getCenter(new THREE.Vector3());
-      const size = box.getSize(new THREE.Vector3()).length();
-      rootModel.position.sub(center);
-
+      // Step 2: Filter out distant stray vertices to get the TRUE anatomical bounding box
+      const centers = [];
       boneMeshes.forEach(b => {
+        const wb = new THREE.Box3().setFromObject(b);
+        if (!wb.isEmpty()) centers.push({ mesh: b, box: wb, center: wb.getCenter(new THREE.Vector3()) });
+      });
+
+      // Calculate median center so stray objects miles away don't ruin camera zoom
+      const coreBox = new THREE.Box3();
+      if (centers.length > 0) {
+        const avgCenter = new THREE.Vector3();
+        centers.forEach(c => avgCenter.add(c.center));
+        avgCenter.divideScalar(centers.length);
+
+        // Compute average distance from center
+        let avgDist = 0;
+        centers.forEach(c => { avgDist += c.center.distanceTo(avgCenter); });
+        avgDist = Math.max(avgDist / centers.length, 0.001);
+
+        // Expand box only by meshes within 3.5x average radius (ignores distant stray artifacts)
+        centers.forEach(c => {
+          if (c.center.distanceTo(avgCenter) <= avgDist * 3.5) {
+            coreBox.expandByPoint(c.box.min);
+            coreBox.expandByPoint(c.box.max);
+          }
+        });
+      }
+      if (coreBox.isEmpty()) coreBox.setFromObject(rootModel);
+
+      // Step 3: AUTO-NORMALIZE SCALE TO 2.0 UNITS (Fixes tiny model size!)
+      const sizeVec = coreBox.getSize(new THREE.Vector3());
+      const maxDim = Math.max(sizeVec.x, sizeVec.y, sizeVec.z, 0.0001);
+      const targetScale = 2.0 / maxDim; // Always normalizes model to 2.0 units tall/wide!
+
+      rootModel.scale.multiplyScalar(targetScale);
+      rootModel.updateMatrixWorld(true);
+
+      // Re-center scaled model precisely at (0, 0, 0)
+      const scaledBox = new THREE.Box3();
+      boneMeshes.forEach(b => scaledBox.expandByObject(b));
+      const scaledCenter = scaledBox.getCenter(new THREE.Vector3());
+      rootModel.position.sub(scaledCenter);
+      rootModel.updateMatrixWorld(true);
+
+      // Save original positions and outward explode vectors after scaling
+      boneMeshes.forEach(b => {
+        b.userData.origPos = b.position.clone();
         const wb = new THREE.Box3().setFromObject(b);
         const wc = wb.getCenter(new THREE.Vector3());
         b.userData.explodeDir = wc.length() > 0.001 ? wc.normalize() : new THREE.Vector3(0, 1, 0);
       });
 
-      defaultCamPos.set(0, size * 0.08, size * 1.15);
+      // Step 4: Set close, full-screen camera framing (No manual zooming needed!)
+      defaultCamPos.set(0, 0.15, 2.35);
       defaultTarget.set(0, 0, 0);
       camera.position.copy(defaultCamPos);
       controls.target.copy(defaultTarget);
@@ -1485,6 +1359,8 @@
         selectBone(boneMeshes[0]);
       }
     }
+
+
 
     function enrichBilingualMetadata(mesh) {
       const d = mesh.userData;
@@ -1506,19 +1382,19 @@
       }
 
       const low = raw.toLowerCase();
-      let division = "Axial / Central";
-      let region = "Thorax";
+      let division = "Axial / Central (CNS)";
+      let region = "Skull";
 
-      if (['cerebr','cerebell','brain','pons','medulla','thalam','optic','trigeminal','facial','skull','cranium','carotid','jugular'].some(k => low.includes(k))) {
-        division = "Axial / Central"; region = "Skull";
-      } else if (['spinal','vertebra','cauda','sacrum','azygos'].some(k => low.includes(k))) {
-        division = "Axial / Central"; region = "Vertebra";
-      } else if (['atrium','ventricle','aorta','coronary','pulmonary','cava','valve','mitral','tricuspid','heart','pericard','vagus','rib','sternum'].some(k => low.includes(k))) {
-        division = "Axial / Central (Heart & Thorax)"; region = "Thorax";
-      } else if (['brachial','median','radial','ulnar','axillary','subclavian','cephalic','basilic','clavicle','scapula','humerus'].some(k => low.includes(k))) {
-        division = "Appendicular / Peripheral"; region = "Upper";
-      } else if (['sciatic','femoral','iliac','saphenous','popliteal','tibial','fibular','femur','tibia','fibula','pelvis'].some(k => low.includes(k))) {
-        division = "Appendicular / Peripheral"; region = "Lower";
+      if (['cerebr','cerebell','brain','pons','medulla','thalam','optic','trigeminal','facial','skull','cranium','frontal','parietal','mandible'].some(k => low.includes(k))) {
+        division = "Axial / Central (CNS)"; region = "Skull";
+      } else if (['spinal','vertebra','cauda','sacrum','cord'].some(k => low.includes(k))) {
+        division = "Axial / Central (CNS)"; region = "Vertebra";
+      } else if (['vagus','phrenic','sympathetic','rib','sternum','heart','lung','aorta','ventricle'].some(k => low.includes(k))) {
+        division = "Axial / Thorax"; region = "Thorax";
+      } else if (['brachial','median','radial','ulnar','axillary','musculocutaneous','clavicle','scapula','humerus','biceps','deltoid'].some(k => low.includes(k))) {
+        division = "Appendicular / Upper"; region = "Upper";
+      } else if (['sciatic','femoral','obturator','tibial','peroneal','fibular','sacral','femur','tibia','fibula','pelvis'].some(k => low.includes(k))) {
+        division = "Appendicular / Lower"; region = "Lower";
       }
 
       const matchedKey = Object.keys(BILINGUAL_MBBS_DB).find(k => low.includes(k));
@@ -1527,8 +1403,8 @@
 
       d.cleanTitle = raw;
       d.latin = d.latin || `Terminologia Anatomica: ${raw}`;
-      d.division = d.division || division;
-      d.region = d.region || region;
+      d.division = division;
+      d.region = region;
 
       d.en = entry ? {
         title: `${raw} — ${entry.en.title}`,
@@ -1541,11 +1417,11 @@
       } : {
         title: raw,
         type: d.bone_type || "Anatomical Structure",
-        side: `Location (${sideEn}): Situated in the ${region} compartment; observe its 3D spatial course and relations with adjacent structures.`,
-        features: `Parts & Landmarks: Principal anatomical subdivisions, branches/tributaries, or surfaces of ${raw}.`,
-        attachments: `Function & Supply: Provides physiological conduit or structural support in ${division}; see live Wikipedia summary above for full details.`,
-        ossification: `Anatomical Term: Terminologia (${raw}). Embryological derivation from mesoderm/pharyngeal arch/neural tube.`,
-        clinical: `Medical Importance: Important landmark in physical diagnosis, angiography/imaging, surgical exposure, and MBBS practical viva.`
+        side: `Location (${sideEn}): Situated in the ${region} compartment; observe its 3D spatial relationship with adjacent vessels, nerves, and bones.`,
+        features: `Parts & Landmarks: Principal body, extremities, surfaces, borders, and articular/functional subdivisions of ${raw}.`,
+        attachments: `Function & Supply: Provides structural/physiological function in the ${division}; supplied by regional neurovascular bundles.`,
+        ossification: `Anatomical Term: Terminologia (${raw}). Embryological derivation from somite/neural tube/arch primordia.`,
+        clinical: `Medical Importance: Key landmark in physical diagnosis, imaging, surgical exposure, and MBBS practical viva.`
       };
 
       d.bn = entry ? {
@@ -1560,55 +1436,61 @@
         title: autoBnTitle,
         type: `${region} অঞ্চলের শারীরস্থানিক গঠন`,
         side: `অবস্থান (${sideBn}): ত্রিমাত্রিক (3D) মডেলে ${autoBnTitle}-এর সঠিক শারীরস্থানিক অবস্থান ও পার্শ্ববর্তী অঙ্গসমূহের সম্পর্ক লক্ষ্য করুন।`,
-        features: `অংশসমূহের বিবরণ: ${autoBnTitle}-এর প্রধান অংশ, শাখা-প্রশাখা এবং গঠনগত ল্যান্ডমার্কসমূহ।`,
-        attachments: `শারীরবৃত্তীয় কাজ ও সরবরাহ: সংশ্লিষ্ট তন্ত্রে ${autoBnTitle}-এর কার্যকরী ভূমিকা (উপরে লাইভ উইকিপিডিয়া বক্সে আরও বিস্তারিত দেখুন)।`,
+        features: `অংশসমূহের বিবরণ: ${autoBnTitle}-এর প্রধান অংশ, তল, প্রান্ত এবং গঠনগত ল্যান্ডমার্কসমূহ।`,
+        attachments: `শারীরবৃত্তীয় কাজ ও সরবরাহ: সংশ্লিষ্ট তন্ত্রে ${autoBnTitle}-এর কার্যকরী ভূমিকা এবং রক্ত ও স্নায়ু সরবরাহ।`,
         ossification: `শারীরস্থানিক পরিভাষা: Terminologia (${raw}) ও ভ্রূণতাত্ত্বিক বিকাশ।`,
         clinical: `চিকিৎসাগত গুরুত্ব (Medical Importance): রোগ নির্ণয়, অস্ত্রোপচার এবং MBBS ভাইভা পরীক্ষায় ${autoBnTitle}-এর বিশেষ ক্লিনিক্যাল গুরুত্ব রয়েছে।`
       };
     }
 
-    // Built-in Multi-Part 3D Models (With Rich 10-Part Cardiovascular Model!)
     function buildProceduralSystem(sysKey, isBackgroundHome = false) {
       const g = new THREE.Group();
       let parts = [];
 
-      if (sysKey === 'cardio') {
+      if (sysKey === 'nervous') {
         parts = [
-          { name: "Right_Atrium", wiki: "Right atrium", color: 0x3b82f6, pos: [-0.20, 0.16, 0.04], geo: new THREE.SphereGeometry(0.16, 28, 28) },
-          { name: "Right_Ventricle", wiki: "Right ventricle", color: 0x2563eb, pos: [-0.10, -0.14, 0.12], geo: new THREE.SphereGeometry(0.20, 28, 28) },
-          { name: "Left_Atrium", wiki: "Left atrium", color: 0xdc2626, pos: [0.16, 0.20, -0.12], geo: new THREE.SphereGeometry(0.16, 28, 28) },
-          { name: "Left_Ventricle", wiki: "Left ventricle", color: 0xb91c1c, pos: [0.14, -0.16, 0], geo: new THREE.SphereGeometry(0.23, 32, 32) },
-          { name: "Arch_of_Aorta", wiki: "Arch of aorta", color: 0xef4444, pos: [0.04, 0.45, 0], geo: new THREE.TorusGeometry(0.20, 0.06, 24, 48, Math.PI) },
-          { name: "Superior_Vena_Cava", wiki: "Superior vena cava", color: 0x1d4ed8, pos: [-0.24, 0.46, 0.02], geo: new THREE.CylinderGeometry(0.05, 0.05, 0.42, 20) },
-          { name: "Inferior_Vena_Cava", wiki: "Inferior vena cava", color: 0x1e40af, pos: [-0.20, -0.42, -0.04], geo: new THREE.CylinderGeometry(0.055, 0.055, 0.38, 20) },
-          { name: "Pulmonary_Trunk_Artery", wiki: "Pulmonary artery", color: 0x60a5fa, pos: [0.02, 0.26, 0.15], geo: new THREE.CylinderGeometry(0.052, 0.052, 0.34, 20).rotateZ(-0.35) },
-          { name: "Left_Coronary_Artery", wiki: "Left coronary artery", color: 0xfbbf24, pos: [0.08, -0.05, 0.21], geo: new THREE.CylinderGeometry(0.015, 0.012, 0.36, 16).rotateZ(0.25) },
-          { name: "Right_Coronary_Artery", wiki: "Right coronary artery", color: 0xf59e0b, pos: [-0.18, 0.0, 0.18], geo: new THREE.CylinderGeometry(0.015, 0.012, 0.32, 16).rotateZ(-0.4) },
-          { name: "Mitral_Tricuspid_Cardiac_Valves", wiki: "Heart valve", color: 0xfef3c7, pos: [0.02, 0.04, 0.02], geo: new THREE.TorusGeometry(0.08, 0.018, 16, 32).rotateX(Math.PI / 2) }
+          { name: "Left_Cerebrum", color: 0xfef08a, pos: [0.15, 0.78, 0], geo: new THREE.SphereGeometry(0.19, 28, 28) },
+          { name: "Right_Cerebrum", color: 0xfef08a, pos: [-0.15, 0.78, 0], geo: new THREE.SphereGeometry(0.19, 28, 28) },
+          { name: "Thalamus", color: 0xf59e0b, pos: [0, 0.72, 0.02], geo: new THREE.SphereGeometry(0.08, 24, 24) },
+          { name: "Cerebellum", color: 0xfde047, pos: [0, 0.58, -0.15], geo: new THREE.SphereGeometry(0.13, 24, 24) },
+          { name: "Brainstem_Pons_Medulla", color: 0xfacc15, pos: [0, 0.52, 0], geo: new THREE.CylinderGeometry(0.05, 0.035, 0.24, 20) },
+          { name: "Left_Vagus_Nerve", color: 0x22d3ee, pos: [0.09, 0.22, 0.06], geo: new THREE.CylinderGeometry(0.014, 0.014, 0.58, 16) },
+          { name: "Spinal_Cord", color: 0xfef9c3, pos: [0, 0.08, -0.04], geo: new THREE.CylinderGeometry(0.028, 0.018, 0.72, 20) },
+          { name: "Left_Sciatic_Nerve", color: 0xeab308, pos: [0.15, -0.62, -0.02], geo: new THREE.CylinderGeometry(0.024, 0.016, 0.78, 20) },
+          { name: "Right_Sciatic_Nerve", color: 0xeab308, pos: [-0.15, -0.62, -0.02], geo: new THREE.CylinderGeometry(0.024, 0.016, 0.78, 20) }
         ];
-      } else if (sysKey === 'nervous') {
+      } else if (sysKey === 'cardio') {
         parts = [
-          { name: "Left_Cerebrum", wiki: "Cerebrum", color: 0xfef08a, pos: [0.15, 0.78, 0], geo: new THREE.SphereGeometry(0.19, 28, 28) },
-          { name: "Right_Cerebrum", wiki: "Cerebrum", color: 0xfef08a, pos: [-0.15, 0.78, 0], geo: new THREE.SphereGeometry(0.19, 28, 28) },
-          { name: "Thalamus", wiki: "Thalamus", color: 0xf59e0b, pos: [0, 0.72, 0.02], geo: new THREE.SphereGeometry(0.08, 24, 24) },
-          { name: "Cerebellum", wiki: "Cerebellum", color: 0xfde047, pos: [0, 0.58, -0.15], geo: new THREE.SphereGeometry(0.13, 24, 24) },
-          { name: "Brainstem_Pons_Medulla", wiki: "Brainstem", color: 0xfacc15, pos: [0, 0.52, 0], geo: new THREE.CylinderGeometry(0.05, 0.035, 0.24, 20) },
-          { name: "Left_Vagus_Nerve", wiki: "Vagus nerve", color: 0x22d3ee, pos: [0.09, 0.22, 0.06], geo: new THREE.CylinderGeometry(0.014, 0.014, 0.58, 16) },
-          { name: "Spinal_Cord", wiki: "Spinal cord", color: 0xfef9c3, pos: [0, 0.08, -0.04], geo: new THREE.CylinderGeometry(0.028, 0.018, 0.72, 20) },
-          { name: "Left_Sciatic_Nerve", wiki: "Sciatic nerve", color: 0xeab308, pos: [0.15, -0.62, -0.02], geo: new THREE.CylinderGeometry(0.024, 0.016, 0.78, 20) }
+          { name: "Left_Ventricle_Chamber", color: 0xef4444, pos: [0.12, 0.15, 0], geo: new THREE.SphereGeometry(0.22, 28, 28) },
+          { name: "Right_Ventricle_Chamber", color: 0xdc2626, pos: [-0.12, 0.14, 0.08], geo: new THREE.SphereGeometry(0.19, 28, 28) },
+          { name: "Arch_of_Aorta", color: 0xf87171, pos: [0.02, 0.48, 0], geo: new THREE.TorusGeometry(0.18, 0.055, 20, 40, Math.PI) },
+          { name: "Superior_Vena_Cava", color: 0x3b82f6, pos: [-0.22, 0.45, 0], geo: new THREE.CylinderGeometry(0.05, 0.05, 0.42, 20) }
+        ];
+      } else if (sysKey === 'muscular') {
+        parts = [
+          { name: "Left_Pectoralis_Major_Muscle", color: 0xe11d48, pos: [0.18, 0.42, 0.1], geo: new THREE.BoxGeometry(0.24, 0.2, 0.06) },
+          { name: "Right_Pectoralis_Major_Muscle", color: 0xe11d48, pos: [-0.18, 0.42, 0.1], geo: new THREE.BoxGeometry(0.24, 0.2, 0.06) },
+          { name: "Left_Biceps_Brachii_Muscle", color: 0xf43f5e, pos: [0.36, 0.25, 0.04], geo: new THREE.CylinderGeometry(0.05, 0.04, 0.38, 20) },
+          { name: "Left_Quadriceps_Femoris_Muscle", color: 0xbe123c, pos: [0.18, -0.45, 0.04], geo: new THREE.CylinderGeometry(0.07, 0.055, 0.55, 20) }
+        ];
+      } else if (sysKey === 'visceral') {
+        parts = [
+          { name: "Right_Lung_Pulmo", color: 0xf472b6, pos: [-0.2, 0.42, 0], geo: new THREE.SphereGeometry(0.19, 24, 24) },
+          { name: "Left_Lung_Pulmo", color: 0xf472b6, pos: [0.2, 0.42, 0], geo: new THREE.SphereGeometry(0.18, 24, 24) },
+          { name: "Liver_Hepar", color: 0x9a3412, pos: [-0.12, 0.1, 0.05], geo: new THREE.BoxGeometry(0.3, 0.16, 0.18) },
+          { name: "Stomach_Gaster", color: 0xfb923c, pos: [0.14, 0.08, 0.06], geo: new THREE.SphereGeometry(0.13, 24, 24) }
         ];
       } else {
         parts = [
-          { name: "Left_Clavicle", wiki: "Clavicle", color: 0xfef3c7, pos: [0.19, 0.56, 0.08], geo: new THREE.CylinderGeometry(0.022, 0.022, 0.30, 16).rotateZ(Math.PI / 2.1) },
-          { name: "Left_Humerus", wiki: "Humerus", color: 0xfef3c7, pos: [0.35, 0.26, 0], geo: new THREE.CylinderGeometry(0.035, 0.03, 0.48, 20) },
-          { name: "Left_Femur", wiki: "Femur", color: 0xfef3c7, pos: [0.17, -0.45, 0], geo: new THREE.CylinderGeometry(0.045, 0.04, 0.64, 22) }
+          { name: "Left_Clavicle", color: 0xfef3c7, pos: [0.19, 0.56, 0.08], geo: new THREE.CylinderGeometry(0.022, 0.022, 0.30, 16).rotateZ(Math.PI / 2.1) },
+          { name: "Left_Humerus", color: 0xfef3c7, pos: [0.35, 0.26, 0], geo: new THREE.CylinderGeometry(0.035, 0.03, 0.48, 20) },
+          { name: "Left_Femur", color: 0xfef3c7, pos: [0.17, -0.45, 0], geo: new THREE.CylinderGeometry(0.045, 0.04, 0.64, 22) }
         ];
       }
 
       parts.forEach(p => {
         const m = new THREE.Mesh(p.geo, new THREE.MeshStandardMaterial({ color: p.color, roughness: 0.35 }));
         m.name = p.name;
-        if (p.wiki) m.userData.wiki_query = p.wiki;
         m.position.set(...p.pos);
         g.add(m);
       });
@@ -1616,7 +1498,7 @@
     }
 
     // ============================================================================
-    // 10. COMPLETE PARTS DIRECTORY MODAL BUILDER
+    // 9. COMPLETE PARTS DIRECTORY MODAL BUILDER
     // ============================================================================
     const catalogModal = document.getElementById('catalogModal');
     const catalogList = document.getElementById('catalogList');
@@ -1639,7 +1521,7 @@
             <p class="text-rose-300"><strong>🏥 Medical Importance:</strong> ${c.clinical}</p>
           </div>
           <div class="flex items-center">
-            <span class="px-3 py-1.5 rounded-lg bg-amber-500 text-slate-950 font-bold text-xs whitespace-nowrap">🔍 View + Wiki</span>
+            <span class="px-3 py-1.5 rounded-lg bg-amber-500 text-slate-950 font-bold text-xs whitespace-nowrap">🔍 View in 3D</span>
           </div>
         `;
         item.onclick = () => {
@@ -1656,7 +1538,7 @@
     document.getElementById('btnCloseCatalog').onclick = () => catalogModal.classList.add('hidden');
 
     // ============================================================================
-    // 11. TOUCH SELECTION, WIKIPEDIA SYNC & VOICE NARRATION
+    // 10. TOUCH SELECTION, DETAILS RENDERER & VOICE NARRATION
     // ============================================================================
     const raycaster = new THREE.Raycaster();
     const pointer = new THREE.Vector2();
@@ -1695,7 +1577,6 @@
       if (!isIsolatedMode) document.getElementById('btnExamineBone').classList.remove('hidden');
 
       renderBoneDetails(bone);
-      fetchWikipediaSummaryForMesh(bone);
       openRightPanel();
     }
 
@@ -1779,15 +1660,14 @@
       if (!selectedBone || !('speechSynthesis' in window)) return;
       window.speechSynthesis.cancel();
       const content = selectedBone.userData[currentLang] || selectedBone.userData.en;
-      const wikiPart = selectedBone.userData.wikiExtract ? `Wikipedia Summary: ${selectedBone.userData.wikiExtract}` : '';
-      const u = new SpeechSynthesisUtterance(`${content.title}. ${wikiPart}. ${content.side}. ${content.clinical}`);
+      const u = new SpeechSynthesisUtterance(`${content.title}. ${content.side}. ${content.attachments}. ${content.clinical}`);
       u.lang = (currentLang === 'bn') ? 'bn-IN' : 'en-IN';
       u.rate = 0.92;
       window.speechSynthesis.speak(u);
     };
 
     // ============================================================================
-    // 12. LEFT & RIGHT DRAWER TOGGLES + FILTERS
+    // 11. LEFT & RIGHT DRAWER TOGGLES + FILTERS
     // ============================================================================
     const leftPanel = document.getElementById('leftPanel');
     const rightPanel = document.getElementById('rightPanel');
@@ -1897,7 +1777,7 @@
     };
 
     // ============================================================================
-    // 13. RENDER LOOP
+    // 12. RENDER LOOP
     // ============================================================================
     const projVec = new THREE.Vector3();
     function animate() {
